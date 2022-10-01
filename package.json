@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  },
+  "scripts": {
+    "build": "node index.js"
+  },
+  "license": "MIT"
+}
