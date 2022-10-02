@@ -82,19 +82,6 @@ const dfs = (tree, locals) => {
         if (conditionStack.length === 3) conditionStack.push(':', 'null;')
         return `(${conditionStack.join('')});`
       }
-      case '*?': {
-        const conditionStack = []
-        tree.args
-          .map(x => dfs(x, locals))
-          .forEach((x, i) =>
-            i % 2 === 0
-              ? conditionStack.push(x, '?')
-              : conditionStack.push(x, ':')
-          )
-        conditionStack.pop()
-        conditionStack.push(':', '0;')
-        return `(${conditionStack.join('')});`
-      }
       case '.:':
         return '[' + tree.args.map(x => dfs(x, locals)).join(',') + ']'
       case '::':

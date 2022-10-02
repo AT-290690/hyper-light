@@ -125,17 +125,6 @@ const tokens = {
     const [first, ...rest] = args.map(a => evaluate(a, env))
     return +rest.every(x => first <= x)
   },
-  ['*?']: (args, env) => {
-    if (args.length === 0 || args.length % 2 !== 0)
-      throw new TypeError('Invalid number of arguments to *?')
-    let res = 0
-    for (let i = 0; i < args.length; i += 2)
-      if (!!evaluate(args[i], env)) {
-        res = evaluate(args[i + 1], env)
-        break
-      }
-    return res
-  },
   ['&&']: (args, env) => {
     if (args.length === 0)
       throw new TypeError('Invalid number of arguments to &&')
