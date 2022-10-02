@@ -193,7 +193,7 @@ ${languageUtilsString}
 </body>`
 }
 
-export const interpredHtml = (source, utils = '../language/core/utils.js') => {
+export const interpredHtml = (source, utils = '../language/misc/utils.js') => {
   const inlined = wrapInBody(removeNoCode(source))
   return `<style>body { background: black } </style><body><div id="canvas-container"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.10/two.min.js" integrity="sha512-D9pUm3+gWPkv/Wl6vd45vRLjdkdEKGje7BxOxYG0N6m4UlEUB7RSljBwpmJNAOuf6txLLtlaRchoKfzngr/bQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
