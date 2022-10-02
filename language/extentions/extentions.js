@@ -1040,42 +1040,12 @@ export const STD = {
   null: VOID,
   NULL: VOID,
   IMP: module => {
-    const pop = createPopUp()
-    popUp(
-      pop,
+    console.log(
       `<- [${Object.keys(module)
         .filter(x => x !== 'NAME')
         .map(x => `"${x}"`)
-        .join(';')}] [${module.NAME}];\n`,
-      window.innerWidth * 1 - 20
+        .join(';')}] [${module.NAME}];\n`
     )
-    pop.focus()
-  },
-  SOURCE: method => {
-    popUp(
-      createPopUp(),
-      method.toString(),
-      window.innerWidth * 1 - 20,
-      window.innerHeight / 2
-    )
-  },
-  INSPECT: (disable = 0) => {
-    if (disable) return (msg, count) => {}
-    const popup = createPopUp()
-    popup.setSize(window.innerWidth * 1 - 20, window.innerHeight / 3)
-    let count = 0
-    return (msg, comment = '', space) => {
-      const current = popup.getValue()
-      popup.setValue(
-        `${current ? current + '\n' : ''};; ${count++} ${comment}
-${msg !== VOID ? JSON.stringify(msg, null, space) : VOID}`
-      )
-      popup.setCursor(
-        popup.posToOffset({ ch: 0, line: popup.lineCount() - 1 }),
-        true
-      )
-      return msg
-    }
   },
 
   tco:

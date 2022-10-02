@@ -1,6 +1,7 @@
-import { compileToJs } from './compiler.js'
-import { cell, parse } from './parser.js'
-import { tokens } from './tokens.js'
+import LZUTF8 from 'lzutf8'
+import { compileToJs } from '../core/compiler.js'
+import { cell, parse } from '../core/parser.js'
+import { tokens } from '../core/tokens.js'
 import { STD, protolessModule } from '../extentions/extentions.js'
 import { languageUtilsString } from './toJs.js'
 

@@ -1,4 +1,3 @@
-import { prettier } from './utils.js'
 import evaluate from './interpreter.js'
 const tailCallOpt = (children, name, parent) => {
   for (let i = 0; i < children.length; i++)
@@ -95,7 +94,7 @@ export const parseExpression = program => {
   else if ((match = /^[^\s\[\];"]+/.exec(program)))
     expr = { type: 'word', name: match[0] }
   else {
-    const snapshot = prettier(program.split('];')[0].split(']')[0]).trim()
+    const snapshot = ' ' + program.split('];')[0].split(']')[0].trim()
     throw new SyntaxError(`Unexpect syntax: "${snapshot}"`)
   }
   return parseApply(expr, program.slice(match[0].length))
