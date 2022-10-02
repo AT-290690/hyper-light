@@ -1,13 +1,12 @@
-// game of life
-<- ["SKETCH"; "ARRAY"; "OBJECT"] [LIBRARY]; 
+<- ["SKETCH"; "ARRAY"; "OBJECT"; "MATH"] [LIBRARY]; 
 <- ["make scene"; "make group"; "make rectangle"; "update"; "play"; "draw"; 
     "insert into group"; "background"; "width"; "height"; "set position";
     "set fill"; "set stroke"; "no fill"; "no stroke"] [SKETCH]; 
 <- ["push"; "for each"] [ARRAY]; 
 <- ["for of"] [OBJECT]; 
-<- ["dice"] [. [LIBRARY; "MATH"]; "roll"];
+<- ["dice"] [MATH; "roll"];
 
-// state
+;; STATE
 := [N; 50]; 
 := [factor; 0.25]; 
 := [r; * [N; factor]]; 
@@ -91,6 +90,3 @@ make scene [1300; 500; -> [.. [
     update state []; 
     render []]]]]]; 
   play []]]]; 
-
-
-

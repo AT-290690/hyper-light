@@ -1,5 +1,6 @@
-<- ["background"; "make scene"; "make line"; "update"; "width"; "height"] [. [LIBRARY; "SKETCH"]];
-<- ["sin"; "cos"; "PI"][. [LIBRARY; "MATH"]];
+<- ["MATH"; "SKETCH"] [LIBRARY];
+<- ["background"; "make scene"; "make line"; "update"; "width"; "height"] [SKETCH];
+<- ["sin"; "cos"; "PI"] [MATH];
 
 make scene [:= [WIDTH; 500]; := [HEIGHT; 500]; -> [..[
   background["#010"];
@@ -12,19 +13,19 @@ make scene [:= [WIDTH; 500]; := [HEIGHT; 500]; -> [..[
   := [x; width [0.5]];
   := [y; height [1]];
   
-  // ARRAY FOR STACK OF TREE POSITIONS
+  ;; ARRAY FOR STACK OF TREE POSITIONS
   := [x stack; .: [max level]];
   := [y stack; .: [max level]];
   
   := [draw branch; -> [dir; .. [
     
-  // CALCULATE NEXT POINT
+  ;; CALCULATE NEXT POINT
   := [delta x; * [length; cos [angle]]];
   := [delta y; * [length; sin [angle]]];
   := [next x; + [x; delta x]];
   := [next y; - [y; delta y]];
   
-  // DRAW A SINGLE BRANCH!
+  ;; DRAW A SINGLE BRANCH!
   make line [x; y; next x; next y];
   .= [x stack; level; x];
   .= [y stack; level; y];
@@ -34,7 +35,7 @@ make scene [:= [WIDTH; 500]; := [HEIGHT; 500]; -> [..[
   = [angle; + [angle; * [theta; dir]]];
   = [length; * [length; step]];
     
-  // EXIT CONDITION OF RECURSION
+  ;; EXIT CONDITION OF RECURSION
   ? [< [level; max level]; .. [
     draw branch [1];
     draw branch [-1]]];
