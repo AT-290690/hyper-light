@@ -300,6 +300,7 @@ const LIBRARY = {
   },
   MATH: {
     NAME: 'MATH',
+    lerp: (start, end, amt) => (1 - amt) * start + amt * end,
     abs: num => Math.abs(num),
     mod: (left, right) => ((left % right) + right) % right,
     clamp: (num, min, max) => Math.min(Math.max(num, min), max),
