@@ -18,12 +18,22 @@ const LIBRARY = {
     },
     ANCHOR: {
       NAME: 'ANCHOR',
-      makeanchor: (p1, p2, p3, p4, p5, p6, p7) =>
+      anchor: (p1, p2, p3, p4, p5, p6, p7) =>
         new Two.Anchor(p1, p2, p3, p4, p5, p6, p7),
     },
     PATH: {
       NAME: 'PATH',
-      makepath: (anchors, a, b, c) => new Two.Path(anchors, a, b, c),
+      pathfrom: points => {
+        const path = LIBRARY.SKETCH.engine.makePath(...points)
+        path.closed = false
+        return path
+      },
+      makepath: (...points) => {
+        const path = LIBRARY.SKETCH.engine.makePath(...points)
+        path.closed = false
+        return path
+      },
+      path: (anchors, a, b, c) => new Two.Path(anchors, a, b, c),
     },
     VECTOR: {
       NAME: 'VECTOR',
@@ -248,6 +258,10 @@ const LIBRARY = {
           })
         : entity.origin.set(x, y)
       return entity
+    },
+    closepath: path => {
+      path.closed = true
+      return path
     },
     make: (prop, ...args) => new Two[prop](...args),
     getwidth: () => document.body.getBoundingClientRect().width,
