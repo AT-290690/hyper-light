@@ -152,7 +152,7 @@ const treeShake = modules => {
   let LIB = ''
   const dfs = (modules, LIB, LIBRARY) => {
     for (const key in modules) {
-      if (key !== 'LIBRARY') {
+      if (key !== 'LIBRARY' && modules[key] !== undefined) {
         LIB += '["' + key + '"]:{'
         for (const method of modules[key]) {
           if (LIBRARY[key]) {

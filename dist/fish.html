@@ -1,0 +1,66 @@
+<style>body { background: black } </style><body><div id="canvas-container"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.10/two.min.js" integrity="sha512-D9pUm3+gWPkv/Wl6vd45vRLjdkdEKGje7BxOxYG0N6m4UlEUB7RSljBwpmJNAOuf6txLLtlaRchoKfzngr/bQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+const canvasContainer = document.getElementById("canvas-container");
+const VOID = null;
+const fs = { readFileSync: () => {}, writeFileSync: () => {}};
+const _tco = func => (...args) => { let result = func(...args); while (typeof result === 'function') { result = result(); }; return result };
+const _pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
+const _spread = (items) => Array.isArray(items[0]) ? items.reduce((acc, item) => [...acc, ...item], []) : items.reduce((acc, item) => ({ ...acc, ...item }), {});
+const protolessModule = methods => { const env = Object.create(null); for (const method in methods) env[method] = methods[method]; return env;};;
+</script>
+<script>const LIBRARY = {["SKETCH"]:{["makescene"]:(width = 100, height = 100, callback) => {
+      LIBRARY.SKETCH.engine?.removeEventListener('update')
+      LIBRARY.SKETCH.CANVAS_CONTAINER =
+        document.getElementById('canvas-container')
+      LIBRARY.SKETCH.engine = new Two({
+        width,
+        height,
+      }).appendTo(LIBRARY.SKETCH.CANVAS_CONTAINER)
+      callback()
+      return 'Scene created!'
+    },["makecircle"]:(x, y, r) => LIBRARY.SKETCH.engine.makeCircle(x, y, r),["makegroup"]:(...args) => LIBRARY.SKETCH.engine.makeGroup(...args),["background"]:(color = 'var(--background-primary)') =>
+      (LIBRARY.SKETCH.CANVAS_CONTAINER.firstChild.style.background = color),["width"]:(ratio = 1) => LIBRARY.SKETCH.engine.width * ratio,["height"]:(ratio = 1) => LIBRARY.SKETCH.engine.height * ratio,["update"]:(...args) => {
+      LIBRARY.SKETCH.engine.update(...args)
+      return 'Updated!'
+    },["nostroke"]:entity => {
+      entity.noStroke()
+      return entity
+    },["draw"]:(lifespan, callback) => {
+      if (callback && typeof callback === 'function') {
+        LIBRARY.SKETCH.engine.bind('update', callback)
+        setTimeout(() => {
+          LIBRARY.SKETCH.engine.unbind('update', callback)
+          LIBRARY.SKETCH.engine.removeEventListener('update')
+        }, 1000 * lifespan)
+      }
+    },["makerectangle"]:(x, y, w, h) =>
+      LIBRARY.SKETCH.engine.makeRectangle(x, y, w, h),["play"]:(...args) => {
+      LIBRARY.SKETCH.engine.play(...args)
+      return 'Playing!'
+    },["makepolygon"]:(...args) => LIBRARY.SKETCH.engine.makePolygon(...args),["setposition"]:(entity, x, y) => {
+      entity.position.set(x, y)
+      return entity
+    },["setfill"]:(entity, fill) => {
+      entity.fill = fill
+      return entity
+    },["setopacity"]:(entity, opacity) => {
+      entity.opacity = opacity
+      return entity
+    },["setorigin"]:(entity, x, y) => {
+      entity.additions
+        ? entity.additions.forEach(item => {
+            item.position.set(item.position.x - x, item.position.y - y)
+          })
+        : entity.origin.set(x, y)
+      return entity
+    },["setrotation"]:(entity, a) => {
+      entity.rotation = a
+      return entity
+    },["gettranslation"]:entity => entity.translation,},["LOOP"]:{["repeat"]:(times, callback) => {
+      let out = VOID
+      for (let i = 0; i < times; i++) out = callback(i)
+      return out
+    },},["ARRAY"]:{["push"]:(entity, ...args) => entity.push(...args),},["MATH"]:{["PI"]:3.141592653589793,["sin"]:n => Math.sin(n),["cos"]:n => Math.cos(n),},}</script>
+<script> (() => { var SKETCH,ARRAY,MATH,COLOR,LOOP,makescene,makecircle,makegroup,background,width,height,update,nostroke,draw,makerectangle,play,makepolygon,VECTOR,setposition,setfill,setopacity,setorigin,setrotation,gettranslation,cyclerepeat,arraypush,PI,sin,cos;(()=>{SKETCH = LIBRARY["SKETCH"];ARRAY = LIBRARY["ARRAY"];MATH = LIBRARY["MATH"];COLOR = LIBRARY["COLOR"];LOOP = LIBRARY["LOOP"];makescene = SKETCH["makescene"];makecircle = SKETCH["makecircle"];makegroup = SKETCH["makegroup"];background = SKETCH["background"];width = SKETCH["width"];height = SKETCH["height"];update = SKETCH["update"];nostroke = SKETCH["nostroke"];draw = SKETCH["draw"];makerectangle = SKETCH["makerectangle"];play = SKETCH["play"];makepolygon = SKETCH["makepolygon"];VECTOR = SKETCH["VECTOR"];setposition = SKETCH["setposition"];setfill = SKETCH["setfill"];setopacity = SKETCH["setopacity"];setorigin = SKETCH["setorigin"];setrotation = SKETCH["setrotation"];gettranslation = SKETCH["gettranslation"];cyclerepeat = LOOP["repeat"];arraypush = ARRAY["push"];PI = MATH["PI"];sin = MATH["sin"];cos = MATH["cos"];return makescene(400,200,() => {var w,h,size,mid,colors,rects,fin1,fin2,tail,body,scales,eyeball,iris,fish; return  (()=>{background("#0f2645");(void(w=4)||w);(void(h=4)||h);(void(size=8)||size);(void(mid=(width(0.5)-(size*0.5)))||mid);(void(colors=["#9dc5eb","#6888a6"])||colors);(void(rects=[])||rects);cyclerepeat(w,(x) => { return  cyclerepeat(h,(y) => { return  _pipe((__) => { return  arraypush(__,_pipe((__) => { return  setfill(__,colors[((x+y)%2)]);},(__) => { return  nostroke(__);})(makecircle((x*size),(y*size),(size*0.65),(size*0.25))));})(rects);});});(void(h=height(0.5))||h);(void(fin1=_pipe((__) => { return  setrotation(__,(PI*0.3));},(__) => { return  setposition(__,(mid+28),(h+-26));},(__) => { return  setfill(__,colors["1"]);})(makepolygon(0,0,18,3)))||fin1);(void(fin2=_pipe((__) => { return  setrotation(__,(PI*-0.5));},(__) => { return  setposition(__,(mid+5),(h+35));},(__) => { return  setfill(__,colors["1"]);})(makepolygon(0,0,15,3)))||fin2);(void(tail=_pipe((__) => { return  setrotation(__,(PI*0.9));},(__) => { return  setposition(__,(mid+50),(h+15));},(__) => { return  setfill(__,colors["1"]);})(makepolygon(0,0,23,3)))||tail);(void(body=_pipe((__) => { return  setrotation(__,(PI*0.85));},(__) => { return  setposition(__,(mid+5),h);},(__) => { return  setfill(__,colors["0"]);})(makepolygon(0,0,40,4)))||body);(void(scales=_pipe((__) => { return  makegroup(__);},(__) => { return  setrotation(__,(PI*0.8));},(__) => { return  setposition(__,(mid+5),h);},(__) => { return  setorigin(__,(size*2),(size*2));})(rects))||scales);(void(eyeball=_pipe((__) => { return  setposition(__,(mid+-18),(h+-7));},(__) => { return  setfill(__,"white");})(makecircle(0,0,8)))||eyeball);(void(iris=_pipe((__) => { return  setposition(__,(mid+-18),(h+-7));},(__) => { return  setfill(__,"black");})(makecircle(0,0,6)))||iris);(void(fish=makegroup([fin1,fin2,tail,body,scales,eyeball,iris]))||fish);_pipe((__) => { return  setposition(__,mid,height(0.3));},(__) => { return  setorigin(__,(mid+20),(h+-20));},(__) => { return  setrotation(__,-0.2);})(fish);draw(60,(framecount,_) => {var amplitude; return  (()=>{(void(fish["rotation"]=(-0.25+(-0.2*sin((framecount*0.1)))))||fish);(void(tail["rotation"]=(3+(0.2*sin((framecount*0.15)))))||tail);(void(amplitude=2)||amplitude);(void(fish["position"]["x"]=(fish["position"]["x"]+(2*cos((framecount*0.05)))))||fish);return (void(fish["position"]["y"]=(fish["position"]["y"]+(amplitude*sin((framecount*0.1)))))||fish);})()});return play();})()});})() })()</script>
+</body>

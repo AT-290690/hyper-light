@@ -9,7 +9,9 @@ import { decodeUrl, encodeUrl } from './language/misc/utils.js'
 //   )
 // )
 // interpred(readFileSync('./programms/parens.rs', 'utf8'))
-compile(readFileSync('./programms/tree.rs', 'utf8'), './dist/tree.html')
+// compile(readFileSync('./programms/tree.rs', 'utf8'), './dist/tree.html')
+compile(readFileSync('./programms/fish.rs', 'utf8'), './dist/fish.html')
+
 // for debugging
 // interpredBrowser(
 //   readFileSync('./programms/rect.rs', 'utf8'),
