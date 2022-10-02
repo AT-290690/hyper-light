@@ -34,7 +34,7 @@ const dfs = (tree, locals) => {
         const vars = localVars.size ? `var ${[...localVars].join(',')};` : ''
         return `(${args.map(x => dfs(x, locals))}) => {${vars} ${
           body.type === 'apply' || body.type === 'value' ? 'return ' : ' '
-        } ${evaluatedBody.trimStart()}};`
+        } ${evaluatedBody.toString().trimStart()}};`
       }
 
       case '==':
@@ -44,17 +44,24 @@ const dfs = (tree, locals) => {
       case '*':
       case ':':
       case '!=':
-      case '&&':
-      case '||':
       case '>=':
       case '<=':
       case '>':
       case '<':
-      case '??':
         return (
           '(' +
           tree.args
             .map(x => dfs(x, locals))
+            .join(symbols[tree.operator.name] ?? tree.operator.name) +
+          ')'
+        )
+      case '??':
+      case '&&':
+      case '||':
+        return (
+          '(' +
+          tree.args
+            .map(x => `(${dfs(x, locals)})`)
             .join(symbols[tree.operator.name] ?? tree.operator.name) +
           ')'
         )
@@ -206,6 +213,8 @@ const dfs = (tree, locals) => {
             return method.type === 'value'
               ? `${caller}["${method.value}"](${arg.join(',')});`
               : `${caller}[${dfs(method, locals)}](${arg.join(',')});`
+          } else {
+            return `(${dfs(tree.operator, locals)})()`
           }
         }
       }
