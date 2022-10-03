@@ -1,45 +1,13 @@
 import evaluate from './interpreter.js'
-const name = expr => {
-  if (expr.type !== 'word') {
-    throw new TypeError('Argument names must be words')
-  }
-  return expr.name
-}
+
 const extract = (item, env) =>
   item.type === 'value' ? item.value : evaluate(item, env)
-const isEqual = (a, b) => {
-  const typeA = typeof a,
-    typeB = typeof b
-  if (typeA !== typeB) return 0
-  if (typeA === 'number' || typeA === 'string' || typeA === 'boolean')
-    return +(a === b)
-
-  if (typeA === 'object') {
-    const isArrayA = Array.isArray(a),
-      isArrayB = Array.isArray(b)
-    if (isArrayA !== isArrayB) return 0
-    if (isArrayA && isArrayB) {
-      if (a.length !== b.length) return 0
-      return +a.every((item, index) => isEqual(item, b[index]))
-    } else {
-      if (a === undefined || a === null || b === undefined || b === null)
-        return +(a === b)
-      if (Object.keys(a).length !== Object.keys(b).length) return 0
-      for (const key in a) if (!isEqual(a[key], b[key])) return 0
-      return 1
-    }
-  }
-}
 export const VOID = undefined
 export const pipe =
   (...fns) =>
   x =>
     fns.reduce((v, f) => f(v), x)
-export const parsePath = (arg, env) =>
-  extract(arg, env)
-    ?.toString()
-    ?.split(';')
-    .map(x => x.trim()) ?? VOID
+
 const tokens = {
   ['+']: (args, env) => {
     if (args.length < 2) {
@@ -167,8 +135,12 @@ const tokens = {
 
   ['->']: (args, env) => {
     if (!args.length) throw new SyntaxError('Functions need a body')
-
-    const argNames = args.slice(0, args.length - 1).map(name)
+    const argNames = args.slice(0, args.length - 1).map(expr => {
+      if (expr.type !== 'word') {
+        throw new TypeError('Argument names must be words')
+      }
+      return expr.name
+    })
     const body = args[args.length - 1]
     return (...args) => {
       if (args.length !== argNames.length)
