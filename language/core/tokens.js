@@ -10,58 +10,48 @@ export const pipe =
 
 const tokens = {
   ['+']: (args, env) => {
-    if (args.length < 2) {
-      throw new TypeError('Invalid number of arguments to +')
-    }
+    if (args.length < 2) throw new TypeError('Invalid number of arguments to +')
     const [first, ...rest] = args.map(a => evaluate(a, env))
     return rest.reduce((acc, x) => (acc += x), first)
   },
   ['-']: (args, env) => {
-    if (args.length < 2) {
-      throw new TypeError('Invalid number of arguments to -')
-    }
+    if (args.length < 2) throw new TypeError('Invalid number of arguments to -')
     const [first, ...rest] = args.map(a => evaluate(a, env))
     return rest.reduce((acc, x) => (acc -= x), first)
   },
   ['*']: (args, env) => {
-    if (args.length < 2) {
-      throw new TypeError('Invalid number of arguments to *')
-    }
+    if (args.length < 2) throw new TypeError('Invalid number of arguments to *')
     const [first, ...rest] = args.map(a => evaluate(a, env))
     return rest.reduce((acc, x) => (acc *= x), first)
   },
   [':']: (args, env) => {
-    if (args.length < 2) {
-      throw new TypeError('Invalid number of arguments to :')
-    }
+    if (args.length < 2) throw new TypeError('Invalid number of arguments to :')
     const [first, ...rest] = args.map(a => evaluate(a, env))
+    if (rest.includes(0))
+      throw new RangeError('Invalid operation to : (devision by zero)')
     return rest.reduce((acc, x) => (acc /= x), first)
   },
   ['%']: (args, env) => {
-    if (args.length !== 2) {
+    if (args.length !== 2)
       throw new TypeError('Invalid number of arguments to %')
-    }
     const [left, right] = args.map(a => evaluate(a, env))
     return left % right
   },
   ['?']: (args, env) => {
-    if (args.length > 3 || args.length <= 1) {
+    if (args.length > 3 || args.length <= 1)
       throw new TypeError('Invalid number of arguments to ?')
-    }
     if (!!evaluate(args[0], env)) return evaluate(args[1], env)
     else if (args[2]) return evaluate(args[2], env)
     else return 0
   },
   ['!']: (args, env) => {
-    if (args.length !== 1) {
+    if (args.length !== 1)
       throw new TypeError('Invalid number of arguments to !')
-    }
     return +!extract(args[0], env)
   },
   ['==']: (args, env) => {
     if (args.length < 2)
       throw new TypeError('Invalid number of arguments to ==')
-
     const [first, ...rest] = args.map(a => evaluate(a, env))
     return +rest.every(x => first === x)
   },
@@ -136,9 +126,8 @@ const tokens = {
   ['->']: (args, env) => {
     if (!args.length) throw new SyntaxError('Functions need a body')
     const argNames = args.slice(0, args.length - 1).map(expr => {
-      if (expr.type !== 'word') {
+      if (expr.type !== 'word')
         throw new TypeError('Argument names must be words')
-      }
       return expr.name
     })
     const body = args[args.length - 1]
@@ -155,7 +144,6 @@ const tokens = {
   ['=']: (args, env) => {
     if (args.length !== 2 || args[0].type !== 'word')
       throw new SyntaxError('Invalid use of operation =')
-
     const entityName = args[0].name
     const value = evaluate(args[1], env)
     for (let scope = env; scope; scope = Object.getPrototypeOf(scope))
@@ -182,9 +170,7 @@ const tokens = {
       else {
         let temp = entity
         const last = prop.pop()
-        prop.forEach(item => {
-          temp = temp[item]
-        })
+        prop.forEach(item => (temp = temp[item]))
         temp[last] = value
       }
       return entity
@@ -197,9 +183,7 @@ const tokens = {
           else {
             let temp = entity
             const last = prop.pop()
-            prop.forEach(item => {
-              temp = temp[item]
-            })
+            prop.forEach(item => (temp = temp[item]))
             temp[last] = value
           }
           return entity
@@ -222,9 +206,7 @@ const tokens = {
         } else {
           let temp = scope[entityName]
           const last = prop.pop()
-          prop.forEach(item => {
-            temp = temp[item]
-          })
+          prop.forEach(item => (temp = temp[item]))
           //const value = temp[last];
           delete temp[last]
           return scope[entityName]
@@ -259,9 +241,7 @@ const tokens = {
         } else {
           let temp = scope[entityName]
           const last = prop.pop()
-          prop.forEach(item => {
-            temp = temp[item]
-          })
+          prop.forEach(item => (temp = temp[item]))
           const entityProperty = temp[last]
           if (typeof entityProperty === 'function') {
             const caller = temp
@@ -272,14 +252,11 @@ const tokens = {
       }
   },
   ['...']: (args, env) => {
-    if (!args.length) {
-      throw new TypeError('Invalid number of arguments to ...')
-    }
+    if (!args.length) throw new TypeError('Invalid number of arguments to ...')
     const [first, ...rest] = args
     const toSpread = evaluate(first, env)
-    if (typeof toSpread !== 'object') {
+    if (typeof toSpread !== 'object')
       throw new SyntaxError('... can only be used on .: or ::')
-    }
     return Array.isArray(toSpread)
       ? [
           ...toSpread,

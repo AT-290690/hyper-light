@@ -6,10 +6,20 @@
     "arrowParens": "avoid"
   },
   "scripts": {
-    "build": "node index.js"
+    "build": "node index.js",
+    "test": "jest test test"
   },
   "license": "MIT",
   "dependencies": {
-    "lzutf8": "^0.6.3"
+    "babel-jest": "^27.0.6",
+    "jest": "^27.0.6",
+    "lzutf8": "^0.6.3",
+    "nanobench": "^2.1.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.14.9"
+  },
+  "jest": {
+    "preset": "./jest.json"
   }
 }
