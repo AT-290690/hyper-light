@@ -3,7 +3,11 @@ import { compileToJs } from '../core/compiler.js'
 import { cell, parse } from '../core/parser.js'
 import { tokens } from '../core/tokens.js'
 import { STD, protolessModule } from '../extentions/extentions.js'
-import { languageUtilsString } from './toJs.js'
+
+export const languageUtilsString = `const _tco = func => (...args) => { let result = func(...args); while (typeof result === 'function') { result = result(); }; return result };
+const _pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
+const _spread = (items) => Array.isArray(items[0]) ? items.reduce((acc, item) => [...acc, ...item], []) : items.reduce((acc, item) => ({ ...acc, ...item }), {});
+const protolessModule = methods => { const env = Object.create(null); for (const method in methods) env[method] = methods[method]; return env;};`
 
 export const logBoldMessage = msg => console.log('\x1b[1m', msg)
 export const logErrorMessage = msg =>
@@ -175,6 +179,16 @@ const treeShake = modules => {
   }
   LIB += 'const LIBRARY = {' + dfs(modules, LIB, STD.LIBRARY) + '}'
   return LIB
+}
+
+export const compileModule = source => {
+  const inlined = wrapInBody(removeNoCode(source))
+  const { body, modules } = compileToJs(parse(inlined))
+  const LIB = treeShake(modules)
+  return `const VOID = null;
+${languageUtilsString}
+${LIB}
+${body}`
 }
 
 export const compileHtml = source => {
