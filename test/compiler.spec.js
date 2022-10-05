@@ -24,7 +24,31 @@ var fn;(()=>{(void(fn=(x) => { return  (x*10)})||fn);return fn(3);})()`.trim()
 var x,y,temp;(()=>{(void(x=10)||x);(void(y=3)||y);(void(temp=x)||temp);(void(x=y)||x);(void(y=temp)||y);return {"x":x,"y":y,}})()`.trim()
     )
   })
-
+  it('swtich statement', () => {
+    expect(
+      'var CONSOLE' +
+        compileModule(
+          `<- ["CONSOLE"] [LIBRARY];
+          <- ["console log"] [CONSOLE];
+          := [switch case; -> [matcher; 
+            ?? [
+            . [:: [
+              "knock knock"; -> [..["who's there"]]; 
+              "meaning of life"; -> [..[42]];
+              ;; add more cases here
+              ;; ...
+            ]; matcher]; 
+              ;; default case
+            -> ["nothing matched"]
+          ][]]];
+          .: [switch case ["meaning of life"]; switch case [0]; switch case  ["knock knock"]];`
+        )
+          .split('var CONSOLE')[1]
+          .trim()
+    ).toBe(
+      `var CONSOLE,consolelog,switchcase;(()=>{CONSOLE = LIBRARY["CONSOLE"];consolelog = CONSOLE["consolelog"];(void(switchcase=(matcher) => { return  ((({"knock knock":() => { return  (()=>{;return "who's there"})()},"meaning of life":() => { return  (()=>{;return 42})()},}[matcher])??(() => { return  "nothing matched"})))()})||switchcase);return [switchcase("meaning of life"),switchcase(0),switchcase("knock knock")]})()`
+    )
+  })
   it('game of life', () => {
     expect(
       'var SKETCH' +
