@@ -1,4 +1,4 @@
-import { removeNoCode, run, compileModule } from '../language/misc/utils.js'
+import { removeNoCode, run } from '../language/misc/utils.js'
 describe('run should work as expected', () => {
   it('definitions', () => {
     expect(
