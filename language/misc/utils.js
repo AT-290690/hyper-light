@@ -71,7 +71,7 @@ export const isBalancedParenthesis = sourceCode => {
   const stack = []
   const str = sourceCode.replace(/"(.*?)"/g, '')
   const pairs = { ']': '[' }
-  for (let i = 0; i < str.length; i++)
+  for (let i = 0; i < str.length; ++i)
     if (str[i] === '[') stack.push(str[i])
     else if (str[i] in pairs) if (stack.pop() !== pairs[str[i]]) count++
   return { str, diff: count - stack.length }

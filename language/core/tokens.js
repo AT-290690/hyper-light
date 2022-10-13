@@ -86,7 +86,7 @@ const tokens = {
   ['&&']: (args, env) => {
     if (args.length === 0)
       throw new TypeError('Invalid number of arguments to &&')
-    for (let i = 0; i < args.length - 1; i++)
+    for (let i = 0; i < args.length - 1; ++i)
       if (!!evaluate(args[i], env)) continue
       else return evaluate(args[i], env)
     return evaluate(args[args.length - 1], env)
@@ -94,7 +94,7 @@ const tokens = {
   ['||']: (args, env) => {
     if (args.length === 0)
       throw new TypeError('Invalid number of arguments  to ||')
-    for (let i = 0; i < args.length - 1; i++)
+    for (let i = 0; i < args.length - 1; ++i)
       if (!!evaluate(args[i], env)) return evaluate(args[i], env)
       else continue
     return evaluate(args[args.length - 1], env)
@@ -137,7 +137,7 @@ const tokens = {
           'Invalid number of arguments near ("' + argNames.join('; ') + '")'
         )
       const localEnv = Object.create(env)
-      for (let i = 0; i < args.length; i++) localEnv[argNames[i]] = args[i]
+      for (let i = 0; i < args.length; ++i) localEnv[argNames[i]] = args[i]
       return evaluate(body, localEnv)
     }
   },
@@ -159,7 +159,7 @@ const tokens = {
     const main = args[0]
     const last = args[args.length - 1]
     const prop = []
-    for (let i = 1; i < args.length - 1; i++) {
+    for (let i = 1; i < args.length - 1; ++i) {
       const arg = args[i]
       prop.push(extract(arg, env)?.toString() ?? VOID)
     }
@@ -192,7 +192,7 @@ const tokens = {
   },
   ['.-']: (args, env) => {
     const prop = []
-    for (let i = 1; i < args.length; i++) {
+    for (let i = 1; i < args.length; ++i) {
       const arg = args[i]
       prop.push(extract(arg, env)?.toString() ?? VOID)
     }
@@ -215,7 +215,7 @@ const tokens = {
   },
   ['.']: (args, env) => {
     const prop = []
-    for (let i = 1; i < args.length; i++) {
+    for (let i = 1; i < args.length; ++i) {
       const arg = args[i]
       prop.push(extract(arg, env)?.toString() ?? VOID)
     }

@@ -486,11 +486,11 @@ const LIBRARY = {
     },
     routine: (entity, times, callback) => {
       let out = VOID
-      for (let i = 0; i < times; i++) out = callback(entity, i)
+      for (let i = 0; i < times; ++i) out = callback(entity, i)
       return out
     },
     loop: (start, end, callback) => {
-      for (let i = start; i < end; i++) callback(i)
+      for (let i = start; i < end; ++i) callback(i)
     },
     whiletrue: (condition, callback) => {
       let out = VOID
@@ -499,7 +499,7 @@ const LIBRARY = {
     },
     repeat: (times, callback) => {
       let out = VOID
-      for (let i = 0; i < times; i++) out = callback(i)
+      for (let i = 0; i < times; ++i) out = callback(i)
       return out
     },
     tailcalloptimisedrecursion:
@@ -579,7 +579,7 @@ const LIBRARY = {
         const dim = dimensions[0]
         const rest = dimensions.slice(1)
         const arr = []
-        for (let i = 0; i < dim; i++) arr[i] = LIBRARY.ARRAY.makematrix(...rest)
+        for (let i = 0; i < dim; ++i) arr[i] = LIBRARY.ARRAY.makematrix(...rest)
         return arr
       } else return VOID
     },
@@ -598,7 +598,7 @@ const LIBRARY = {
     each: (entity, fn) => entity.forEach((x, i, arr) => fn(x, i)),
     from: items => Array.from(items),
     transform: (entity, callback) => {
-      for (let i = 0; i < entity.length; i++)
+      for (let i = 0; i < entity.length; ++i)
         entity[i] = callback(entity[i], i, entity)
       return entity
     },
@@ -716,7 +716,7 @@ const LIBRARY = {
     toarray: entity => {
       const len = LIBRARY.BINAR.length(entity)
       const out = []
-      for (let i = 0; i < len; i++) out.push(LIBRARY.BINAR.get(entity, i))
+      for (let i = 0; i < len; ++i) out.push(LIBRARY.BINAR.get(entity, i))
       return out
     },
     copy: entity => {
@@ -725,7 +725,7 @@ const LIBRARY = {
       const half = (lem / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
         LIBRARY.BINAR.addtoleft(out, LIBRARY.BINAR.get(entity, i))
-      for (let i = half; i < lem; i++)
+      for (let i = half; i < lem; ++i)
         LIBRARY.BINAR.addtoright(out, LIBRARY.BINAR.get(entity, i))
       return out
     },
@@ -743,7 +743,7 @@ const LIBRARY = {
       const half = (initial.length / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
         LIBRARY.BINAR.addtoleft(entity, initial[i])
-      for (let i = half; i < initial.length; i++)
+      for (let i = half; i < initial.length; ++i)
         LIBRARY.BINAR.addtoright(entity, initial[i])
       return entity
     },
@@ -767,7 +767,7 @@ const LIBRARY = {
       const half = (initial.length / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
         LIBRARY.BINAR.addtoleft(entity, initial[i])
-      for (let i = half; i < initial.length; i++)
+      for (let i = half; i < initial.length; ++i)
         LIBRARY.BINAR.addtoright(entity, initial[i])
       return entity
     },
@@ -783,7 +783,7 @@ const LIBRARY = {
           entity,
           callback(LIBRARY.BINAR.get(entity, i), i, entity)
         )
-      for (let i = half; i < len; i++)
+      for (let i = half; i < len; ++i)
         LIBRARY.BINAR.addtoleft(
           entity,
           callback(LIBRARY.BINAR.get(entity, i), i, entity)
@@ -793,7 +793,7 @@ const LIBRARY = {
     filter: (entity, callback) => {
       const out = []
       const len = LIBRARY.BINAR.length(entity)
-      for (let i = 0; i < len; i++) {
+      for (let i = 0; i < len; ++i) {
         const current = LIBRARY.BINAR.get(entity, i)
         const predicat = callback(current, i, entity)
         if (predicat) out.push(current)

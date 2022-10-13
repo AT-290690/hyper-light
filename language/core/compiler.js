@@ -119,7 +119,7 @@ const dfs = (tree, locals) => {
       //   return `_curry(${tree.args.map(x => dfs(x, locals)).join(',')});`;
       case '.': {
         const prop = []
-        for (let i = 1; i < tree.args.length; i++) {
+        for (let i = 1; i < tree.args.length; ++i) {
           const arg = tree.args[i]
           prop.push(
             (arg.type === 'value'
@@ -133,7 +133,7 @@ const dfs = (tree, locals) => {
       }
       case '.-': {
         const prop = []
-        for (let i = 1; i < tree.args.length; i++) {
+        for (let i = 1; i < tree.args.length; ++i) {
           const arg = tree.args[i]
           prop.push(
             (arg.type === 'value'
@@ -154,7 +154,7 @@ const dfs = (tree, locals) => {
       case '.=': {
         const res = dfs(tree.args[tree.args.length - 1], locals)
         const prop = []
-        for (let i = 1; i < tree.args.length - 1; i++) {
+        for (let i = 1; i < tree.args.length - 1; ++i) {
           const arg = tree.args[i]
           prop.push(
             (arg.type === 'value'
@@ -256,7 +256,7 @@ export const compileToJs = AST => {
   modules = {}
   const raw = dfs(AST, vars)
   let program = ''
-  for (let i = 0; i < raw.length; i++) {
+  for (let i = 0; i < raw.length; ++i) {
     const current = raw[i]
     const next = raw[i + 1]
     if (!semiColumnEdgeCases.has(current + next)) program += current
