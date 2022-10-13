@@ -1,5 +1,9 @@
 import { VOID } from '../core/tokens.js'
 
+export const TWO_JS_HTML = `<div id="canvas-container"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.10/two.min.js" integrity="sha512-D9pUm3+gWPkv/Wl6vd45vRLjdkdEKGje7BxOxYG0N6m4UlEUB7RSljBwpmJNAOuf6txLLtlaRchoKfzngr/bQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script> const canvasContainer = document.getElementById("canvas-container") </script>`
+
 export const protolessModule = methods => {
   const env = Object.create(null)
   for (const method in methods) env[method] = methods[method]
@@ -1045,6 +1049,142 @@ const LIBRARY = {
       })
       return LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...out.concat(extra))
     },
+  },
+
+  DOM: {
+    NAME: 'DOM',
+    makeuserinterface: () => {
+      const div = document.createElement('div')
+      div.id = '_user-interface'
+      const styles = document.createElement('style')
+      styles.textContent = ``
+      document.body.appendChild(styles)
+      document.body.appendChild(div)
+      // LIBRARY.EVENTS.userInterface = div
+    },
+    makeinput: (width = '100px', height = '100px', settings) => {
+      const element = document.createElement('input')
+      element.classList.add('_user-interface-input')
+      element.width = width
+      element.height = height
+      for (const setting in settings) {
+        element.setAttribute(setting, settings[setting])
+      }
+      return element
+    },
+    makestyletag: (...classes) => {
+      const styles = document.createElement('style')
+      styles.textContent = classes.join('\n')
+      return styles
+    },
+    makeclass: (name, attr) => {
+      let out = ''
+      for (const a in attr) {
+        out += `${a}: ${attr[a]};`
+      }
+      return `._user-interface-${name} {\n${out}\n}`
+    },
+    maketextarea: settings => {
+      const element = document.createElement('textarea')
+      element.classList.add('_user-interface-textarea')
+      for (const setting in settings) {
+        element.setAttribute(setting, settings[setting])
+      }
+      return element
+    },
+    makeslider: settings => {
+      const element = document.createElement('input')
+      element.type = 'range'
+      element.classList.add('_user-interface-slider')
+
+      for (const setting in settings) {
+        element.setAttribute(setting, settings[setting])
+      }
+      return element
+    },
+    copyfromelement: copyElement => {
+      copyElement.select()
+      copyElement.setSelectionRange(0, 99999)
+      navigator.clipboard.writeText(copyElement.value)
+    },
+    copyfromtext: val => {
+      console.log(val)
+      navigator.clipboard.writeText(val)
+    },
+    maketooltip: defaultLabel => {
+      const tooltip = document.createElement('span')
+      tooltip.classList.add('_user-interface-tooltiptext')
+      tooltip.textContent = defaultLabel
+      return tooltip
+    },
+    makebutton: () => {
+      const element = document.createElement('button')
+      element.classList.add('_user-interface-button')
+      return element
+    },
+    makelabel: (element, label) => {
+      element.textContent = label
+      return element
+    },
+    onCcange: (element, callback) => {
+      element.addEventListener('change', callback)
+      return element
+    },
+    onclick: (element, callback) => {
+      element.addEventListener('click', callback)
+      return element
+    },
+    makeparagraph: content => {
+      const element = document.createElement('p')
+      element.textContent = content
+      return element
+    },
+    makespan: content => {
+      const element = document.createElement('span')
+      element.textContent = content
+      element.classList.add('_user-interface-span')
+      return element
+    },
+    makestyle: (element, style) => {
+      element.style = style
+      return element
+    },
+    makecontainer: (...elements) => {
+      const div = document.createElement('div')
+      elements.forEach(element => div.appendChild(element))
+      document.body.appendChild(div)
+      return div
+    },
+    addclass: (element, ...classlist) => {
+      classlist.forEach(cls => element.classList.add('_user-interface-' + cls))
+      return element
+    },
+    insertintocontainer: (container, ...elements) => {
+      elements.forEach(element => container.appendChild(element))
+      return container
+    },
+    removeselffromcontainer: (...elements) =>
+      elements.forEach(element => element.parentNode.removeChild(element)),
+  },
+  STYLE: {
+    NAME: 'STYLE',
+    makestyle: (entity, props) => {
+      for (const prop in props) {
+        entity.renderer.elem.style[prop] = props[prop]
+      }
+      return entity.renderer.elem
+    },
+  },
+  EVENTS: {
+    NAME: 'EVENTS',
+    makeevent: (entity, type, callback) => {
+      entity.renderer.elem.addEventListener(type, callback)
+    },
+    click: (entity, callback) => {
+      entity.renderer.elem.addEventListener('click', callback)
+    },
+    keydown: callback => window.addEventListener('keydown', callback),
+    keyup: callback => window.addEventListener('keyup', callback),
   },
 }
 

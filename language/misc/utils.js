@@ -2,7 +2,7 @@ import LZUTF8 from 'lzutf8'
 import { compileToJs } from '../core/compiler.js'
 import { cell, parse } from '../core/parser.js'
 import { tokens } from '../core/tokens.js'
-import { STD, protolessModule } from '../extentions/extentions.js'
+import { STD, protolessModule, TWO_JS_HTML } from '../extentions/extentions.js'
 
 export const languageUtilsString = `const _tco = func => (...args) => { let result = func(...args); while (typeof result === 'function') { result = result(); }; return result };
 const _pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
@@ -192,14 +192,14 @@ ${LIB}
 ${body}`
 }
 
-export const compileHtml = source => {
+export const compileHtml = (source, scripts = '') => {
   const inlined = wrapInBody(removeNoCode(source))
   const { body, modules } = compileToJs(parse(inlined))
   const LIB = treeShake(modules)
-  return `<style>body { background: black } </style><body><div id="canvas-container"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.10/two.min.js" integrity="sha512-D9pUm3+gWPkv/Wl6vd45vRLjdkdEKGje7BxOxYG0N6m4UlEUB7RSljBwpmJNAOuf6txLLtlaRchoKfzngr/bQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  return `
+<style>body { background: black } </style><body>
+${scripts}
 <script>
-const canvasContainer = document.getElementById("canvas-container");
 const VOID = null;
 ${languageUtilsString}
 </script>
@@ -208,10 +208,14 @@ ${languageUtilsString}
 </body>`
 }
 
-export const interpredHtml = (source, utils = '../language/misc/utils.js') => {
+export const interpredHtml = (
+  source,
+  utils = '../language/misc/utils.js',
+  scripts = TWO_JS_HTML
+) => {
   const inlined = wrapInBody(removeNoCode(source))
-  return `<style>body { background: black } </style><body><div id="canvas-container"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.10/two.min.js" integrity="sha512-D9pUm3+gWPkv/Wl6vd45vRLjdkdEKGje7BxOxYG0N6m4UlEUB7RSljBwpmJNAOuf6txLLtlaRchoKfzngr/bQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  return `<style>body { background: black } </style>
+  ${scripts}
 <script type="module">
 import { exe } from '${utils}'; 
   try { 

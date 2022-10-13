@@ -8,10 +8,10 @@ import {
   run,
 } from './utils.js'
 
-export const compile = (file, to) => {
+export const compile = (file, to, scripts) => {
   try {
     handleUnbalancedParens(file)
-    const data = compileHtml(dashCommentsToSemiComments(file))
+    const data = compileHtml(dashCommentsToSemiComments(file), scripts)
     if (data) writeFileSync(to, data)
   } catch (err) {
     logErrorMessage(err.message)
