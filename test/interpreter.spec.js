@@ -1,43 +1,34 @@
-import { removeNoCode, run } from '../language/misc/utils.js'
+import { interpred } from '../language/misc/utils.js'
 describe('run should work as expected', () => {
   it('definitions', () => {
     expect(
-      run(
-        removeNoCode(
-          `:= [x; 10]; := [y; 3]; := [temp; x]; = [x; y]; = [y; temp]; :: ["x"; x; "y"; y]`
-        )
+      interpred(
+        `:= [x; 10]; := [y; 3]; := [temp; x]; = [x; y]; = [y; temp]; :: ["x"; x; "y"; y]`
       )
     ).toEqual({ x: 3, y: 10 })
-    expect(() => run(removeNoCode(`: [29; 0]`))).toThrow(RangeError)
+    expect(() => interpred(`: [29; 0]`)).toThrow(RangeError)
   })
 
   it('simple math', () => {
     expect(
-      run(
-        removeNoCode(
-          `:= [x; 30]; := [result; + [: [* [+ [1; 2; 3]; 2]; % [4; 3]]; x]];`
-        )
+      interpred(
+        `:= [x; 30]; := [result; + [: [* [+ [1; 2; 3]; 2]; % [4; 3]]; x]];`
       )
     ).toBe(42)
-    expect(() => run(removeNoCode(`: [29; 0]`))).toThrow(RangeError)
+    expect(() => interpred(`: [29; 0]`)).toThrow(RangeError)
   })
 
   it('if', () => {
-    expect(() =>
-      run(
-        removeNoCode(`:= [age; 18]; 
+    expect(
+      interpred(`:= [age; 18]; 
  ? [>= [age; 18]; "Can work!"; "Can't work"];
     `)
-      )
-    ).toBe
-    ;('Can work!')
+    ).toBe('Can work!')
     expect(
-      run(
-        removeNoCode(` 
+      interpred(` 
         := [validate age; -> [age; ? [>= [age; 18]; + ["Can work"; ? [>=[age; 21]; " and can drink"; ""]]; "Can't work and can't drink"]]];
         .: [validate age [18]; validate age [21]; validate age [12]];
     `)
-      )
     ).toEqual([
       'Can work',
       'Can work and can drink',
@@ -47,8 +38,7 @@ describe('run should work as expected', () => {
 
   it('switch case', () => {
     expect(
-      run(
-        removeNoCode(`
+      interpred(` 
      := [switch case; -> [matcher; 
           ?? [
           . [:: [
@@ -62,14 +52,12 @@ describe('run should work as expected', () => {
         ][]]];
         .: [switch case ["meaning of life"]; switch case [0]; switch case  ["knock knock"]];
     `)
-      )
     ).toEqual([42, 'nothing matched', "who's there"])
   })
 
   it('valid parens', () => {
     expect(
-      run(
-        removeNoCode(`.. [<- ["BINAR"; "ARRAY"; "LOGIC"] [LIBRARY]; 
+      interpred(`.. [<- ["BINAR"; "ARRAY"; "LOGIC"] [LIBRARY]; 
     <- ["from"; "to"; "balance"; "append"; "prepend"; "tail"; "first"; "is empty"] [BINAR]; 
     ;; find if parens are valid for pairs of "(" and ")"
     := [isvalidparens; -> [input; 
@@ -83,14 +71,12 @@ describe('run should work as expected', () => {
       .:[
       is valid parens ["(()))"];
       is valid parens ["(())"]]];`)
-      )
     ).toEqual([0, 1])
   })
 
   it('fib sum', () => {
     expect(
-      run(
-        removeNoCode(`;; calculating fib sequance
+      interpred(`;; calculating fib sequance
         := [fib; -> [n; ? [
           > [n; 0]; 
              ? [== [n; 1]; 1;
@@ -98,14 +84,12 @@ describe('run should work as expected', () => {
                 + [fib [- [n; 1]]; fib [- [n; 2]]]]]; n]]];
               fib[10]
                 `)
-      )
     ).toBe(55)
   })
 
   it('max sub array sum rec', () => {
     expect(
-      run(
-        removeNoCode(`;; max_sub_array_recursive
+      interpred(`;; max_sub_array_recursive
     <- ["MATH"] [LIBRARY];
     <- ["max"; "infinity"] [MATH];
     ~= [loop; -> [i; nums; maxGlobal; maxSoFar; 
@@ -114,14 +98,29 @@ describe('run should work as expected', () => {
         loop [= [i; + [i; 1]]; nums; maxGlobal; maxSoFar]]; 
         maxGlobal]]]
     [0; .: [1; -2; 10; -5; 12; 3; -2; 3; -199; 10]; * [infinity; -1]; * [infinity; -1]]`)
-      )
     ).toBe(21)
+  })
+  it('sum median', () => {
+    expect(
+      interpred(`
+<- ["MATH"; "ARRAY"] [LIBRARY];
+<- ["sum"] [MATH];
+<- ["range"] [ARRAY];
+
+:= [NUMBERS; range [1; 100]];
+:= [first; . [NUMBERS; 0]];
+:= [last; . [NUMBERS; - [. [NUMBERS; "length"]; 1]]];
+:= [median; + [first; 
+- [* [last; * [+ [1; last]; 0.5]]; 
+    * [first; * [+ [1; first]; 0.5]]]]];
+== [sum [NUMBERS]; median]
+    `)
+    ).toBe(1)
   })
 
   it('sum tree nodes', () => {
     expect(
-      run(
-        removeNoCode(`;; sum_tree_nodes
+      interpred(`;; sum_tree_nodes
     := [node; -> [value; left; right; 
       :: ["value"; value; 
           "left"; left; 
@@ -144,7 +143,6 @@ describe('run should work as expected', () => {
         node [7; void; void]]]];
         sum [myTree]
     `)
-      )
     ).toBe(28)
   })
 })
