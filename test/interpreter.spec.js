@@ -1,31 +1,31 @@
-import { interpred } from '../language/misc/utils.js'
+import { runFromText } from '../language/misc/utils.js'
 describe('run should work as expected', () => {
   it('definitions', () => {
     expect(
-      interpred(
+      runFromText(
         `:= [x; 10]; := [y; 3]; := [temp; x]; = [x; y]; = [y; temp]; :: ["x"; x; "y"; y]`
       )
     ).toEqual({ x: 3, y: 10 })
-    expect(() => interpred(`: [29; 0]`)).toThrow(RangeError)
+    expect(() => runFromText(`: [29; 0]`)).toThrow(RangeError)
   })
 
   it('simple math', () => {
     expect(
-      interpred(
+      runFromText(
         `:= [x; 30]; := [result; + [: [* [+ [1; 2; 3]; 2]; % [4; 3]]; x]];`
       )
     ).toBe(42)
-    expect(() => interpred(`: [29; 0]`)).toThrow(RangeError)
+    expect(() => runFromText(`: [29; 0]`)).toThrow(RangeError)
   })
 
   it('if', () => {
     expect(
-      interpred(`:= [age; 18]; 
+      runFromText(`:= [age; 18]; 
  ? [>= [age; 18]; "Can work!"; "Can't work"];
     `)
     ).toBe('Can work!')
     expect(
-      interpred(` 
+      runFromText(` 
         := [validate age; -> [age; ? [>= [age; 18]; + ["Can work"; ? [>=[age; 21]; " and can drink"; ""]]; "Can't work and can't drink"]]];
         .: [validate age [18]; validate age [21]; validate age [12]];
     `)
@@ -38,7 +38,7 @@ describe('run should work as expected', () => {
 
   it('switch case', () => {
     expect(
-      interpred(` 
+      runFromText(` 
      := [switch case; -> [matcher; 
           ?? [
           . [:: [
@@ -57,7 +57,7 @@ describe('run should work as expected', () => {
 
   it('valid parens', () => {
     expect(
-      interpred(`.. [<- ["BINAR"; "ARRAY"; "LOGIC"] [LIBRARY]; 
+      runFromText(`.. [<- ["BINAR"; "ARRAY"; "LOGIC"] [LIBRARY]; 
     <- ["from"; "to"; "balance"; "append"; "prepend"; "tail"; "first"; "is empty"] [BINAR]; 
     ;; find if parens are valid for pairs of "(" and ")"
     := [isvalidparens; -> [input; 
@@ -76,7 +76,7 @@ describe('run should work as expected', () => {
 
   it('fib sum', () => {
     expect(
-      interpred(`;; calculating fib sequance
+      runFromText(`;; calculating fib sequance
         := [fib; -> [n; ? [
           > [n; 0]; 
              ? [== [n; 1]; 1;
@@ -89,7 +89,7 @@ describe('run should work as expected', () => {
 
   it('max sub array sum rec', () => {
     expect(
-      interpred(`;; max_sub_array_recursive
+      runFromText(`;; max_sub_array_recursive
     <- ["MATH"] [LIBRARY];
     <- ["max"; "infinity"] [MATH];
     ~= [loop; -> [i; nums; maxGlobal; maxSoFar; 
@@ -102,7 +102,7 @@ describe('run should work as expected', () => {
   })
   it('sum median', () => {
     expect(
-      interpred(`
+      runFromText(`
 <- ["MATH"; "ARRAY"] [LIBRARY];
 <- ["sum"] [MATH];
 <- ["range"] [ARRAY];
@@ -120,7 +120,7 @@ describe('run should work as expected', () => {
 
   it('sum tree nodes', () => {
     expect(
-      interpred(`;; sum_tree_nodes
+      runFromText(`;; sum_tree_nodes
     := [node; -> [value; left; right; 
       :: ["value"; value; 
           "left"; left; 
