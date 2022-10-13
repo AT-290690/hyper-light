@@ -17,13 +17,25 @@
   <script type="module">
     import { compileToJs } from './language/core/compiler.js'
     import {
-      decodeUrl,
       wrapInBody,
       removeNoCode,
       treeShake,
       languageUtilsString,
     } from './language/misc/utils.js'
     import { parse } from './language/core/parser.js'
+
+    const decodeUrl = url => {
+      const value = LZUTF8.decompress(url, {
+        inputEncoding: 'Base64',
+        outputEncoding: 'String',
+      }).trim()
+      const suffix = [...new Set(value.match(/\'+?\d+/g))]
+      const matcher = suffix.reduce(
+        (acc, m) => acc.split(m).join(']'.repeat(parseInt(m.substring(1)))),
+        value
+      )
+      return matcher
+    }
 
     const inlined = wrapInBody(
       removeNoCode(

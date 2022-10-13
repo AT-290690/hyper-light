@@ -1,4 +1,4 @@
-import { encodeUrl } from './language/misc/utils.js'
+import { encodeUrl } from './language/misc/compression.js'
 import { readFileSync } from 'fs'
 export const encode = path => encodeUrl(readFileSync(path, 'utf8'))
 export const link = path =>
