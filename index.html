@@ -15,15 +15,15 @@
     referrerpolicy="no-referrer"
   ></script>
   <script type="module">
-    import { compileToJs } from './src/language/core/compiler.js'
+    import { compileToJs } from './language/core/compiler.js'
     import {
       decodeUrl,
       wrapInBody,
       removeNoCode,
       treeShake,
       languageUtilsString,
-    } from './src/language/misc/utils.js'
-    import { parse } from './src/language/core/parser.js'
+    } from './language/misc/utils.js'
+    import { parse } from './language/core/parser.js'
 
     const inlined = wrapInBody(
       removeNoCode(
