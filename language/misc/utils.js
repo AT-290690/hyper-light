@@ -1,4 +1,3 @@
-import LZUTF8 from 'lzutf8'
 import { compileToJs } from '../core/compiler.js'
 import { cell, parse } from '../core/parser.js'
 import { tokens } from '../core/tokens.js'
