@@ -2,6 +2,7 @@ import { compileToJs } from '../core/compiler.js'
 import { cell, parse } from '../core/parser.js'
 import { tokens } from '../core/tokens.js'
 import { STD, protolessModule, TWO_JS_HTML } from '../extentions/extentions.js'
+import { removeNoCode, wrapInBody } from './helpers.js'
 
 export const languageUtilsString = `const _tco = func => (...args) => { let result = func(...args); while (typeof result === 'function') { result = result(); }; return result };
 const _pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
@@ -51,11 +52,6 @@ const findParent = ast => {
 //     else throw new Error(errors)
 //   }
 // }
-const NoCodeRegExp = /[ ]+(?=[^"]*(?:"[^"]*"[^"]*)*$)+|\n|\t|;;.+/g
-export const extractComments = source =>
-  source.match(NoCodeRegExp).filter(x => x[0] === ';' && x[1] === ';')
-export const removeNoCode = source => source.replace(NoCodeRegExp, '')
-export const wrapInBody = source => `..[${source}]`
 export const runFromText = source => run(removeNoCode(source))
 
 export const exe = source => {
@@ -110,7 +106,7 @@ export const handleHangingSemi = source => {
   return code[code.length - 1] === ';' ? code : code + ';'
 }
 
-const treeShake = modules => {
+export const treeShake = modules => {
   let LIB = ''
   const dfs = (modules, LIB, LIBRARY) => {
     for (const key in modules) {

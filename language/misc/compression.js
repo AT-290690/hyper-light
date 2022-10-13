@@ -1,3 +1,5 @@
+import { removeNoCode } from './helpers.js'
+import LZUTF8 from 'lzutf8'
 export const encodeUrl = source => {
   const value = removeNoCode(source)
   const out = value

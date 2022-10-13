@@ -1126,11 +1126,12 @@ const LIBRARY = {
       element.textContent = label
       return element
     },
-    onCcange: (element, callback) => {
+    oninputchange: (element, callback) => {
       element.addEventListener('change', callback)
       return element
     },
-    onclick: (element, callback) => {
+    onmouseclick: (element, callback) => {
+      console.log(element)
       element.addEventListener('click', callback)
       return element
     },

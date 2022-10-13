@@ -8,20 +8,10 @@
 </head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/lzutf8@0.6.3/build/production/lzutf8.min.js"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.10/two.min.js"
-    integrity="sha512-D9pUm3+gWPkv/Wl6vd45vRLjdkdEKGje7BxOxYG0N6m4UlEUB7RSljBwpmJNAOuf6txLLtlaRchoKfzngr/bQg=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>
   <script type="module">
     import { compileToJs } from './language/core/compiler.js'
-    import {
-      wrapInBody,
-      removeNoCode,
-      treeShake,
-      languageUtilsString,
-    } from './language/misc/utils.js'
+    import { treeShake, languageUtilsString } from './language/misc/utils.js'
+    import { wrapInBody, removeNoCode } from './language/misc/helpers.js'
     import { parse } from './language/core/parser.js'
 
     const decodeUrl = url => {
@@ -45,6 +35,12 @@
       )
     )
     const { body, modules } = compileToJs(parse(inlined))
+    if ('SKETCH' in modules) {
+      const script = document.createElement('script')
+      script.src =
+        'https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.10/two.min.js'
+      document.body.appendChild(script)
+    }
     const LIB = treeShake(modules)
     const script = document.createElement('script')
     script.innerHTML = `const canvasContainer =  document.createElement('div')
