@@ -1,8 +1,12 @@
 import { removeNoCode } from './helpers.js'
 import LZUTF8 from 'lzutf8'
+import { generateCompressedModules } from './utils.js'
+
+const shortModules = generateCompressedModules()
+
 export const encodeUrl = source => {
   const value = removeNoCode(source)
-  const out = value
+  let { result, count } = value
     .split('];]')
     .join(']]')
     .split('')
@@ -23,22 +27,33 @@ export const encodeUrl = source => {
       },
       { result: '', count: 0 }
     )
-  if (out.count > 0) out.result += "'" + out.count
-  const encoded = LZUTF8.compress(out.result.trim(), {
+  if (count > 0) result += "'" + count
+
+  for (const { full, short } of shortModules) {
+    if (result.includes(full + '['))
+      result = result.replaceAll(full + '[', short + '[')
+  }
+
+  const encoded = LZUTF8.compress(result.trim(), {
     outputEncoding: 'Base64',
   })
 
   return encoded
 }
+
 export const decodeUrl = url => {
   const value = LZUTF8.decompress(url, {
     inputEncoding: 'Base64',
     outputEncoding: 'String',
   }).trim()
   const suffix = [...new Set(value.match(/\'+?\d+/g))]
-  const matcher = suffix.reduce(
+  let result = suffix.reduce(
     (acc, m) => acc.split(m).join(']'.repeat(parseInt(m.substring(1)))),
     value
   )
-  return matcher
+  for (const { full, short } of shortModules)
+    if (result.includes(short + '['))
+      result = result.replaceAll(short + '[', full + '[')
+
+  return result
 }

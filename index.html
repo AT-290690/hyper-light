@@ -16,21 +16,29 @@
   <script src="https://cdn.jsdelivr.net/npm/lzutf8@0.6.3/build/production/lzutf8.min.js"></script>
   <script type="module">
     import { compileToJs } from './language/core/compiler.js'
-    import { treeShake, languageUtilsString } from './language/misc/utils.js'
+    import {
+      treeShake,
+      languageUtilsString,
+      generateCompressedModules,
+    } from './language/misc/utils.js'
     import { wrapInBody, removeNoCode } from './language/misc/helpers.js'
     import { parse } from './language/core/parser.js'
-
+    const shortModules = generateCompressedModules()
     const decodeUrl = url => {
       const value = LZUTF8.decompress(url, {
         inputEncoding: 'Base64',
         outputEncoding: 'String',
       }).trim()
       const suffix = [...new Set(value.match(/\'+?\d+/g))]
-      const matcher = suffix.reduce(
+      let result = suffix.reduce(
         (acc, m) => acc.split(m).join(']'.repeat(parseInt(m.substring(1)))),
         value
       )
-      return matcher
+      for (const { full, short } of shortModules)
+        if (result.includes(short + '['))
+          result = result.replaceAll(short + '[', full + '[')
+
+      return result
     }
 
     const inlined = wrapInBody(

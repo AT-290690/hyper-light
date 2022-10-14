@@ -179,3 +179,54 @@ import { exe } from '${utils}';
 </script>
 </body>`
 }
+
+export const generateCompressedModules = (
+  abc = [
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z',
+  ]
+) => {
+  const { NAME, ...LIB } = STD.LIBRARY
+  const modules = []
+  for (const module in LIB)
+    for (const m in LIB[module])
+      if (m !== 'NAME' && m.length > 4) modules.push(m)
+  let index = 0
+  let count = 0
+  const ratio = (modules.length / abc.length) | 0.5
+  return modules
+    .sort((a, b) => (a.length > b.length ? -1 : 1))
+    .map(full => {
+      const short = abc[index] + count
+      ++count
+      if (count > ratio) {
+        ++index
+        count = 0
+      }
+      return { full, short }
+    })
+}
