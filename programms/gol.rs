@@ -1,9 +1,9 @@
 <- ["SKETCH"; "ARRAY"; "OBJECT"; "MATH"] [LIBRARY]; 
-<- ["make scene"; "make group"; "make rectangle"; "update"; "play"; "draw"; 
-    "insert into group"; "background"; "width"; "height"; "set position";
-    "set fill"; "set stroke"; "no fill"; "no stroke"] [SKETCH]; 
-<- ["push"; "for each"] [ARRAY]; 
-<- ["for of"] [OBJECT]; 
+<- ["makescene"; "makegroup"; "makerectangle"; "update"; "play"; "draw"; 
+    "insertintogroup"; "background"; "width"; "height"; "setposition";
+    "setfill"; "setstroke"; "nofill"; "nostroke"] [SKETCH]; 
+<- ["push"; "foreach"] [ARRAY]; 
+<- ["forof"] [OBJECT]; 
 <- ["dice"] [MATH; "roll"];
 
 ;; STATE

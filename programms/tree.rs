@@ -1,5 +1,5 @@
 <- ["MATH"; "SKETCH"] [LIBRARY];
-<- ["background"; "make scene"; "make line"; "update"; "width"; "height"] [SKETCH];
+<- ["background"; "makescene"; "makeline"; "update"; "width"; "height"] [SKETCH];
 <- ["sin"; "cos"; "PI"] [MATH];
 
 make scene [:= [WIDTH; 500]; := [HEIGHT; 500]; -> [..[

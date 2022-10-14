@@ -1,10 +1,10 @@
 <- ["SKETCH"; "ARRAY"; "MATH"; "COLOR"; "LOOP"] [LIBRARY];
 
-<- ["make scene"; "make circle"; "make group"; "background"; 
-    "width"; "height"; "update"; "no stroke"; 
-    "draw"; "make rectangle"; "play"; "make polygon"; "VECTOR";
-   "set position"; "set fill"; "set opacity"; "set origin"; "set rotation";
-   "get translation"] [SKETCH];
+<- ["makescene"; "makecircle"; "makegroup"; "background"; 
+    "width"; "height"; "update"; "nostroke"; 
+    "draw"; "makerectangle"; "play"; "makepolygon"; "VECTOR";
+   "setposition"; "setfill"; "setopacity"; "setorigin"; "setrotation";
+   "gettranslation"] [SKETCH];
 
 <- ["repeat"] [LOOP; "cycle"];
 <- ["push"] [ARRAY; "array"];
