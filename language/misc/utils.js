@@ -210,22 +210,28 @@ export const generateCompressedModules = (
     'z',
   ]
 ) => {
+  abc = [...abc, ...abc.map(x => x.toUpperCase())]
   const { NAME, ...LIB } = STD.LIBRARY
   const modules = []
-  for (const module in LIB)
-    for (const m in LIB[module])
-      if (m !== 'NAME' && m.length > 4) modules.push(m)
+  const dfs = (LIB, modules) => {
+    for (const module in LIB) {
+      for (const m in LIB[module]) {
+        if (LIB[module][m].NAME) dfs(LIB[module][m], modules)
+        if (m !== 'NAME' && m.length > 2) modules.push(m)
+      }
+    }
+  }
+  dfs(LIB, modules)
   let index = 0
   let count = 0
-  const ratio = (modules.length / abc.length) | 0.5
   return modules
-    .sort((a, b) => (a.length > b.length ? -1 : 1))
+    .sort((a, b) => (a.length > b.length ? 1 : -1))
     .map(full => {
-      const short = abc[index] + count
-      ++count
-      if (count > ratio) {
-        ++index
-        count = 0
+      const short = count + abc[index]
+      ++index
+      if (index === abc.length) {
+        index = 0
+        ++count
       }
       return { full, short }
     })

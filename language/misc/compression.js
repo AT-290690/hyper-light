@@ -3,7 +3,6 @@ import LZUTF8 from 'lzutf8'
 import { generateCompressedModules } from './utils.js'
 
 export const shortModules = generateCompressedModules()
-
 export const encodeUrl = source => {
   const value = removeNoCode(source)
   let { result, count } = value
@@ -32,6 +31,8 @@ export const encodeUrl = source => {
   for (const { full, short } of shortModules) {
     if (result.includes(full + '[')) {
       result = result.replaceAll(full + '[', short + '[')
+    }
+    if (result.includes(`"${full}"`)) {
       result = result.replaceAll(`"${full}"`, `"${short}"`)
     }
   }
@@ -53,11 +54,14 @@ export const decodeUrl = url => {
     (acc, m) => acc.split(m).join(']'.repeat(parseInt(m.substring(1)))),
     value
   )
-  for (const { full, short } of shortModules)
+  for (const { full, short } of shortModules) {
     if (result.includes(short + '[')) {
       result = result.replaceAll(short + '[', full + '[')
+    }
+    if (result.includes(`"${short}"`)) {
       result = result.replaceAll(`"${short}"`, `"${full}"`)
     }
+  }
 
   return result
 }
