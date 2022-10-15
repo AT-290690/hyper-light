@@ -1,17 +1,20 @@
 ;; write a user interface
 ;; make button
 ;; click events
-<- ["DOM"] [LIBRARY];
-<- ["make user interface"; "make container"; "make button"; "insert into container"; "make label"; "on mouse click"; "make span"; "make style"] [DOM];
+<- ["DOM"; "COLOR"] [LIBRARY];
+<- ["makeuserinterface"; "makecontainer"; "makebutton"; "insertintocontainer"; 
+"makelabel"; "onmouseclick"; "makespan"; "makestyle"; "makeparagraph"] [DOM];
+<- ["randomlightcolor"] [COLOR];
 make user interface [];
 |> [
   := [main; make container []];
   | insert into container [
     |> [make button [];
       | make label ["click me"];
-      | on mouse click [-> [insert into container [main; 
-      |> [
-        make span ["I am a span!"];
-        | make style ["color: white"]
-      ]]]]]]];
+      | on mouse click [-> [
+      insert into container [main; 
+      |> [make span ["I am a span!"];
+        | make style [+ ["color: "; random light color []]]]; 
+      make paragraph []]]]];
+      make paragraph []]];
 

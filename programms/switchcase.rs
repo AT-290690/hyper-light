@@ -1,5 +1,5 @@
 <- ["CONSOLE"] [LIBRARY];
-<- ["console log"] [CONSOLE];
+<- ["consolelog"] [CONSOLE];
 
 := [matcher; "meaning of life"];
 := [switch case; 

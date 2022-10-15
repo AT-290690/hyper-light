@@ -12,6 +12,31 @@ export const protolessModule = methods => {
 
 const LIBRARY = {
   NAME: 'LIBRARY',
+  COLOR: {
+    NAME: 'COLOR',
+    makergbcolor: (r, g, b) => `rgb(${r}, ${g}, ${b})`,
+    makergbalphacolor: (r, g, b, a = 1) => `rgba(${r}, ${g}, ${b}, ${a})`,
+    randomcolor: () => `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+    randomlightcolor: () =>
+      '#' +
+      (
+        '00000' + Math.floor(Math.random() * Math.pow(16, 6)).toString(16)
+      ).slice(-6),
+    rgbtohex: color => {
+      const [r, g, b] = color.split('(')[1].split(')')[0].split(',').map(Number)
+      function componentToHex(c) {
+        var hex = c.toString(16)
+        return hex.length == 1 ? '0' + hex : hex
+      }
+      return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b)
+    },
+    inverthexcolor: hex =>
+      '#' +
+      (Number(`0x1${hex.split('#')[1]}`) ^ 0xffffff)
+        .toString(16)
+        .substring(1)
+        .toUpperCase(),
+  },
   SKETCH: {
     NAME: 'SKETCH',
     COMMANDS: {

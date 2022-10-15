@@ -306,9 +306,10 @@ const tokens = {
   ['<-']:
     (args, env) =>
     (exp, prefix = '') => {
-      prefix = prefix.replaceAll(' ', '')
+      //   prefix = prefix.replaceAll(' ', '')
       args.forEach(arg => {
-        const method = arg.value.replaceAll(' ', '')
+        const method = arg.value
+        //.replaceAll(' ', '')
         env[`${prefix}${method}`] = exp[method]
       })
       return VOID

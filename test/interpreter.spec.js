@@ -154,7 +154,6 @@ describe('run should work as expected', () => {
     expect(
       runFromText(`<- ["BINAR"] [LIBRARY];
     <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
-    
     |> [10; 
        | ones []; 
        | map [-> [x; i; a; * [x; 254]]];
