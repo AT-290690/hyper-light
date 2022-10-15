@@ -12,6 +12,12 @@ export const protolessModule = methods => {
 
 const LIBRARY = {
   NAME: 'LIBRARY',
+  DATE: {
+    NAME: 'DATE',
+    formattolocal: (date, format) => date.toLocaleDateString(format),
+    makenewdate: () => new Date(),
+    makedate: date => new Date(date),
+  },
   COLOR: {
     NAME: 'COLOR',
     makergbcolor: (r, g, b) => `rgb(${r}, ${g}, ${b})`,
@@ -1078,15 +1084,19 @@ const LIBRARY = {
       return LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...out.concat(extra))
     },
   },
-
   DOM: {
     NAME: 'DOM',
+    getbody: () => document.body,
+    getparentnode: element => element.parentNode,
+    getelementbyid: id => document.getElementById(id),
+    getelementsbyclassname: tag => document.getElementsByClassName(tag),
+    getelementsbytagname: tag => document.getElementsByTagName(tag),
     makeuserinterface: () => {
       const div = document.createElement('div')
       div.id = '_user-interface'
-      const styles = document.createElement('style')
-      styles.textContent = ``
-      document.body.appendChild(styles)
+      // const styles = document.createElement('style')
+      // styles.textContent = ``
+      // document.body.appendChild(styles)
       document.body.appendChild(div)
       // LIBRARY.EVENTS.userInterface = div
     },
@@ -1100,18 +1110,6 @@ const LIBRARY = {
       }
       return element
     },
-    makestyletag: (...classes) => {
-      const styles = document.createElement('style')
-      styles.textContent = classes.join('\n')
-      return styles
-    },
-    makeclass: (name, attr) => {
-      let out = ''
-      for (const a in attr) {
-        out += `${a}: ${attr[a]};`
-      }
-      return `._user-interface-${name} {\n${out}\n}`
-    },
     maketextarea: settings => {
       const element = document.createElement('textarea')
       element.classList.add('_user-interface-textarea')
@@ -1119,6 +1117,11 @@ const LIBRARY = {
         element.setAttribute(setting, settings[setting])
       }
       return element
+    },
+    makecheckbox: () => {
+      const checkbox = document.createElement('input')
+      checkbox.type = 'checkbox'
+      return checkbox
     },
     makeslider: settings => {
       const element = document.createElement('input')
@@ -1136,7 +1139,6 @@ const LIBRARY = {
       navigator.clipboard.writeText(copyElement.value)
     },
     copyfromtext: val => {
-      console.log(val)
       navigator.clipboard.writeText(val)
     },
     maketooltip: defaultLabel => {
@@ -1154,15 +1156,7 @@ const LIBRARY = {
       element.textContent = label
       return element
     },
-    oninputchange: (element, callback) => {
-      element.addEventListener('change', callback)
-      return element
-    },
-    onmouseclick: (element, callback) => {
-      console.log(element)
-      element.addEventListener('click', callback)
-      return element
-    },
+
     makeparagraph: content => {
       const element = document.createElement('p')
       element.textContent = content
@@ -1174,7 +1168,12 @@ const LIBRARY = {
       element.classList.add('_user-interface-span')
       return element
     },
-    makestyle: (element, style) => {
+    getattribute: (element, key) => element.getattribute(key),
+    setattribute: (element, key, value) => {
+      element.setAttribute(key, value)
+      return element
+    },
+    setstyle: (element, style) => {
       element.style = style
       return element
     },
@@ -1197,23 +1196,53 @@ const LIBRARY = {
   },
   STYLE: {
     NAME: 'STYLE',
-    makestyle: (entity, props) => {
+    displayshow: element => {
+      element.style.display = 'block'
+      return element
+    },
+    displayhide: element => {
+      element.style.display = 'none'
+      return element
+    },
+    makeclass: (name, attr) => {
+      let out = ''
+      for (const a in attr) {
+        out += `${a}: ${attr[a]};`
+      }
+      return `._user-interface-${name} {\n${out}\n}`
+    },
+    makesvgstyle: (entity, props) => {
       for (const prop in props) {
         entity.renderer.elem.style[prop] = props[prop]
       }
       return entity.renderer.elem
     },
+    styleoption: attr => {
+      let out = ''
+      for (const a in attr) {
+        out += `${a}: ${attr[a]};`
+      }
+      return out
+    },
   },
-  EVENTS: {
-    NAME: 'EVENTS',
-    makeevent: (entity, type, callback) => {
-      entity.renderer.elem.addEventListener(type, callback)
+  EVENT: {
+    NAME: 'EVENT',
+    oninputchange: (element, callback) => {
+      element.addEventListener('change', callback)
+      return element
     },
-    click: (entity, callback) => {
-      entity.renderer.elem.addEventListener('click', callback)
+    onmouseclick: (element, callback) => {
+      element.addEventListener('click', callback)
+      return element
     },
-    keydown: callback => window.addEventListener('keydown', callback),
-    keyup: callback => window.addEventListener('keyup', callback),
+    onkeydown: (element, callback) => {
+      element.addEventListener('keydown', callback)
+      return element
+    },
+    onkeyup: (element, callback) => {
+      element.addEventListener('keyup', callback)
+      return element
+    },
   },
 }
 
