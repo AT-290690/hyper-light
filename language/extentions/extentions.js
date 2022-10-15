@@ -666,6 +666,8 @@ const LIBRARY = {
     sort: (entity, callback) => entity.sort(callback),
     slice: (entity, start, end) => entity.slice(start, end),
     splice: (entity, ...args) => entity.splice(...args),
+    zeroes: size => new Array(size).fill(0),
+    ones: size => new Array(size).fill(1),
     range: (start, end, step = 1) => {
       const arr = []
       if (start > end) for (let i = start; i >= end; i -= 1) arr.push(i * step)
@@ -688,7 +690,8 @@ const LIBRARY = {
       entity.right = []
       return entity
     },
-
+    zeroes: size => LIBRARY.BINAR.from(new Array(size).fill(0)),
+    ones: size => LIBRARY.BINAR.from(new Array(size).fill(1)),
     flatten: (collection, levels, flat) =>
       LIBRARY.BINAR.to(
         collection,
@@ -784,12 +787,12 @@ const LIBRARY = {
       const half = (len / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
         LIBRARY.BINAR.addtoleft(
-          entity,
+          result,
           callback(LIBRARY.BINAR.get(entity, i), i, entity)
         )
       for (let i = half; i < len; ++i)
-        LIBRARY.BINAR.addtoleft(
-          entity,
+        LIBRARY.BINAR.addtoright(
+          result,
           callback(LIBRARY.BINAR.get(entity, i), i, entity)
         )
       return result

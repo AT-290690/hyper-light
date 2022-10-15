@@ -4,7 +4,8 @@ import { decodeUrl, shortModules } from './language/misc/compression.js'
 import { compile, interpred, interpredBrowser } from './language/misc/fs.js'
 import { compileModule } from './language/misc/utils.js'
 
-console.log(compileModule('. ["sda"; "length"]'))
+console.log(interpred(readFileSync('./programms/binar.rs', 'utf8')))
+// console.log(compileModule('. ["sda"; "length"]'))
 // console.log(
 //   decodeUrl(
 //     'PC1bIkJJTkFSIjsiQVJSQVkiOyJMT0dJQyJdW0xJQlJBUlldO8QlZnJvbSI7InRvIjsiYmFsYW5jZSI7ImFwcGVuZCI7InByZccKdGFpbCI7ImZpcnN0IjsiaXMgZW1wdHkiXVvFaF07Oj1baXN2YWxpZHBhcmVuczstPltpbnB1dDt8yQnEbltdO3x0b1stPlthY2M7eDtpbmRleDthcnI7P1s9PVsiKCI7eF07x3nGJF3GG8V8xBJdOyIoIl075ACTxg/mALDGLSc1O3xpc+UAnVsnNDvtAJRbIigoKSkiXTs='

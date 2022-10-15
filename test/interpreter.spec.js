@@ -149,4 +149,16 @@ describe('run should work as expected', () => {
   it('length of string', () => {
     expect(runFromText(`. ["01010"; "length"];`)).toBe(5)
   })
+
+  it('binar should work as expected', () => {
+    expect(
+      runFromText(`<- ["BINAR"] [LIBRARY];
+    <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
+    
+    |> [10; 
+       | ones []; 
+       | map [-> [x; i; a; * [x; 254]]];
+       | to array []]`)
+    ).toEqual([254, 254, 254, 254, 254, 254, 254, 254, 254, 254])
+  })
 })
