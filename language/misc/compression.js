@@ -2,7 +2,7 @@ import { removeNoCode } from './helpers.js'
 import LZUTF8 from 'lzutf8'
 import { generateCompressedModules } from './utils.js'
 
-const shortModules = generateCompressedModules()
+export const shortModules = generateCompressedModules()
 
 export const encodeUrl = source => {
   const value = removeNoCode(source)
