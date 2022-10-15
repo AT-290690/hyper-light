@@ -28,17 +28,11 @@ export const encodeUrl = source => {
     )
   if (count > 0) result += "'" + count
 
-  for (const { full, short } of shortModules) {
-    if (result.includes(full + '[')) {
-      result = result.replaceAll(full + '[', short + '[')
-    }
-    if (result.includes('[' + full + ']')) {
-      result = result.replaceAll('[' + full + ']', '[' + short + ']')
-    }
-    if (result.includes(`"${full}"`)) {
-      result = result.replaceAll(`"${full}"`, `"${short}"`)
-    }
-  }
+  for (const { full, short } of shortModules)
+    result = result
+      .replaceAll(full + '[', short + '[')
+      .replaceAll('[' + full + ']', '[' + short + ']')
+      .replaceAll(`"${full}"`, `"${short}"`)
   const encoded = LZUTF8.compress(result.trim(), {
     outputEncoding: 'Base64',
   })
@@ -56,17 +50,11 @@ export const decodeUrl = url => {
     (acc, m) => acc.split(m).join(']'.repeat(parseInt(m.substring(1)))),
     value
   )
-  for (const { full, short } of shortModules) {
-    if (result.includes(short + '[')) {
-      result = result.replaceAll(short + '[', full + '[')
-    }
-    if (result.includes('[' + short + ']')) {
-      result = result.replaceAll('[' + short + ']', '[' + full + ']')
-    }
-    if (result.includes(`"${short}"`)) {
-      result = result.replaceAll(`"${short}"`, `"${full}"`)
-    }
-  }
+  for (const { full, short } of shortModules)
+    result = result
+      .replaceAll(short + '[', full + '[')
+      .replaceAll('[' + short + ']', '[' + full + ']')
+      .replaceAll(`"${short}"`, `"${full}"`)
 
   return result
 }
