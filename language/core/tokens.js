@@ -219,7 +219,7 @@ const tokens = {
       const arg = args[i]
       prop.push(extract(arg, env)?.toString() ?? VOID)
     }
-    if (args[0].type === 'apply') {
+    if (args[0].type === 'apply' || args[0].type === 'value') {
       env['0_annonymous'] = evaluate(args[0], env)
       return tokens['.']([{ name: '0_annonymous', type: 'word' }, args[1]], env)
     }

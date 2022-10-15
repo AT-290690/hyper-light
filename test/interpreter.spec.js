@@ -145,4 +145,8 @@ describe('run should work as expected', () => {
     `)
     ).toBe(28)
   })
+
+  it('length of string', () => {
+    expect(runFromText(`. ["01010"; "length"];`)).toBe(5)
+  })
 })
