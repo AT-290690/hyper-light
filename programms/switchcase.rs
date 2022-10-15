@@ -1,4 +1,4 @@
-<- ["CONSOLE"] [LIBRARY];
+<- ["CONSOLE"] [LIB];
 <- ["consolelog"] [CONSOLE];
 
 := [matcher; "meaning of life"];

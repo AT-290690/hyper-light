@@ -1,4 +1,4 @@
-<- ["SKETCH"; "MATH"] [LIBRARY];
+<- ["SKETCH"; "MATH"] [LIB];
 <- ["make scene"; "width"; "height"; "set rotation"; "set position";
     "set fill"; "no fill"; "set stroke"; "set line width"; "no fill"; "close path";
     "update"; "make rectangle"; "background"; "set scale"; "PATH";

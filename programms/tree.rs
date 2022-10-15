@@ -1,4 +1,4 @@
-<- ["MATH"; "SKETCH"] [LIBRARY];
+<- ["MATH"; "SKETCH"] [LIB];
 <- ["background"; "makescene"; "makeline"; "update"; "width"; "height"] [SKETCH];
 <- ["sin"; "cos"; "PI"] [MATH];
 

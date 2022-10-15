@@ -107,48 +107,48 @@ export const handleHangingSemi = source => {
 }
 
 export const treeShake = modules => {
-  let LIB = ''
-  const dfs = (modules, LIB, LIBRARY) => {
+  let lib = ''
+  const dfs = (modules, lib, LIB) => {
     for (const key in modules) {
-      if (key !== 'LIBRARY' && modules[key] !== undefined) {
-        LIB += '["' + key + '"]:{'
+      if (key !== 'LIB' && modules[key] !== undefined) {
+        lib += '["' + key + '"]:{'
         for (const method of modules[key]) {
-          if (LIBRARY[key]) {
-            const current = LIBRARY[key][method]
+          if (LIB[key]) {
+            const current = LIB[key][method]
             if (current) {
               if (typeof current === 'object') {
-                LIB += dfs({ [method]: modules[method] }, '', LIBRARY[key])
+                lib += dfs({ [method]: modules[method] }, '', LIB[key])
               } else {
-                LIB += '["' + method + '"]:'
-                LIB += current.toString()
-                LIB += ','
+                lib += '["' + method + '"]:'
+                lib += current.toString()
+                lib += ','
               }
             }
           }
         }
-        LIB += '},'
+        lib += '},'
       }
     }
-    return LIB
+    return lib
   }
-  LIB += 'const LIBRARY = {' + dfs(modules, LIB, STD.LIBRARY) + '}'
-  return LIB
+  lib += 'const LIB = {' + dfs(modules, lib, STD.LIB) + '}'
+  return lib
 }
 
 export const compileModule = source => {
   const inlined = wrapInBody(removeNoCode(source))
   const { body, modules } = compileToJs(parse(inlined))
-  const LIB = treeShake(modules)
+  const lib = treeShake(modules)
   return `const VOID = null;
 ${languageUtilsString}
-${LIB}
+${lib}
 ${body}`
 }
 
 export const compileHtml = (source, scripts = '') => {
   const inlined = wrapInBody(removeNoCode(source))
   const { body, modules } = compileToJs(parse(inlined))
-  const LIB = treeShake(modules)
+  const lib = treeShake(modules)
   return `
 <style>body { background: black } </style><body>
 ${scripts}
@@ -156,7 +156,7 @@ ${scripts}
 const VOID = null;
 ${languageUtilsString}
 </script>
-<script>${LIB}</script>
+<script>${lib}</script>
 <script> (() => { ${body} })()</script>
 </body>`
 }
@@ -211,17 +211,18 @@ export const generateCompressedModules = (
   ]
 ) => {
   abc = [...abc, ...abc.map(x => x.toUpperCase())]
-  const { NAME, ...LIB } = STD.LIBRARY
+  const { NAME, ...lib } = STD.LIB
   const modules = []
-  const dfs = (LIB, modules) => {
-    for (const module in LIB) {
-      for (const m in LIB[module]) {
-        if (LIB[module][m].NAME) dfs(LIB[module][m], modules)
+  const dfs = (lib, modules) => {
+    for (const module in lib) {
+      modules.push(module)
+      for (const m in lib[module]) {
+        if (lib[module][m].NAME) dfs(lib[module][m], modules)
         if (m !== 'NAME' && m.length > 2) modules.push(m)
       }
     }
   }
-  dfs(LIB, modules)
+  dfs(lib, modules)
   let index = 0
   let count = 0
   return modules

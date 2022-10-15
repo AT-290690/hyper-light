@@ -1,4 +1,4 @@
-<- ["DOM"; "COLOR"; "DATE"; "STYLE"; "EVENT"; "CONVERT"; "STRING"; "ARRAY"; "CONSOLE"] [LIBRARY];
+<- ["DOM"; "COLOR"; "DATE"; "STYLE"; "EVENT"; "CONVERT"; "STRING"; "ARRAY"; "CONSOLE"] [LIB];
 <- ["makeuserinterface"; "makecontainer"; "makebutton"; "insertintocontainer"; 
 "makelabel"; "removeselffromcontainer"; "makeinput"; 
 "makespan"; "setstyle"; "makeparagraph"; "getbody"; "setattribute";
@@ -80,15 +80,15 @@ set style [get body []; "font-family: Courier New"];
                   for of [array [get elements by class name ["todo"]]; 
                   -> [element;  display show [get parent node [element]]]]]]]]]]]];
     |> [make button [];
-      | make label ["+"];
-      | set style ["
-        margin-left: 10px;
-        border-radius: 50px;
-        color: white;
-        background: transparent;
-        cursor: pointer;
-        border: solid 1px white;
-      "];
+        | make label ["+"];
+        | set style ["
+          margin-left: 10px;
+          border-radius: 50px;
+          color: white;
+          background: transparent;
+          cursor: pointer;
+          border: solid 1px white;
+        "];
       | on mouse click [-> [
         ? [. [todo input; "value"]; .. [
         insert into container [main; 

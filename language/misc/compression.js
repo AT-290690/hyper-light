@@ -32,11 +32,13 @@ export const encodeUrl = source => {
     if (result.includes(full + '[')) {
       result = result.replaceAll(full + '[', short + '[')
     }
+    if (result.includes('[' + full + ']')) {
+      result = result.replaceAll('[' + full + ']', '[' + short + ']')
+    }
     if (result.includes(`"${full}"`)) {
       result = result.replaceAll(`"${full}"`, `"${short}"`)
     }
   }
-
   const encoded = LZUTF8.compress(result.trim(), {
     outputEncoding: 'Base64',
   })
@@ -57,6 +59,9 @@ export const decodeUrl = url => {
   for (const { full, short } of shortModules) {
     if (result.includes(short + '[')) {
       result = result.replaceAll(short + '[', full + '[')
+    }
+    if (result.includes('[' + short + ']')) {
+      result = result.replaceAll('[' + short + ']', '[' + full + ']')
     }
     if (result.includes(`"${short}"`)) {
       result = result.replaceAll(`"${short}"`, `"${full}"`)

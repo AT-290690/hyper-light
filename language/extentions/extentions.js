@@ -10,13 +10,17 @@ export const protolessModule = methods => {
   return env
 }
 
-const LIBRARY = {
-  NAME: 'LIBRARY',
+const LIB = {
+  NAME: 'LIB',
   DATE: {
     NAME: 'DATE',
     formattolocal: (date, format) => date.toLocaleDateString(format),
     makenewdate: () => new Date(),
     makedate: date => new Date(date),
+    gethours: date => date.getHours(),
+    getminutes: date => date.getMinutes(),
+    getseconds: date => date.getSeconds(),
+    gettime: date => date.getTime(),
   },
   COLOR: {
     NAME: 'COLOR',
@@ -59,12 +63,12 @@ const LIBRARY = {
     PATH: {
       NAME: 'PATH',
       pathfrom: points => {
-        const path = LIBRARY.SKETCH.engine.makePath(...points)
+        const path = LIB.SKETCH.engine.makePath(...points)
         path.closed = false
         return path
       },
       makepath: (...points) => {
-        const path = LIBRARY.SKETCH.engine.makePath(...points)
+        const path = LIB.SKETCH.engine.makePath(...points)
         path.closed = false
         return path
       },
@@ -106,22 +110,20 @@ const LIBRARY = {
       rotate: (vec, angle) => vec.rotate(angle),
     },
     background: (color = 'var(--background-primary)') =>
-      (LIBRARY.SKETCH.CANVAS_CONTAINER.firstChild.style.background = color),
+      (LIB.SKETCH.CANVAS_CONTAINER.firstChild.style.background = color),
     requestanimationframe: fn => (animation = requestAnimationFrame(fn)),
     destroycomposition: () => {
-      LIBRARY.SKETCH.CANVAS_CONTAINER.style.background =
-        'var(--background-primary)'
-      LIBRARY.SKETCH.CANVAS_CONTAINER.innerHTML = ''
-      LIBRARY.SKETCH.engine?.removeEventListener('update')
+      LIB.SKETCH.CANVAS_CONTAINER.style.background = 'var(--background-primary)'
+      LIB.SKETCH.CANVAS_CONTAINER.innerHTML = ''
+      LIB.SKETCH.engine?.removeEventListener('update')
     },
     makescene: (width = 100, height = 100, callback) => {
-      LIBRARY.SKETCH.engine?.removeEventListener('update')
-      LIBRARY.SKETCH.CANVAS_CONTAINER =
-        document.getElementById('canvas-container')
-      LIBRARY.SKETCH.engine = new Two({
+      LIB.SKETCH.engine?.removeEventListener('update')
+      LIB.SKETCH.CANVAS_CONTAINER = document.getElementById('canvas-container')
+      LIB.SKETCH.engine = new Two({
         width,
         height,
-      }).appendTo(LIBRARY.SKETCH.CANVAS_CONTAINER)
+      }).appendTo(LIB.SKETCH.CANVAS_CONTAINER)
       callback()
       return 'Scene created!'
     },
@@ -135,7 +137,7 @@ const LIBRARY = {
     },
     removefromgroup: item => {
       item.parent.remove(item)
-      LIBRARY.SKETCH.engine.add(item)
+      LIB.SKETCH.engine.add(item)
       return item
     },
     removefromscene: item => {
@@ -144,59 +146,58 @@ const LIBRARY = {
     },
     groupadditions: group => group.additions,
     groupchildren: group => group.children,
-    width: (ratio = 1) => LIBRARY.SKETCH.engine.width * ratio,
-    height: (ratio = 1) => LIBRARY.SKETCH.engine.height * ratio,
-    add: (...elements) => LIBRARY.SKETCH.engine.add(...elements),
-    clear: () => LIBRARY.SKETCH.engine.clear(),
-    ignore: (...args) => LIBRARY.SKETCH.engine.ignore(...args),
+    width: (ratio = 1) => LIB.SKETCH.engine.width * ratio,
+    height: (ratio = 1) => LIB.SKETCH.engine.height * ratio,
+    add: (...elements) => LIB.SKETCH.engine.add(...elements),
+    clear: () => LIB.SKETCH.engine.clear(),
+    ignore: (...args) => LIB.SKETCH.engine.ignore(...args),
     interpret: index =>
-      LIBRARY.SKETCH.engine.interpret(document.getElementById(index)),
-    listen: (...args) => LIBRARY.SKETCH.engine.listen(...args),
-    load: (...args) => LIBRARY.SKETCH.engine.load(...args),
-    makearcsegment: (...args) => LIBRARY.SKETCH.engine.makeArcSegment(...args),
-    makearrow: (...args) => LIBRARY.SKETCH.engine.makeArrow(...args),
-    makecircle: (x, y, r) => LIBRARY.SKETCH.engine.makeCircle(x, y, r),
-    makecurve: (...points) => LIBRARY.SKETCH.engine.makeCurve(...points),
-    makeellipse: (...args) => LIBRARY.SKETCH.engine.makeEllipse(...args),
-    makegroup: (...args) => LIBRARY.SKETCH.engine.makeGroup(...args),
+      LIB.SKETCH.engine.interpret(document.getElementById(index)),
+    listen: (...args) => LIB.SKETCH.engine.listen(...args),
+    load: (...args) => LIB.SKETCH.engine.load(...args),
+    makearcsegment: (...args) => LIB.SKETCH.engine.makeArcSegment(...args),
+    makearrow: (...args) => LIB.SKETCH.engine.makeArrow(...args),
+    makecircle: (x, y, r) => LIB.SKETCH.engine.makeCircle(x, y, r),
+    makecurve: (...points) => LIB.SKETCH.engine.makeCurve(...points),
+    makeellipse: (...args) => LIB.SKETCH.engine.makeEllipse(...args),
+    makegroup: (...args) => LIB.SKETCH.engine.makeGroup(...args),
     makeimagesequence: (...args) =>
-      LIBRARY.SKETCH.engine.makeImageSequence(...args),
+      LIB.SKETCH.engine.makeImageSequence(...args),
     makeline: (x1, y1, x2, y2, color = 'white') => {
-      const line = LIBRARY.SKETCH.engine.makeLine(x1, y1, x2, y2)
+      const line = LIB.SKETCH.engine.makeLine(x1, y1, x2, y2)
       line.stroke = color
       return line
     },
     makelineargradient: (...args) =>
-      LIBRARY.SKETCH.engine.makeLinearGradient(...args),
-    makepath: (...args) => LIBRARY.SKETCH.engine.makePath(...args),
-    makepoints: (...args) => LIBRARY.SKETCH.engine.makePoints(...args),
-    makepolygon: (...args) => LIBRARY.SKETCH.engine.makePolygon(...args),
+      LIB.SKETCH.engine.makeLinearGradient(...args),
+    makepath: (...args) => LIB.SKETCH.engine.makePath(...args),
+    makepoints: (...args) => LIB.SKETCH.engine.makePoints(...args),
+    makepolygon: (...args) => LIB.SKETCH.engine.makePolygon(...args),
     makeradialgradient: (...args) =>
-      LIBRARY.SKETCH.engine.makeRadialGradient(...args),
-    makerectangle: (x, y, w, h) =>
-      LIBRARY.SKETCH.engine.makeRectangle(x, y, w, h),
+      LIB.SKETCH.engine.makeRadialGradient(...args),
+    makerectangle: (x, y, w, h) => LIB.SKETCH.engine.makeRectangle(x, y, w, h),
     makeroundedrectangle: (...args) =>
-      LIBRARY.SKETCH.engine.makeRoundedRectangle(...args),
-    makesprite: (...args) => LIBRARY.SKETCH.engine.makeSprite(...args),
-    makestar: (...args) => LIBRARY.SKETCH.engine.makeStar(...args),
-    maketext: (...args) => LIBRARY.SKETCH.engine.makeText(...args),
-    maketexture: (...args) => LIBRARY.SKETCH.engine.makeTexture(...args),
-    on: (...args) => LIBRARY.SKETCH.engine.on(...args),
-    off: (...args) => LIBRARY.SKETCH.engine.off(...args),
+      LIB.SKETCH.engine.makeRoundedRectangle(...args),
+    makesprite: (...args) => LIB.SKETCH.engine.makeSprite(...args),
+    makestar: (...args) => LIB.SKETCH.engine.makeStar(...args),
+    maketext: (...args) => LIB.SKETCH.engine.makeText(...args),
+    maketexture: (...args) => LIB.SKETCH.engine.makeTexture(...args),
+    on: (...args) => LIB.SKETCH.engine.on(...args),
+    off: (...args) => LIB.SKETCH.engine.off(...args),
     pause: (...args) => {
-      LIBRARY.SKETCH.engine.pause(...args)
+      LIB.SKETCH.engine.pause(...args)
       return 'Paused!'
     },
     play: (...args) => {
-      LIBRARY.SKETCH.engine.play(...args)
+      LIB.SKETCH.engine.play(...args)
       return 'Playing!'
     },
-    release: (...args) => LIBRARY.SKETCH.engine.release(...args),
-    remove: (...args) => LIBRARY.SKETCH.engine.remove(...args),
-    setplaying: (...args) => LIBRARY.SKETCH.engine.setPlaying(...args),
-    trigger: (...args) => LIBRARY.SKETCH.engine.trigger(...args),
+    release: (...args) => LIB.SKETCH.engine.release(...args),
+    remove: (...args) => LIB.SKETCH.engine.remove(...args),
+    setplaying: (...args) => LIB.SKETCH.engine.setPlaying(...args),
+    trigger: (...args) => LIB.SKETCH.engine.trigger(...args),
     update: (...args) => {
-      LIBRARY.SKETCH.engine.update(...args)
+      LIB.SKETCH.engine.update(...args)
       return 'Updated!'
     },
     nofill: entity => {
@@ -209,16 +210,16 @@ const LIBRARY = {
     },
     draw: (lifespan, callback) => {
       if (callback && typeof callback === 'function') {
-        LIBRARY.SKETCH.engine.bind('update', callback)
+        LIB.SKETCH.engine.bind('update', callback)
         setTimeout(() => {
-          LIBRARY.SKETCH.engine.unbind('update', callback)
-          LIBRARY.SKETCH.engine.removeEventListener('update')
+          LIB.SKETCH.engine.unbind('update', callback)
+          LIB.SKETCH.engine.removeEventListener('update')
         }, 1000 * lifespan)
       }
     },
 
     setscreensize: (w, h, showBorder = true) => {
-      const svg = LIBRARY.SKETCH.CANVAS_CONTAINER.firstChild
+      const svg = LIB.SKETCH.CANVAS_CONTAINER.firstChild
       svg.setAttribute('width', w)
       svg.setAttribute('height', h)
       if (showBorder) svg.style.border = '1px solid lime'
@@ -423,15 +424,13 @@ const LIBRARY = {
         if (isArrayA !== isArrayB) return 0
         if (isArrayA && isArrayB) {
           if (a.length !== b.length) return 0
-          return +a.every((item, index) =>
-            LIBRARY.LOGIC.isequal(item, b[index])
-          )
+          return +a.every((item, index) => LIB.LOGIC.isequal(item, b[index]))
         } else {
           if (a === undefined || a === null || b === undefined || b === null)
             return +(a === b)
           if (Object.keys(a).length !== Object.keys(b).length) return 0
           for (const key in a) {
-            if (!LIBRARY.LOGIC.isequal(a[key], b[key])) {
+            if (!LIB.LOGIC.isequal(a[key], b[key])) {
               return 0
             }
           }
@@ -452,14 +451,14 @@ const LIBRARY = {
         if (isArrayA !== isArrayB) return 0
         if (isArrayA && isArrayB) {
           return a.length < b.length
-            ? +a.every((item, index) => LIBRARY.LOGIC.issimilar(item, b[index]))
-            : +b.every((item, index) => LIBRARY.LOGIC.issimilar(item, a[index]))
+            ? +a.every((item, index) => LIB.LOGIC.issimilar(item, b[index]))
+            : +b.every((item, index) => LIB.LOGIC.issimilar(item, a[index]))
         } else {
           if (a === undefined || a === null || b === undefined || b === null)
             return +(a === b)
           const less = Object.keys(a) > Object.keys(b) ? b : a
           for (const key in less) {
-            if (!LIBRARY.LOGIC.issimilar(a[key], b[key])) {
+            if (!LIB.LOGIC.issimilar(a[key], b[key])) {
               return 0
             }
           }
@@ -480,7 +479,7 @@ const LIBRARY = {
     invert: val => +!val,
     ishaving: (obj, ...props) => +props.every(x => x in obj),
     areequal: (item, ...args) =>
-      +args.every(current => LIBRARY.LOGIC.isequal(item, current)),
+      +args.every(current => LIB.LOGIC.isequal(item, current)),
   },
   LOOP: {
     NAME: 'LOOP',
@@ -614,7 +613,7 @@ const LIBRARY = {
         const dim = dimensions[0]
         const rest = dimensions.slice(1)
         const arr = []
-        for (let i = 0; i < dim; ++i) arr[i] = LIBRARY.ARRAY.makematrix(...rest)
+        for (let i = 0; i < dim; ++i) arr[i] = LIB.ARRAY.makematrix(...rest)
         return arr
       } else return VOID
     },
@@ -714,182 +713,181 @@ const LIBRARY = {
     offsetleft: entity => (entity.left.length - 1) * -1,
     offsetright: entity => entity.right.length,
     negativeZero: Symbol('-0'),
-    makebinar: () => ({ left: [LIBRARY.BINAR.negativeZero], right: [] }),
+    makebinar: () => ({ left: [LIB.BINAR.negativeZero], right: [] }),
     length: entity => entity.left.length + entity.right.length - 1,
     clear: entity => {
-      entity.left = [LIBRARY.BINAR.negativeZero]
+      entity.left = [LIB.BINAR.negativeZero]
       entity.right = []
       return entity
     },
-    zeroes: size => LIBRARY.BINAR.from(new Array(size).fill(0)),
-    ones: size => LIBRARY.BINAR.from(new Array(size).fill(1)),
+    zeroes: size => LIB.BINAR.from(new Array(size).fill(0)),
+    ones: size => LIB.BINAR.from(new Array(size).fill(1)),
     flatten: (collection, levels, flat) =>
-      LIBRARY.BINAR.to(
+      LIB.BINAR.to(
         collection,
         (acc, current) => {
-          if (LIBRARY.BINAR.isbinar(current))
-            acc.push(...LIBRARY.BINAR.toarray(flat(current, levels)))
+          if (LIB.BINAR.isbinar(current))
+            acc.push(...LIB.BINAR.toarray(flat(current, levels)))
           else acc.push(current)
           return acc
         },
         []
       ),
     get: (entity, offset) => {
-      const offsetIndex = offset + LIBRARY.BINAR.offsetleft(entity)
+      const offsetIndex = offset + LIB.BINAR.offsetleft(entity)
       const index = offsetIndex < 0 ? offsetIndex * -1 : offsetIndex
       return offsetIndex >= 0 ? entity.right[index] : entity.left[index]
     },
     at: (entity, index) => {
       if (index < 0)
-        return LIBRARY.BINAR.get(entity, LIBRARY.BINAR.length(entity) + index)
-      else return LIBRARY.BINAR.get(entity, index)
+        return LIB.BINAR.get(entity, LIB.BINAR.length(entity) + index)
+      else return LIB.BINAR.get(entity, index)
     },
     set: (entity, index, value) => {
-      const offset = index + LIBRARY.BINAR.offsetleft(entity)
+      const offset = index + LIB.BINAR.offsetleft(entity)
       if (offset >= 0) entity.right[offset] = value
       else entity.left[offset * -1] = value
     },
-    first: entity => LIBRARY.BINAR.get(entity, 0),
-    last: entity => LIBRARY.BINAR.get(entity, LIBRARY.BINAR.length(entity) - 1),
+    first: entity => LIB.BINAR.get(entity, 0),
+    last: entity => LIB.BINAR.get(entity, LIB.BINAR.length(entity) - 1),
     toarray: entity => {
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       const out = []
-      for (let i = 0; i < len; ++i) out.push(LIBRARY.BINAR.get(entity, i))
+      for (let i = 0; i < len; ++i) out.push(LIB.BINAR.get(entity, i))
       return out
     },
     copy: entity => {
-      const lem = LIBRARY.BINAR.length(entity)
-      const out = LIBRARY.BINAR.makebinar()
+      const lem = LIB.BINAR.length(entity)
+      const out = LIB.BINAR.makebinar()
       const half = (lem / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
-        LIBRARY.BINAR.addtoleft(out, LIBRARY.BINAR.get(entity, i))
+        LIB.BINAR.addtoleft(out, LIB.BINAR.get(entity, i))
       for (let i = half; i < lem; ++i)
-        LIBRARY.BINAR.addtoright(out, LIBRARY.BINAR.get(entity, i))
+        LIB.BINAR.addtoright(out, LIB.BINAR.get(entity, i))
       return out
     },
     isbinar: entity =>
       typeof entity === 'object' &&
       'left' in entity &&
-      entity.left[0] === LIBRARY.BINAR.negativeZero,
+      entity.left[0] === LIB.BINAR.negativeZero,
     isbalanced: entity =>
-      LIBRARY.BINAR.offsetright(entity) + LIBRARY.BINAR.offsetleft(entity) ===
-      0,
+      LIB.BINAR.offsetright(entity) + LIB.BINAR.offsetleft(entity) === 0,
     balance: entity => {
-      if (LIBRARY.BINAR.isbalanced(entity)) return entity
-      const initial = LIBRARY.BINAR.toarray(entity)
-      LIBRARY.BINAR.clear(entity)
+      if (LIB.BINAR.isbalanced(entity)) return entity
+      const initial = LIB.BINAR.toarray(entity)
+      LIB.BINAR.clear(entity)
       const half = (initial.length / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
-        LIBRARY.BINAR.addtoleft(entity, initial[i])
+        LIB.BINAR.addtoleft(entity, initial[i])
       for (let i = half; i < initial.length; ++i)
-        LIBRARY.BINAR.addtoright(entity, initial[i])
+        LIB.BINAR.addtoright(entity, initial[i])
       return entity
     },
     addtoleft: (entity, item) => entity.left.push(item),
     addtoright: (entity, item) => entity.right.push(item),
     removefromleft: entity => {
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       if (len) {
-        if (len === 1) LIBRARY.BINAR.clear(entity)
+        if (len === 1) LIB.BINAR.clear(entity)
         else if (entity.left.length > 0) entity.left.length--
       }
     },
     removefromright: entity => {
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       if (len) {
-        if (len === 1) LIBRARY.BINAR.clear(entity)
+        if (len === 1) LIB.BINAR.clear(entity)
         else if (entity.right.length > 0) entity.right.length--
       }
     },
     fill: (entity, ...initial) => {
       const half = (initial.length / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
-        LIBRARY.BINAR.addtoleft(entity, initial[i])
+        LIB.BINAR.addtoleft(entity, initial[i])
       for (let i = half; i < initial.length; ++i)
-        LIBRARY.BINAR.addtoright(entity, initial[i])
+        LIB.BINAR.addtoright(entity, initial[i])
       return entity
     },
-    from: initial => LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...initial),
+    from: initial => LIB.BINAR.fill(LIB.BINAR.makebinar(), ...initial),
     makebinarwith: (...intilal) =>
-      LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...intilal),
+      LIB.BINAR.fill(LIB.BINAR.makebinar(), ...intilal),
     map: (entity, callback) => {
-      const result = LIBRARY.BINAR.makebinar()
-      const len = LIBRARY.BINAR.length(entity)
+      const result = LIB.BINAR.makebinar()
+      const len = LIB.BINAR.length(entity)
       const half = (len / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
-        LIBRARY.BINAR.addtoleft(
+        LIB.BINAR.addtoleft(
           result,
-          callback(LIBRARY.BINAR.get(entity, i), i, entity)
+          callback(LIB.BINAR.get(entity, i), i, entity)
         )
       for (let i = half; i < len; ++i)
-        LIBRARY.BINAR.addtoright(
+        LIB.BINAR.addtoright(
           result,
-          callback(LIBRARY.BINAR.get(entity, i), i, entity)
+          callback(LIB.BINAR.get(entity, i), i, entity)
         )
       return result
     },
     filter: (entity, callback) => {
       const out = []
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       for (let i = 0; i < len; ++i) {
-        const current = LIBRARY.BINAR.get(entity, i)
+        const current = LIB.BINAR.get(entity, i)
         const predicat = callback(current, i, entity)
         if (predicat) out.push(current)
       }
-      return LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...out)
+      return LIB.BINAR.fill(LIB.BINAR.makebinar(), ...out)
     },
     some: (entity, callback) => {
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       for (let i = 0; i < len; i += 1)
-        if (callback(LIBRARY.BINAR.get(entity, i), i, entity)) return true
+        if (callback(LIB.BINAR.get(entity, i), i, entity)) return true
       return false
     },
     every: (entity, callback) => {
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       for (let i = 0; i < len; i += 1)
         if (
-          i >= LIBRARY.BINAR.length(entity) ||
-          !callback(LIBRARY.BINAR.get(entity, i), i, entity)
+          i >= LIB.BINAR.length(entity) ||
+          !callback(LIB.BINAR.get(entity, i), i, entity)
         )
           return false
       return true
     },
     findfirst: (entity, callback) => {
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       for (let i = 0; i < len; i += 1) {
-        const current = LIBRARY.BINAR.get(entity, i)
+        const current = LIB.BINAR.get(entity, i)
         if (callback(current, i, entity)) return current
       }
     },
     findlast: (entity, callback) => {
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       for (let i = len - 1; i >= 0; i -= 1) {
-        const current = LIBRARY.BINAR.get(entity, i)
+        const current = LIB.BINAR.get(entity, i)
         if (callback(current, i, entity)) return current
       }
     },
     scan: (entity, callback, dir = 1) => {
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       if (dir === -1)
         for (let i = len; i >= 0; i -= 1)
-          callback(LIBRARY.BINAR.get(entity, i), i, entity)
+          callback(LIB.BINAR.get(entity, i), i, entity)
       else
         for (let i = 0; i < len; i += 1)
-          callback(LIBRARY.BINAR.get(entity, i), i, entity)
+          callback(LIB.BINAR.get(entity, i), i, entity)
       return entity
     },
     each: (entity, callback) => {
-      const len = LIBRARY.BINAR.length(entity)
-      for (let i = 0; i < len; i += 1) callback(LIBRARY.BINAR.get(entity, i))
+      const len = LIB.BINAR.length(entity)
+      for (let i = 0; i < len; i += 1) callback(LIB.BINAR.get(entity, i))
       return entity
     },
     reverse: entity => {
-      const len = LIBRARY.BINAR.length(entity)
+      const len = LIB.BINAR.length(entity)
       if (len <= 2) {
         if (len === 1) return entity
-        const temp = LIBRARY.BINAR.get(entity, 0)
-        LIBRARY.BINAR.set(entity, 0, LIBRARY.BINAR.get(entity, 1))
-        LIBRARY.BINAR.set(entity, 1, temp)
+        const temp = LIB.BINAR.get(entity, 0)
+        LIB.BINAR.set(entity, 0, LIB.BINAR.get(entity, 1))
+        LIB.BINAR.set(entity, 1, temp)
         return entity
       }
       const left = entity.left
@@ -902,156 +900,151 @@ const LIBRARY = {
     isempty: entity => (entity.left.length + entity.right.length === 1 ? 1 : 0),
     isinbounds: (entity, index) => index >= 0 && index < entity.length,
     getinbounds: (entity, index) =>
-      LIBRARY.BINAR.get(
+      LIB.BINAR.get(
         entity,
-        LIBRARY.MATH.clamp(index, 0, LIBRARY.BINAR.length(entity) - 1)
+        LIB.MATH.clamp(index, 0, LIB.BINAR.length(entity) - 1)
       ),
     append: (entity, item) => {
-      LIBRARY.BINAR.addtoright(entity, item)
+      LIB.BINAR.addtoright(entity, item)
       return entity
     },
     prepend: (entity, item) => {
-      LIBRARY.BINAR.addtoleft(entity, item)
+      LIB.BINAR.addtoleft(entity, item)
       return entity
     },
     cut: entity => {
-      if (LIBRARY.BINAR.offsetright(entity) === 0) LIBRARY.BINAR.balance(entity)
-      const out = LIBRARY.BINAR.last(entity)
-      LIBRARY.BINAR.removefromright(entity)
+      if (LIB.BINAR.offsetright(entity) === 0) LIB.BINAR.balance(entity)
+      const out = LIB.BINAR.last(entity)
+      LIB.BINAR.removefromright(entity)
       return out
     },
     chop: entity => {
-      if (LIBRARY.BINAR.offsetleft(entity) === 0) LIBRARY.BINAR.balance(entity)
-      const out = LIBRARY.BINAR.first(entity)
-      LIBRARY.BINAR.removefromleft(entity)
+      if (LIB.BINAR.offsetleft(entity) === 0) LIB.BINAR.balance(entity)
+      const out = LIB.BINAR.first(entity)
+      LIB.BINAR.removefromleft(entity)
       return out
     },
     head: entity => {
-      if (LIBRARY.BINAR.offsetright(entity) === 0) LIBRARY.BINAR.balance(entity)
-      LIBRARY.BINAR.removefromright(entity)
+      if (LIB.BINAR.offsetright(entity) === 0) LIB.BINAR.balance(entity)
+      LIB.BINAR.removefromright(entity)
       return entity
     },
     tail: entity => {
-      if (LIBRARY.BINAR.offsetleft(entity) === 0) LIBRARY.BINAR.balance(entity)
-      LIBRARY.BINAR.removefromleft(entity)
+      if (LIB.BINAR.offsetleft(entity) === 0) LIB.BINAR.balance(entity)
+      LIB.BINAR.removefromleft(entity)
       return entity
     },
     to: (entity, callback, initial) => {
-      initial = initial ?? LIBRARY.BINAR.makebinar()
-      const len = LIBRARY.BINAR.length(entity)
+      initial = initial ?? LIB.BINAR.makebinar()
+      const len = LIB.BINAR.length(entity)
       for (let i = 0; i < len; i += 1)
-        initial = callback(initial, LIBRARY.BINAR.get(entity, i), i, entity)
+        initial = callback(initial, LIB.BINAR.get(entity, i), i, entity)
       return initial
     },
     rotateleft: (entity, n = 1) => {
-      n = n % LIBRARY.BINAR.length(entity)
+      n = n % LIB.BINAR.length(entity)
       for (let i = 0; i < n; i += 1) {
-        if (LIBRARY.BINAR.offsetleft(entity) === 0)
-          LIBRARY.BINAR.balance(entity)
-        LIBRARY.BINAR.addtoright(entity, LIBRARY.BINAR.first(entity))
-        LIBRARY.BINAR.removefromleft(entity)
+        if (LIB.BINAR.offsetleft(entity) === 0) LIB.BINAR.balance(entity)
+        LIB.BINAR.addtoright(entity, LIB.BINAR.first(entity))
+        LIB.BINAR.removefromleft(entity)
       }
       return entity
     },
     rotateright: (entity, n = 1) => {
-      n = n % LIBRARY.BINAR.length(entity)
+      n = n % LIB.BINAR.length(entity)
       for (let i = 0; i < n; i += 1) {
-        if (LIBRARY.BINAR.offsetright(entity) === 0)
-          LIBRARY.BINAR.balance(entity)
-        LIBRARY.BINAR.addtoleft(entity, LIBRARY.BINAR.last(entity))
-        LIBRARY.BINAR.removefromright(entity)
+        if (LIB.BINAR.offsetright(entity) === 0) LIB.BINAR.balance(entity)
+        LIB.BINAR.addtoleft(entity, LIB.BINAR.last(entity))
+        LIB.BINAR.removefromright(entity)
       }
       return entity
     },
     rotate: (entity, n = 1, direction = 1) => {
       return direction === 1
-        ? LIBRARY.BINAR.rotateright(entity, n)
-        : LIBRARY.BINAR.rotateleft(entity, n)
+        ? LIB.BINAR.rotateright(entity, n)
+        : LIB.BINAR.rotateleft(entity, n)
     },
     flat: (entity, levels = 1) => {
       const flat =
         levels === Infinity
-          ? collection => LIBRARY.BINAR.flatten(collection, levels, flat)
+          ? collection => LIB.BINAR.flatten(collection, levels, flat)
           : (collection, levels) => {
               levels -= 1
               return levels === -1
                 ? collection
-                : LIBRARY.BINAR.flatten(collection, levels, flat)
+                : LIB.BINAR.flatten(collection, levels, flat)
             }
-      return LIBRARY.BINAR.fill(
-        LIBRARY.BINAR.makebinar(),
-        ...flat(entity, levels)
-      )
+      return LIB.BINAR.fill(LIB.BINAR.makebinar(), ...flat(entity, levels))
     },
     swap: (entity, i1, i2) => {
-      const temp = LIBRARY.BINAR.get(entity, i1)
-      LIBRARY.BINAR.set(entity, i1, LIBRARY.BINAR.get(entity, i2))
-      LIBRARY.BINAR.set(entity, i2, temp)
+      const temp = LIB.BINAR.get(entity, i1)
+      LIB.BINAR.set(entity, i1, LIB.BINAR.get(entity, i2))
+      LIB.BINAR.set(entity, i2, temp)
       return entity
     },
     swapremoveRight: (entity, index) => {
-      LIBRARY.BINAR.set(entity, index, LIBRARY.BINAR.cut(entity))
+      LIB.BINAR.set(entity, index, LIB.BINAR.cut(entity))
       return entity
     },
     swapremoveLeft: (entity, index) => {
-      LIBRARY.BINAR.set(entity, index, LIBRARY.BINAR.chop(entity))
+      LIB.BINAR.set(entity, index, LIB.BINAR.chop(entity))
       return entity
     },
-    compact: entity => LIBRARY.BINAR.filter(entity, Boolean),
+    compact: entity => LIB.BINAR.filter(entity, Boolean),
     union: (entity, b) => {
       const a = entity
-      const out = LIBRARY.BINAR.makebinar()
-      const A = new Set(LIBRARY.BINAR.toarray(a))
-      const B = new Set(LIBRARY.BINAR.toarray(b))
-      A.forEach(item => LIBRARY.BINAR.append(out, item))
-      B.forEach(item => LIBRARY.BINAR.append(out, item))
-      return LIBRARY.BINAR.balance(out)
+      const out = LIB.BINAR.makebinar()
+      const A = new Set(LIB.BINAR.toarray(a))
+      const B = new Set(LIB.BINAR.toarray(b))
+      A.forEach(item => LIB.BINAR.append(out, item))
+      B.forEach(item => LIB.BINAR.append(out, item))
+      return LIB.BINAR.balance(out)
     },
     symetricdifference: (entity, b) => {
       const a = entity
-      const out = LIBRARY.BINAR.makebinar()
-      const A = new Set(LIBRARY.BINAR.toarray(a))
-      const B = new Set(LIBRARY.BINAR.toarray(b))
-      B.forEach(item => !A.has(item) && LIBRARY.BINAR.append(out, item))
-      A.forEach(item => !B.has(item) && LIBRARY.BINAR.append(out, item))
-      return LIBRARY.BINAR.balance(out)
+      const out = LIB.BINAR.makebinar()
+      const A = new Set(LIB.BINAR.toarray(a))
+      const B = new Set(LIB.BINAR.toarray(b))
+      B.forEach(item => !A.has(item) && LIB.BINAR.append(out, item))
+      A.forEach(item => !B.has(item) && LIB.BINAR.append(out, item))
+      return LIB.BINAR.balance(out)
     },
     intersection: (entity, b) => {
       const a = entity
-      const out = LIBRARY.BINAR.makebinar()
-      const A = new Set(LIBRARY.BINAR.toarray(a))
-      const B = new Set(LIBRARY.BINAR.toarray(b))
-      B.forEach(item => A.has(item) && LIBRARY.BINAR.append(out, item))
-      return LIBRARY.BINAR.balance(out)
+      const out = LIB.BINAR.makebinar()
+      const A = new Set(LIB.BINAR.toarray(a))
+      const B = new Set(LIB.BINAR.toarray(b))
+      B.forEach(item => A.has(item) && LIB.BINAR.append(out, item))
+      return LIB.BINAR.balance(out)
     },
     difference: (entity, b) => {
       const a = entity
-      const out = LIBRARY.BINAR.makebinar()
-      const A = new Set(LIBRARY.BINAR.toarray(a))
-      const B = new Set(LIBRARY.BINAR.toarray(b))
-      A.forEach(item => !B.has(item) && LIBRARY.BINAR.append(out, item))
-      return LIBRARY.BINAR.balance(out)
+      const out = LIB.BINAR.makebinar()
+      const A = new Set(LIB.BINAR.toarray(a))
+      const B = new Set(LIB.BINAR.toarray(b))
+      A.forEach(item => !B.has(item) && LIB.BINAR.append(out, item))
+      return LIB.BINAR.balance(out)
     },
     partition: (entity, groups = 1) =>
-      LIBRARY.BINAR.balance(
-        LIBRARY.BINAR.to(entity, (acc, _, index, arr) => {
+      LIB.BINAR.balance(
+        LIB.BINAR.to(entity, (acc, _, index, arr) => {
           if (index % groups === 0) {
-            const part = LIBRARY.BINAR.makebinar()
+            const part = LIB.BINAR.makebinar()
             for (let i = 0; i < groups; i += 1) {
-              const current = LIBRARY.BINAR.get(arr, index + i)
-              if (current !== undefined) LIBRARY.BINAR.append(part, current)
+              const current = LIB.BINAR.get(arr, index + i)
+              if (current !== undefined) LIB.BINAR.append(part, current)
             }
-            LIBRARY.BINAR.balance(part)
-            LIBRARY.BINAR.append(acc, part)
+            LIB.BINAR.balance(part)
+            LIB.BINAR.append(acc, part)
           }
           return acc
         })
       ),
     unique: entity => {
       const set = new Set()
-      return LIBRARY.BINAR.fill(
-        LIBRARY.BINAR.makebinar(),
-        ...LIBRARY.BINAR.to(
+      return LIB.BINAR.fill(
+        LIB.BINAR.makebinar(),
+        ...LIB.BINAR.to(
           entity,
           (acc, item) => {
             if (!set.has(item)) {
@@ -1067,7 +1060,7 @@ const LIBRARY = {
     duplicates: entity => {
       const set = new Set()
       const extra = []
-      const out = LIBRARY.BINAR.to(
+      const out = LIB.BINAR.to(
         entity,
         (acc, item) => {
           set.has(item) ? acc.push(item) : set.add(item)
@@ -1081,7 +1074,7 @@ const LIBRARY = {
           extra.push(item)
         }
       })
-      return LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...out.concat(extra))
+      return LIB.BINAR.fill(LIB.BINAR.makebinar(), ...out.concat(extra))
     },
   },
   DOM: {
@@ -1098,7 +1091,7 @@ const LIBRARY = {
       // styles.textContent = ``
       // document.body.appendChild(styles)
       document.body.appendChild(div)
-      // LIBRARY.EVENTS.userInterface = div
+      // LIB.EVENTS.userInterface = div
     },
     makeinput: (width = '100px', height = '100px', settings) => {
       const element = document.createElement('input')
@@ -1268,5 +1261,5 @@ export const STD = {
       while (typeof result === 'function') result = result()
       return result
     },
-  LIBRARY,
+  LIB,
 }
