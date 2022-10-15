@@ -122,7 +122,6 @@ const tokens = {
     env[args[0].name] = value
     return value
   },
-
   ['->']: (args, env) => {
     if (!args.length) throw new SyntaxError('Functions need a body')
     const argNames = args.slice(0, args.length - 1).map(expr => {
@@ -220,36 +219,49 @@ const tokens = {
       prop.push(extract(arg, env)?.toString() ?? VOID)
     }
     if (args[0].type === 'apply' || args[0].type === 'value') {
-      env['0_annonymous'] = evaluate(args[0], env)
-      return tokens['.']([{ name: '0_annonymous', type: 'word' }, args[1]], env)
-    }
-    // if (args[0].type === 'apply') {
-    //   const caller = evaluate(args[0], env);
-    //   const fn = caller[evaluate(args[1], env)];
-    //   return fn.bind(caller);
-    // }
-    const entityName = args[0].name
-    for (let scope = env; scope; scope = Object.getPrototypeOf(scope))
-      if (Object.prototype.hasOwnProperty.call(scope, entityName)) {
-        if (prop.length === 1) {
-          const entityProperty = scope[entityName][prop[0]]
-          if (typeof entityProperty === 'function') {
-            const caller = scope[entityName]
-            const fn = entityProperty
-            return fn.bind(caller)
-          } else return entityProperty ?? VOID
-        } else {
-          let temp = scope[entityName]
-          const last = prop.pop()
-          prop.forEach(item => (temp = temp[item]))
-          const entityProperty = temp[last]
-          if (typeof entityProperty === 'function') {
-            const caller = temp
-            const fn = entityProperty
-            return fn.bind(caller)
-          } else return entityProperty ?? VOID
-        }
+      const entity = evaluate(args[0], env)
+      if (prop.length === 1) {
+        const entityProperty = entity[prop[0]]
+        if (typeof entityProperty === 'function') {
+          const caller = entity
+          const fn = entityProperty
+          return fn.bind(caller)
+        } else return entityProperty ?? VOID
+      } else {
+        let temp = entity
+        const last = prop.pop()
+        prop.forEach(item => (temp = temp[item]))
+        const entityProperty = temp[last]
+        if (typeof entityProperty === 'function') {
+          const caller = temp
+          const fn = entityProperty
+          return fn.bind(caller)
+        } else return entityProperty ?? VOID
       }
+    } else {
+      const entityName = args[0].name
+      for (let scope = env; scope; scope = Object.getPrototypeOf(scope))
+        if (Object.prototype.hasOwnProperty.call(scope, entityName)) {
+          if (prop.length === 1) {
+            const entityProperty = scope[entityName][prop[0]]
+            if (typeof entityProperty === 'function') {
+              const caller = scope[entityName]
+              const fn = entityProperty
+              return fn.bind(caller)
+            } else return entityProperty ?? VOID
+          } else {
+            let temp = scope[entityName]
+            const last = prop.pop()
+            prop.forEach(item => (temp = temp[item]))
+            const entityProperty = temp[last]
+            if (typeof entityProperty === 'function') {
+              const caller = temp
+              const fn = entityProperty
+              return fn.bind(caller)
+            } else return entityProperty ?? VOID
+          }
+        }
+    }
   },
   ['...']: (args, env) => {
     if (!args.length) throw new TypeError('Invalid number of arguments to ...')
