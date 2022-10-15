@@ -38,6 +38,9 @@
         if (result.includes(short + '[')) {
           result = result.replaceAll(short + '[', full + '[')
         }
+        if (result.includes('[' + short + ']')) {
+          result = result.replaceAll('[' + short + ']', '[' + full + ']')
+        }
         if (result.includes(`"${short}"`)) {
           result = result.replaceAll(`"${short}"`, `"${full}"`)
         }

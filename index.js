@@ -34,8 +34,9 @@ import { compileModule } from './language/misc/utils.js'
 //   './dist/rect2.html'
 // )
 // console.log(encodeUrl(':= [x; 10]; * [x; 2];'))
+console.log(encodeUrl(readFileSync('./programms/gol.rs', 'utf8')))
 
-//compile(readFileSync('./programms/todo.rs', 'utf8'), './dist/todo.html')
+// compile(readFileSync('./programms/todo.rs', 'utf8'), './dist/todo.html')
 // console.log(encodeUrl(readFileSync('./programms/gol.rs', 'utf8')))
 // compile(readFileSync('./programms/monster.rs', 'utf8'), './dist/monster.html', TWO_JS_HTML)
 // interpred(readFileSync('./programms/switchcase.rs', 'utf8'))
