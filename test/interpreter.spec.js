@@ -150,7 +150,7 @@ describe('run should work as expected', () => {
     expect(runFromText(`. ["01010"; "length"];`)).toBe(5)
   })
 
-  it('binar should work as expected', () => {
+  it('binar should work', () => {
     expect(
       runFromText(`<- ["BINAR"] [LIB];
     <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
@@ -159,5 +159,20 @@ describe('run should work as expected', () => {
        | map [-> [x; i; a; * [x; 254]]];
        | to array []]`)
     ).toEqual([254, 254, 254, 254, 254, 254, 254, 254, 254, 254])
+  })
+
+  it('* import should work', () => {
+    expect(
+      runFromText(`<- ["BINAR"; "MATH"] [LIB];
+    <- ["*"] [BINAR];
+    <- ["floor"] [MATH];
+    
+    |> [make binar [];
+        | fill [1.3; 3.4; 4.8];
+        | map [floor];
+        | to array []
+       ]
+    `)
+    ).toEqual([1, 3, 4])
   })
 })

@@ -306,12 +306,13 @@ const tokens = {
   ['<-']:
     (args, env) =>
     (exp, prefix = '') => {
-      //   prefix = prefix.replaceAll(' ', '')
-      args.forEach(arg => {
-        const method = arg.value
-        //.replaceAll(' ', '')
-        env[`${prefix}${method}`] = exp[method]
-      })
+      if (args[0].value === '*')
+        for (const method in exp) env[`${prefix}${method}`] = exp[method]
+      else
+        args.forEach(arg => {
+          const method = arg.value
+          env[`${prefix}${method}`] = exp[method]
+        })
       return VOID
     },
   ['|>']: (args, env) => {
