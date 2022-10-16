@@ -175,4 +175,27 @@ describe('run should work as expected', () => {
     `)
     ).toEqual([1, 3, 4])
   })
+
+  it('nested pipes should work', () => {
+    expect(
+      runFromText(`<- ["BINAR"; "MATH"] [UNIVERSE];
+      <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
+      <- ["cos"; "floor"] [MATH];
+      |> [10; 
+         | ones []; 
+         | map [-> [x; i; a; 
+                    |> [x; | * [
+                            |> [24; 
+                              | : [|> [i; 
+                                       | + [1];
+                                       | * [-1]]]; 
+                              | floor[]]];
+                          | + [12];
+                          | cos [];
+                          | * [100];
+                          | floor []
+                       ]]];
+         | to array []]`)
+    ).toEqual([84, 100, -66, 96, 75, -15, -15, -92, -92, -92])
+  })
 })

@@ -3,7 +3,6 @@
 <p align="center">
 <img  width="100" alt="Star Light Logo" src="https://user-images.githubusercontent.com/88512646/196051171-dd4aea30-a241-45c1-890e-be1a3fd3ead2.svg" />
 </p>
-
 Write programms that can be stored in a hyper-link and then shared without a server host
 
 ```lisp
@@ -14,9 +13,10 @@ Write programms that can be stored in a hyper-link and then shared without a ser
 ;; Functional [Rich set of utility functions]
 ;; Tree Shakeable [The compiled code uses only the functions that are imported]
 ;; Composable [The pipe operator |> [5; | add [3]; | mult [4]]; makes it easy to compose functions]
-
 ;; Void [Only one empty primitive [void] - this is undefined; no null or NaN]
 ;; Binar [Shipped with a fast and memory cheap array data-structure binary array O[1] operations]
+;; Tail Call Recursion [Functions can be optimised - just as fast as loops]
+;; Devision by zero is a compile time error
 ;; Web Editor [Create web apps directly on the web with autocomplete; logger; live preview on the side]
 ```
 
@@ -80,8 +80,6 @@ make scene [:= [WIDTH; 500]; := [HEIGHT; 500]; -> [..[
 
 here is the link:
 https://at-290690.github.io/hyper-light/preview.html?s=PC1bIjF2IjsiM0oiXVs1ZV07xBI1TiI7IjRWxBd5IjsiMkrECkMiXVszSsYhMG8iOyIwbiI7IlBJIl1bMXZdOzVOWzo9W1dJRFRIOzUwMF07Oj1bSEVJR0hUxg8tPlsuLsQjdGhldGE7MC44xSNzdGVwOzAuN8UNYW5nbGU7KltQSTswLjUnMsQUbGVuZ3RoOzNDWzAuMskUdmVsO8ZkbWF4xg8xxhB4OzJKW8k+ecQ5McYMeHN0YWNrOy46yTTHJNcYZHJhd2JyYW5jaOQAvWRpcjvmAMFkZWx0YXg7KugAmzBu5gC5JzPFNsQeecseb8webmV4dHg7K1t4O8ZGxmrEFnk7LVt5xhZ5JzI7NFZbeDt5O8YwxSBdOy7pAMTmAPJ4xRPnAL/GE3ldO+QBA8U3xAvGQsUWxiErxwjkARToAXErxwgq5wGcZGlyJzPFMuUAwukAy+QBrCcyOz9bPMdF6AEwXeQBGuoBL1sxXTvLDi0xxU7GZC3ebDrPbOgAty3tALd4Oy7tAQrFFXk7Lu0BDCc17ACFMF07M3lbJzQ=
-
-
 
 ## More examples
 
