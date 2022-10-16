@@ -186,14 +186,10 @@ const dfs = (tree, locals) => {
             const methods = tree.operator.args.map(x =>
               x.type === 'value' ? x.value : dfs(x, locals)
             )
-            const prefix =
-              pref && pref.type === 'value'
-                ? pref.value.replaceAll(' ', '')
-                : ''
+            const prefix = pref && pref.type === 'value' ? pref.value : ''
             return methods
               .map(x => {
                 if (x) {
-                  x = x.replaceAll(' ', '')
                   locals.add(`${prefix}${x}`)
                   if (imp in modules) modules[imp].push(x)
                   else modules[imp] = [x]

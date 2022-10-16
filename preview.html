@@ -1,0 +1,68 @@
+<head>
+  <title>Hyper Light</title>
+  <meta name="description" content="Run hyper light programms" />
+  <link rel="icon" type="image/x-icon" href="./editor/assets/images/chip.svg" />
+  <style>
+    body {
+      background: black;
+    }
+  </style>
+</head>
+<body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.10/two.min.js"
+    integrity="sha512-D9pUm3+gWPkv/Wl6vd45vRLjdkdEKGje7BxOxYG0N6m4UlEUB7RSljBwpmJNAOuf6txLLtlaRchoKfzngr/bQg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="https://cdn.jsdelivr.net/npm/lzutf8@0.6.3/build/production/lzutf8.min.js"></script>
+  <script type="module">
+    import { compileToJs } from './language/core/compiler.js'
+    import {
+      treeShake,
+      languageUtilsString,
+      generateCompressedModules,
+    } from './language/misc/utils.js'
+    import { wrapInBody, removeNoCode } from './language/misc/helpers.js'
+    import { parse } from './language/core/parser.js'
+    const shortModules = generateCompressedModules()
+    const decodeUrl = url => {
+      const value = LZUTF8.decompress(url, {
+        inputEncoding: 'Base64',
+        outputEncoding: 'String',
+      }).trim()
+      const suffix = [...new Set(value.match(/\'+?\d+/g))]
+      let result = suffix.reduce(
+        (acc, m) => acc.split(m).join(']'.repeat(parseInt(m.substring(1)))),
+        value
+      )
+      for (const { full, short } of shortModules)
+        result = result
+          .replaceAll(short + '[', full + '[')
+          .replaceAll('[' + short + ']', '[' + full + ']')
+          .replaceAll(`"${short}"`, `"${full}"`)
+      return result
+    }
+
+    const inlined = wrapInBody(
+      removeNoCode(
+        decodeUrl(
+          location.href.split('preview.html')[1].trim().replace('?s=', '')
+        )
+      )
+    )
+    const { body, modules } = compileToJs(parse(inlined))
+    const LIB = treeShake(modules)
+    const script = document.createElement('script')
+    script.innerHTML = `const canvasContainer =  document.createElement('div')
+    canvasContainer.id = 'canvas-container'
+    document.body.appendChild(canvasContainer)
+    const VOID = null
+    const INSPECT = () => () => {}
+    ${languageUtilsString}
+    ${LIB}
+    ${body}
+    `
+    document.body.appendChild(script)
+  </script>
+</body>

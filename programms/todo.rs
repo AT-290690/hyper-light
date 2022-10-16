@@ -3,7 +3,7 @@
 "makelabel"; "removeselffromcontainer"; "makeinput"; 
 "makespan"; "setstyle"; "makeparagraph"; "getbody"; "setattribute";
  "getelementsbyclassname"; "getparentnode"; "makecheckbox"] [DOM];
-<- ["display hide"; "display show"] [STYLE];
+<- ["displayhide"; "displayshow"] [STYLE];
 <- ["makenewdate"; "formattolocal"] [DATE];
 <- ["onmouseclick"; "onkeyup"] [EVENT];
 <- ["array"] [CONVERT];
@@ -52,13 +52,13 @@ set style [get body []; "font-family: Courier New"];
 |> [
   := [main; 
   |> [make container []; 
-      | set style ["width: 100%"]]];
+      | set style ["width: 90%"]]];
   | insert into container [
     |> [:= [todo input; 
       |> [make input []; 
            | set style ["
             font-famity: Courier New;
-            width: 90%;
+            width: 80%;
             color: white;
             background: transparent;
             border: white 1px solid;
@@ -96,5 +96,3 @@ set style [get body []; "font-family: Courier New"];
         make paragraph []]; 
         .= [todo input; "value"; ""]]]]]];
       make paragraph []]];
-
- 
