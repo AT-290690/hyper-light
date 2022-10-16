@@ -1,9 +1,8 @@
 <- ["MATH"; "SKETCH"] [LIB];
-<- ["background"; "makescene"; "makeline"; "update"; "width"; "height"] [SKETCH];
+<- ["makescene"; "makeline"; "update"; "width"; "height"] [SKETCH];
 <- ["sin"; "cos"; "PI"] [MATH];
 
 make scene [:= [WIDTH; 500]; := [HEIGHT; 500]; -> [..[
-  background["#010"];
   := [theta; 0.8];
   := [step; 0.7];
   := [angle; * [PI; 0.5]];
