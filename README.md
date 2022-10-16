@@ -1,4 +1,4 @@
-<img style="margin: auto" width="100" alt="Star Light Logo" src="https://user-images.githubusercontent.com/88512646/196051171-dd4aea30-a241-45c1-890e-be1a3fd3ead2.svg" />
+<img style="align-self:center" width="100" alt="Star Light Logo" src="https://user-images.githubusercontent.com/88512646/196051171-dd4aea30-a241-45c1-890e-be1a3fd3ead2.svg" />
 # hyper-light
 
 A programming language that can be stored in a hyper-link and then shared without the need of a server
