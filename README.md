@@ -1,4 +1,4 @@
- # hyper-light
+ # Hyper Light
 
 <p align="center">
 <img  width="100" alt="Star Light Logo" src="https://user-images.githubusercontent.com/88512646/196051171-dd4aea30-a241-45c1-890e-be1a3fd3ead2.svg" />
