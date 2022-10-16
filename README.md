@@ -15,8 +15,8 @@ Write programms that can be stored in a hyper-link and then shared without a ser
 ;; Composable [The pipe operator |> [5; | add [3]; | mult [4]]; makes it easy to compose functions]
 ;; Void [Only one empty primitive [void] - this is undefined; no null or NaN]
 ;; Binar [Shipped with a fast and memory cheap array data-structure binary array O[1] operations]
-;; Tail Call Recursion [Functions can be optimised - just as fast as loops]
-;; Devision by zero is a compile time error
+;; Tail Call Recursion [Recursive functions can be optimised - just as fast as loops]
+;; Devision by zero is a run-time error
 ;; Web Editor [Create web apps directly on the web with autocomplete; logger; live preview on the side]
 ```
 
