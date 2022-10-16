@@ -15,6 +15,29 @@ const createPopUp = () => {
   return popup
 }
 
+const popUp = (
+  popup,
+  msg,
+  w = window.innerWidth / 2 - 5,
+  h = window.innerHeight / 3
+) => {
+  popup.setSize(w, h)
+  popup.setValue(msg)
+}
+
+STD.IMP = module => {
+  const pop = createPopUp()
+  popUp(
+    pop,
+    `<- [${Object.keys(module)
+      .filter(x => x !== 'NAME')
+      .map(x => `"${x}"`)
+      .join(';')}] [${module.NAME}];\n`,
+    window.innerWidth * 1 - 20
+  )
+  pop.focus()
+}
+
 STD.INSPECT = (disable = 0) => {
   if (disable) return (msg, count) => {}
   const popup = createPopUp()

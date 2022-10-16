@@ -41,7 +41,10 @@ set style [get body []; "font-family: Courier New"];
     | on mouse click [-> [remove self from container [container]]]]];
     make checkbox [];
   |> [make span [value];
-    | set style ["color: white"];
+    | set style ["
+          color: white; 
+          word-wrap: break-word;       
+          "];
     | set attribute ["class"; "todo"]]];
   | set style ["
      border: solid 1px white;

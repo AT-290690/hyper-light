@@ -10,6 +10,52 @@ export const protolessModule = methods => {
   return env
 }
 
+const createPopUp = () => {
+  elements.popupContainer.innerHTML = ''
+  const popup = CodeMirror(elements.popupContainer)
+  elements.popupContainer.style.display = 'block'
+  return popup
+}
+
+const popUp = (
+  popup,
+  msg,
+  w = window.innerWidth / 2 - 5,
+  h = window.innerHeight / 3
+) => {
+  popup.setSize(w, h)
+  popup.setValue(msg)
+}
+
+INSPECT: (disable = 0, createPopUp, popUp) => {
+  if (disable || !createPopUp || popUp) return (msg, count) => {}
+  const popup = createPopUp()
+  popup.setSize(window.innerWidth * 1 - 20, window.innerHeight / 3)
+  let count = 0
+  return (msg, comment = '', space) => {
+    const current = popup.getValue()
+    popup.setValue(
+      `${current ? current + '\n' : ''};; ${count++} ${comment}
+${
+  msg !== VOID
+    ? typeof msg === 'string'
+      ? `"${msg}"`
+      : JSON.stringify(msg, null, space)
+          .replaceAll('{', '[')
+          .replaceAll('}', ']')
+          .replaceAll(',', '; ')
+          .replaceAll('":', '"; ')
+    : VOID
+}`
+    )
+    popup.setCursor(
+      popup.posToOffset({ ch: 0, line: popup.lineCount() - 1 }),
+      true
+    )
+    return msg
+  }
+}
+
 const LIB = {
   NAME: 'LIB',
   DATE: {
@@ -755,6 +801,19 @@ const LIB = {
       const out = []
       for (let i = 0; i < len; ++i) out.push(LIB.BINAR.get(entity, i))
       return out
+    },
+    toarraydeep: entity => {
+      return LIB.BINAR.isbinar(entity)
+        ? LIB.BINAR.toarray(
+            LIB.BINAR.map(entity, item =>
+              LIB.BINAR.isbinar(item)
+                ? LIB.BINAR.some(item, LIB.BINAR.isbinar)
+                  ? LIB.BINAR.toarraydeep(item)
+                  : LIB.BINAR.toarray(item)
+                : item
+            )
+          )
+        : entity
     },
     copy: entity => {
       const lem = LIB.BINAR.length(entity)
