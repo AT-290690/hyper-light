@@ -190,7 +190,7 @@ export const generateCompressedModules = (
 ) => {
   abc = [...abc, ...abc.map(x => x.toUpperCase())]
   const { NAME, ...lib } = STD.UNIVERSE
-  const modules = []
+  const modules = [NAME]
   const dfs = (lib, modules) => {
     for (const module in lib) {
       modules.push(module)

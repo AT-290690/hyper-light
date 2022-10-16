@@ -1,6 +1,7 @@
-<- ["DOM"; "EVENT"] [UNIVERSE];
+<- ["DOM"; "EVENT"; "COLOR"] [UNIVERSE];
 <- ["*"] [DOM];
 <- ["onmouseclick"] [EVENT];
+<- ["randomcolor"] [COLOR];
 
 make user interface [];
 |> [:= [container; make container []];
@@ -8,16 +9,12 @@ make user interface [];
     |> [make button []; 
       | make label ["say hello"];
       | set style ["
-                   border: solid 1px; white;
+                   border: dashed 1px orange;
                    background: transparent;
-                   color: white;
+                   color: cyan;
                    cursor: pointer;
                    padding: 10px;
-                   font-family: Courier New;
                    "];
       | on mouse click [-> [insert into container [container;
           |> [make paragraph ["Hello!"]; 
-             | set style ["
-                          color: white;
-                          font-family: Courier New;
-                          "]]]]]]]]
+             | set style [+ ["color:"; random color []]]]]]]]]]
