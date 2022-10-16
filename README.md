@@ -2,6 +2,20 @@
 
 toy programming language
 
+```lisp
+;; Compiles to JavaScript [Runs on the Web]
+;; Safe [Only a small subset of JavaScript is used]
+;; Compact [Small in size - can be stored in a link ~1400 characters for Game of Life implementation]
+;; Expressive [The whole program is one expression]
+;; Functional [Rich set of utility functions]
+;; Tree Shakeable [The compiled code uses only the functions that are imported]
+;; Composable [The pipe operator |> [5; | add [3]; | mult [4]]; makes it easy to compose functions]
+
+;; Void [Only one empty primitive [void] - this is undefined; no null or NaN]
+;; Binar [Shipped with a fast and memory cheap array data-structure binary array O[1] operations]
+;; Web Editor [Create web apps directly on the web with autocomplete; logger; live preview on the side]
+```
+
 <img width="336" alt="Screenshot 2022-10-02 at 22 06 54" src="https://user-images.githubusercontent.com/88512646/193471696-c2594bf6-085a-4b21-921f-06bb4f5fa0fe.png">
 
 Here is the source for the tree above
