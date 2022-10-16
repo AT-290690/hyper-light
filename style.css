@@ -178,7 +178,7 @@ input:focus {
 .cm-search {
   background-color: var(--background-primary) !important;
   max-width: 48.5vw;
-  bottom: 40px;
+  bottom: 10px;
 }
 
 #console {

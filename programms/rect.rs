@@ -1,5 +1,5 @@
 <- ["SKETCH"; "MATH"; "CONSOLE"] [LIB];
-<- ["makescene"; "setlinewidth"; "set rotation"; "set position"; "nofill"; "setfill"; "setstroke";  "update"; "background"; "makerectangle"; "width"; "height"] [SKETCH];
+<- ["makescene"; "setlinewidth"; "setrotation"; "setposition"; "nofill"; "setfill"; "setstroke";  "update"; "background"; "makerectangle"; "width"; "height"] [SKETCH];
 
 make scene [300; 300; -> [..[
   background["black"];

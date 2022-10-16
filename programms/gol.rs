@@ -4,7 +4,7 @@
     "setfill"; "setstroke"; "nofill"; "nostroke"] [SKETCH]; 
 <- ["push"; "foreach"] [ARRAY]; 
 <- ["forof"] [OBJECT]; 
-<- ["dice"] [MATH; "roll"];
+<- ["randomint"] [MATH; "roll"];
 
 ;; STATE
 := [N; 50]; 
@@ -23,8 +23,8 @@
 ~= [loop; -> [count; bounds; .. [
   ? [! [% [count; cols]]; = [h; + [h; r]]]; 
 
-  := [is alive; roll dice [0; 1]]; 
-  := [next is alive; roll dice [0; 1]]; 
+  := [is alive; roll random int [0; 1]]; 
+  := [next is alive; roll random int [0; 1]]; 
   := [rect; |> [make rectangle [% [* [count; r]; * [r; cols]]; h; r; r]; 
       | set fill [. [COLORS; is alive]];
       | no stroke []]];

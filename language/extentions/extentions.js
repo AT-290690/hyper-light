@@ -400,15 +400,35 @@ export const LIB = {
     floor: n => Math.floor(n),
     round: n => Math.round(n),
     random: () => Math.random(),
-    dice: (min, max) => Math.floor(Math.random() * (max - min + 1) + min),
-    rolldice: (min, max) => Math.floor(Math.random() * (max - min + 1) + min),
+    randomint: (min, max) => Math.floor(Math.random() * (max - min + 1) + min),
     max: (...args) => Math.max(...args),
     min: (...args) => Math.min(...args),
     sin: n => Math.sin(n),
     cos: n => Math.cos(n),
     tan: n => Math.tan(n),
+    tanh: n => Math.tanh(n),
     atan: n => Math.atan(n),
+    atanh: n => Math.atanh(n),
     atan2: (y, x) => Math.atan2(y, x),
+    acos: n => {
+      n = Math.acos(n)
+      return isNaN(n) ? VOID : n
+    },
+    acosh: n => {
+      n = Math.acosh(n)
+      return isNaN(n) ? VOID : n
+    },
+    asin: n => {
+      n = Math.asin(n)
+      return isNaN(n) ? VOID : n
+    },
+    asinh: n => Math.asinh(n),
+    atanh: n => {
+      n = Math.atanh(n)
+      return isNaN(n) ? VOID : n
+    },
+    hypot: (x, y) => Math.hypot(x, y),
+    fround: n => Math.fround(n),
     log10: x => Math.log10(x),
     log2: x => Math.log2(x),
     log: x => Math.log(x),
@@ -418,6 +438,11 @@ export const LIB = {
     infinity: Number.POSITIVE_INFINITY,
     negative: n => -n,
     PI: Math.PI,
+    E: Math.E,
+    LN10: Math.LN10,
+    LOG10E: Math.LOG10E,
+    SQRT1_2: Math.SQRT1_2,
+    SQRT2: Math.SQRT2,
     parseint: (number, base) => parseInt(number.toString(), base),
     number: string => Number(string),
   },

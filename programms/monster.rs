@@ -1,11 +1,11 @@
 <- ["SKETCH"; "MATH"] [LIB];
-<- ["make scene"; "width"; "height"; "set rotation"; "set position";
-    "set fill"; "no fill"; "set stroke"; "set line width"; "no fill"; "close path";
-    "update"; "make rectangle"; "background"; "set scale"; "PATH";
-   "make circle";
+<- ["makescene"; "width"; "height"; "setrotation"; "setposition";
+    "setfill"; "nofill"; "setstroke"; "setlinewidth"; "nofill"; "closepath";
+    "update"; "makerectangle"; "background"; "setscale"; "PATH";
+   "makecircle";
    ] [SKETCH];
-<- ["PI"; "dice"] [MATH];
-<- ["make path"; "path from"] [PATH];
+<- ["PI"; "randomint"] [MATH];
+<- ["makepath"; "pathfrom"] [PATH];
 
 make scene [500; 150; -> [.. [
   background ["#012"];
@@ -15,7 +15,7 @@ make scene [500; 150; -> [.. [
     | set line width [5]];
   
 := [points; .: []];
-~= [loop; -> [count;  .. [.= [points; count; dice [0; 90]]; 
+~= [loop; -> [count;  .. [.= [points; count; randomint [0; 90]]; 
           ? [> [count; 0]; loop [= [count; - [count; 1]]]]]]];
 loop[452];
   
