@@ -8,4 +8,5 @@ export const elements = {
   close: document.getElementById('close'),
   key: document.getElementById('key'),
   app: document.getElementById('app'),
+  run: document.getElementById('run-code'),
 }

@@ -97,19 +97,23 @@ elements.key.addEventListener('click', () => {
 window.addEventListener('resize', () =>
   editor.setSize(window.innerWidth - 5, window.innerHeight - 5)
 )
-
+const runCodeEvent = () => {
+  if (elements.app.style.display === 'block') {
+    elements.app.src = ''
+    setTimeout(updateApp, 250)
+  } else {
+    elements.canvasContainer.style.display = 'none'
+    interpred(editor.getValue())
+  }
+}
 document.addEventListener('keydown', e => {
   if (e.key.toLowerCase() === 's' && (e.ctrlKey || e.metaKey)) {
     e.preventDefault()
     e.stopPropagation()
     elements.consoleElement.textContent = ''
     elements.popupContainer.innerHTML = ''
-    if (elements.app.style.display === 'block') {
-      elements.app.src = ''
-      setTimeout(updateApp, 250)
-    } else {
-      elements.canvasContainer.style.display = 'none'
-      interpred(editor.getValue())
-    }
+    runCodeEvent()
   }
 })
+
+elements.run.addEventListener('click', runCodeEvent)
