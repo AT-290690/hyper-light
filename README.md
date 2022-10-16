@@ -1,6 +1,8 @@
+![favicon](https://user-images.githubusercontent.com/88512646/196051171-dd4aea30-a241-45c1-890e-be1a3fd3ead2.svg)
+
 # hyper-light
 
-toy programming language
+A programming language that can be stored in a hyper-link and then shared without the need of a server
 
 ```lisp
 ;; Compiles to JavaScript [Runs on the Web]
