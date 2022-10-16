@@ -52,7 +52,7 @@
       )
     )
     const { body, modules } = compileToJs(parse(inlined))
-    const LIB = treeShake(modules)
+    const UNIVERSE = treeShake(modules)
     const script = document.createElement('script')
     script.innerHTML = `const canvasContainer =  document.createElement('div')
     canvasContainer.id = 'canvas-container'
@@ -60,7 +60,7 @@
     const VOID = null
     const LOGGER = () => () => {}
     ${languageUtilsString}
-    ${LIB}
+    ${UNIVERSE}
     ${body}
     `
     document.body.appendChild(script)

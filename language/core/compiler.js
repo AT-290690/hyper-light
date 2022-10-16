@@ -1,4 +1,4 @@
-import { LIB } from '../extentions/extentions.js'
+import { UNIVERSE } from '../extentions/extentions.js'
 const vars = new Set()
 let modules = {}
 const symbols = { ':': '/' }
@@ -191,7 +191,7 @@ const dfs = (tree, locals) => {
 
             if (methods.includes('*')) {
               methods.length = 0
-              const MOD = imp === 'LIB' ? LIB : LIB[imp]
+              const MOD = imp === 'UNIVERSE' ? UNIVERSE : UNIVERSE[imp]
               return Object.keys(MOD).map(method => {
                 if (method !== 'NAME') {
                   locals.add(`${prefix}${method}`)

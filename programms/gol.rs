@@ -1,4 +1,4 @@
-<- ["SKETCH"; "ARRAY"; "OBJECT"; "MATH"] [LIB]; 
+<- ["SKETCH"; "ARRAY"; "OBJECT"; "MATH"] [UNIVERSE]; 
 <- ["makescene"; "makegroup"; "makerectangle"; "update"; "play"; "draw"; 
     "insertintogroup"; "background"; "width"; "height"; "setposition";
     "setfill"; "setstroke"; "nofill"; "nostroke"] [SKETCH]; 

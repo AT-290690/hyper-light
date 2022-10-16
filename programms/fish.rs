@@ -1,4 +1,4 @@
-<- ["SKETCH"; "ARRAY"; "MATH"; "COLOR"; "LOOP"] [LIB];
+<- ["SKETCH"; "ARRAY"; "MATH"; "COLOR"; "LOOP"] [UNIVERSE];
 
 <- ["makescene"; "makecircle"; "makegroup"; "background"; 
     "width"; "height"; "update"; "nostroke"; 

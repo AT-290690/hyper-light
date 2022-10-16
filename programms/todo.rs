@@ -1,4 +1,4 @@
-<- ["DOM"; "COLOR"; "DATE"; "STYLE"; "EVENT"; "CONVERT"; "STRING"; "ARRAY"; "CONSOLE"] [LIB];
+<- ["DOM"; "COLOR"; "DATE"; "STYLE"; "EVENT"; "CONVERT"; "STRING"; "ARRAY"; "CONSOLE"] [UNIVERSE];
 <- ["makeuserinterface"; "makecontainer"; "makebutton"; "insertintocontainer"; 
 "makelabel"; "removeselffromcontainer"; "makeinput"; 
 "makespan"; "setstyle"; "makeparagraph"; "getbody"; "setattribute";

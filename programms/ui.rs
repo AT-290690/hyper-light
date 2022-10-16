@@ -1,7 +1,7 @@
 ;; write a user interface
 ;; make button
 ;; click events
-<- ["DOM"; "COLOR"] [LIB];
+<- ["DOM"; "COLOR"] [UNIVERSE];
 <- ["makeuserinterface"; "makecontainer"; "makebutton"; "insertintocontainer"; 
 "makelabel"; "onmouseclick"; "makespan"; "makestyle"; "makeparagraph"] [DOM];
 <- ["randomlightcolor"] [COLOR];

@@ -57,7 +57,7 @@ describe('run should work as expected', () => {
 
   it('valid parens', () => {
     expect(
-      runFromText(`.. [<- ["BINAR"; "ARRAY"; "LOGIC"] [LIB]; 
+      runFromText(`.. [<- ["BINAR"; "ARRAY"; "LOGIC"] [UNIVERSE]; 
     <- ["from"; "to"; "balance"; "append"; "prepend"; "tail"; "first"; "isempty"] [BINAR]; 
     ;; find if parens are valid for pairs of "(" and ")"
     := [isvalidparens; -> [input; 
@@ -90,7 +90,7 @@ describe('run should work as expected', () => {
   it('max sub array sum rec', () => {
     expect(
       runFromText(`;; max_sub_array_recursive
-    <- ["MATH"] [LIB];
+    <- ["MATH"] [UNIVERSE];
     <- ["max"; "infinity"] [MATH];
     ~= [loop; -> [i; nums; maxGlobal; maxSoFar; 
         ? [< [i; . [nums; "length"]]; .. [
@@ -103,7 +103,7 @@ describe('run should work as expected', () => {
   it('sum median', () => {
     expect(
       runFromText(`
-<- ["MATH"; "ARRAY"] [LIB];
+<- ["MATH"; "ARRAY"] [UNIVERSE];
 <- ["sum"] [MATH];
 <- ["range"] [ARRAY];
 
@@ -152,7 +152,7 @@ describe('run should work as expected', () => {
 
   it('binar should work', () => {
     expect(
-      runFromText(`<- ["BINAR"] [LIB];
+      runFromText(`<- ["BINAR"] [UNIVERSE];
     <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
     |> [10; 
        | ones []; 
@@ -163,7 +163,7 @@ describe('run should work as expected', () => {
 
   it('* import should work', () => {
     expect(
-      runFromText(`<- ["BINAR"; "MATH"] [LIB];
+      runFromText(`<- ["BINAR"; "MATH"] [UNIVERSE];
     <- ["*"] [BINAR];
     <- ["floor"] [MATH];
     

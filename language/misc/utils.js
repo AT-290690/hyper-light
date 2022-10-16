@@ -30,28 +30,6 @@ const findParent = ast => {
   return out
 }
 
-// export const printErrors = (errors, args) => {
-//   if (!State.isErrored) {
-//     State.isErrored = true
-//     if (
-//       errors?.message &&
-//       (errors.message.includes('Maximum call stack size exceeded') ||
-//         errors.message.includes('too much recursion'))
-//     )
-//       throw new Error('RangeError: Maximum call stack size exceeded')
-//     const temp = dfs(args)
-//     if (temp.fn || temp.res)
-//       throw new Error(
-//         errors +
-//           ' ( near ' +
-//           (temp.res.type === 'value'
-//             ? temp.res.value
-//             : temp.res.name ?? 'null') +
-//           (temp.fn ? ' in function ' + temp.fn + ' )  ' : ' )')
-//       )
-//     else throw new Error(errors)
-//   }
-// }
 export const runFromText = source => run(removeNoCode(source))
 
 export const exe = source => {
@@ -108,16 +86,16 @@ export const handleHangingSemi = source => {
 
 export const treeShake = modules => {
   let lib = ''
-  const dfs = (modules, lib, LIB) => {
+  const dfs = (modules, lib, UNIVERSE) => {
     for (const key in modules) {
-      if (key !== 'LIB' && modules[key] !== undefined) {
+      if (key !== 'UNIVERSE' && modules[key] !== undefined) {
         lib += '["' + key + '"]:{'
         for (const method of modules[key]) {
-          if (LIB[key]) {
-            const current = LIB[key][method]
+          if (UNIVERSE[key]) {
+            const current = UNIVERSE[key][method]
             if (current) {
               if (typeof current === 'object') {
-                lib += dfs({ [method]: modules[method] }, '', LIB[key])
+                lib += dfs({ [method]: modules[method] }, '', UNIVERSE[key])
               } else {
                 lib += '["' + method + '"]:'
                 lib += current.toString()
@@ -131,7 +109,7 @@ export const treeShake = modules => {
     }
     return lib
   }
-  lib += 'const LIB = {' + dfs(modules, lib, STD.LIB) + '}'
+  lib += 'const UNIVERSE = {' + dfs(modules, lib, STD.UNIVERSE) + '}'
   return lib
 }
 
@@ -211,7 +189,7 @@ export const generateCompressedModules = (
   ]
 ) => {
   abc = [...abc, ...abc.map(x => x.toUpperCase())]
-  const { NAME, ...lib } = STD.LIB
+  const { NAME, ...lib } = STD.UNIVERSE
   const modules = []
   const dfs = (lib, modules) => {
     for (const module in lib) {

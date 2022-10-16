@@ -1,4 +1,4 @@
-<- ["BINAR"; "ARRAY"; "LOGIC"] [LIB]; 
+<- ["BINAR"; "ARRAY"; "LOGIC"] [UNIVERSE]; 
 <- ["from"; "to"; "balance"; "append"; "prepend"; "tail"; "first"; "isempty"] [BINAR]; 
 
 := [isvalidparens; -> [input; 

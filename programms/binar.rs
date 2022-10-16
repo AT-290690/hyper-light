@@ -1,4 +1,4 @@
-<- ["BINAR"] [LIB];
+<- ["BINAR"] [UNIVERSE];
 <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
 
 |> [10; 

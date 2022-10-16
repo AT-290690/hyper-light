@@ -26,7 +26,7 @@ A programming language that can be stored in a hyper-link and then shared withou
 Here is the source for the tree above
 
 ```go
-<- ["MATH"; "SKETCH"] [LIB];
+<- ["MATH"; "SKETCH"] [UNIVERSE];
 <- ["makescene"; "makeline"; "update"; "width"; "height"] [SKETCH];
 <- ["sin"; "cos"; "PI"] [MATH];
 
@@ -79,4 +79,4 @@ make scene [:= [WIDTH; 500]; := [HEIGHT; 500]; -> [..[
 ```
 
 here is the link
-https://at-290690.github.io/hyper-light/preview.html?s=PC1bIjF2IjsiM0oiXVtMSUJdO8QTNU0iOyI0VsQYeSI7IjJKxApDIl1bM0rGITBvIjsiMG4iOyJQSSJdWzF2XTs1TVs6PVtXSURUSDs1MDBdOzo9W0hFSUdIVMYPLT5bLi7EI3RoZXRhOzAuOMUjc3RlcDswLjfFDWFuZ2xlOypbUEk7MC41JzLEFGxlbmd0aDszQ1swLjLJFHZlbDvGZG1heMYPMcYQeDsySlvJPnnEOTHGDHhzdGFjazsuOsk0xyTXGGRyYXdicmFuY2jkAL1kaXI75gDBZGVsdGF4OyroAJswbuYAuSczxTbEHnnLHm/MHm5leHR4OytbeDvGRsZqxBZ5Oy1becYWeScyOzRWW3g7eTvGMMUgXTsu6QDE5gDyeMUT5wC/xhN5XTvkAQPFN8QLxkLFFsYhK8cI5AEU6AFxK8cIKucBnGRpciczxTLlAMLpAMvkAawnMjs/WzzHRegBMF3kARrqAS9bMV07yw4tMcVOxmQt3mw6z2zoALct7QC3eDsu7QEKxRV5Oy7tAQwnNewAhTBdOzN5Wyc0
+https://at-290690.github.io/hyper-light/preview.html?s=PC1bIjF2IjsiM0oiXVtVTklWRVJTRV07xBg1TSI7IjRWxB15IjsiMkrECkMiXVszSsYhMG8iOyIwbiI7IlBJIl1bMXZdOzVNWzo9W1dJRFRIOzUwMF07Oj1bSEVJR0hUxg8tPlsuLsQjdGhldGE7MC44xSNzdGVwOzAuN8UNYW5nbGU7KltQSTswLjUnMsQUbGVuZ3RoOzNDWzAuMskUdmVsO8ZkbWF4xg8xxhB4OzJKW8k+ecQ5McYMeHN0YWNrOy46yTTHJNcYZHJhd2JyYW5jaOQAvWRpcjvmAMFkZWx0YXg7KugAmzBu5gC5JzPFNsQeecseb8webmV4dHg7K1t4O8ZGxmrEFnk7LVt5xhZ5JzI7NFZbeDt5O8YwxSBdOy7pAMTmAPJ4xRPnAL/GE3ldO+QBA8U3xAvGQsUWxiErxwjkARToAXErxwgq5wGcZGlyJzPFMuUAwukAy+QBrCcyOz9bPMdF6AEwXeQBGuoBL1sxXTvLDi0xxU7GZC3ebDrPbOgAty3tALd4Oy7tAQrFFXk7Lu0BDCc17ACFMF07M3lbJzQ=
