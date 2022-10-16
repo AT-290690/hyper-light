@@ -4,5 +4,5 @@ import { interpred } from './language/misc/fs.js'
 
 export const encode = path => encodeUrl(readFileSync(path, 'utf8'))
 export const link = path =>
-  `https://at-290690.github.io/toy_lang/index.html?s=${encode(path)}`
+  `https://at-290690.github.io/hyper-light/index.html?s=${encode(path)}`
 export const evaluate = path => interpred(readFileSync(path, 'utf8'))

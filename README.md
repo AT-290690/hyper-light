@@ -1,3 +1,3 @@
-# toy_lang
+# hyper-light
 
-A toy programming language for drawing svg shapes
+toy programming language
