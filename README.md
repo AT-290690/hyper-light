@@ -19,9 +19,9 @@ A programming language that can be stored in a hyper-link and then shared withou
 ;; Binar [Shipped with a fast and memory cheap array data-structure binary array O[1] operations]
 ;; Web Editor [Create web apps directly on the web with autocomplete; logger; live preview on the side]
 ```
-
+<p align="center">
 <img width="336" alt="Screenshot 2022-10-02 at 22 06 54" src="https://user-images.githubusercontent.com/88512646/193471696-c2594bf6-085a-4b21-921f-06bb4f5fa0fe.png" />
-
+</p>
 Here is the source for the tree above
 
 ```go
