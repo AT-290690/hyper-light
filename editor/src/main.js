@@ -38,7 +38,7 @@ STD.IMP = module => {
   pop.focus()
 }
 
-STD.INSPECT = (disable = 0) => {
+STD.LOGGER = (disable = 0) => {
   if (disable) return (msg, count) => {}
   const popup = createPopUp()
   popup.setSize(window.innerWidth * 1 - 20, window.innerHeight / 3)

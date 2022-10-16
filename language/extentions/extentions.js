@@ -27,7 +27,7 @@ const popUp = (
   popup.setValue(msg)
 }
 
-INSPECT: (disable = 0, createPopUp, popUp) => {
+LOGGER: (disable = 0, createPopUp, popUp) => {
   if (disable || !createPopUp || popUp) return (msg, count) => {}
   const popup = createPopUp()
   popup.setSize(window.innerWidth * 1 - 20, window.innerHeight / 3)
