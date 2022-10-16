@@ -1,3 +1,4 @@
+import { LIB } from '../extentions/extentions.js'
 const vars = new Set()
 let modules = {}
 const symbols = { ':': '/' }
@@ -187,14 +188,28 @@ const dfs = (tree, locals) => {
               x.type === 'value' ? x.value : dfs(x, locals)
             )
             const prefix = pref && pref.type === 'value' ? pref.value : ''
-            return methods
-              .map(x => {
-                if (x) {
-                  locals.add(`${prefix}${x}`)
-                  if (imp in modules) modules[imp].push(x)
-                  else modules[imp] = [x]
+
+            if (methods.includes('*')) {
+              methods.length = 0
+              const MOD = imp === 'LIB' ? LIB : LIB[imp]
+              return Object.keys(MOD).map(method => {
+                if (method !== 'NAME') {
+                  locals.add(`${prefix}${method}`)
+                  if (imp in modules) modules[imp].push(method)
+                  else modules[imp] = [method]
                 }
-                return `${prefix}${x} = ${imp}["${x}"];`
+                return `${prefix}${method} = ${MOD.NAME}["${method}"];`
+              })
+            }
+
+            return methods
+              .map(method => {
+                if (method) {
+                  locals.add(`${prefix}${method}`)
+                  if (imp in modules) modules[imp].push(method)
+                  else modules[imp] = [method]
+                }
+                return `${prefix}${method} = ${imp}["${method}"];`
               })
               .join('')
           } else if (

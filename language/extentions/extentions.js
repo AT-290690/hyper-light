@@ -56,7 +56,7 @@ ${
   }
 }
 
-const LIB = {
+export const LIB = {
   NAME: 'LIB',
   DATE: {
     NAME: 'DATE',
