@@ -1,5 +1,4 @@
-![favicon](https://user-images.githubusercontent.com/88512646/196051171-dd4aea30-a241-45c1-890e-be1a3fd3ead2.svg)
-
+<img width="100" alt="Screenshot 2022-10-02 at 22 06 54" src="[https://user-images.githubusercontent.com/88512646/193471696-c2594bf6-085a-4b21-921f-06bb4f5fa0fe.png](https://user-images.githubusercontent.com/88512646/196051171-dd4aea30-a241-45c1-890e-be1a3fd3ead2.sv)">
 # hyper-light
 
 A programming language that can be stored in a hyper-link and then shared without the need of a server
