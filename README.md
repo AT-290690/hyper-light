@@ -17,7 +17,7 @@ Write programms that can be stored in a hyper-link and then shared without a ser
 ;; Void [Only one empty primitive [void] - this is undefined; no null or NaN]
 ;; Binar [Shipped with a fast and memory cheap array data-structure binary array O[1] operations]
 ;; Tail Call Recursion [Recursive functions can be optimised - just as fast as loops]
-;; Devision by zero is a run-time error
+;; Devision by zero is a run-time error, as well as number operations are validated
 ;; Web Editor [Create web apps directly on the web with autocomplete; logger; live preview on the side]
 ```
 
