@@ -76,6 +76,7 @@ export const encodeUrl = source => {
     })
   for (const { full, short } of shortDefinitions)
     result = result.replaceAll(new RegExp(`\\b${full}\\b`, 'g'), short)
+
   const encoded = LZUTF8.compress(result.trim(), {
     outputEncoding: 'Base64',
   })
