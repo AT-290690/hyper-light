@@ -37,7 +37,8 @@ const dfs = (tree, locals) => {
           body.type === 'apply' || body.type === 'value' ? 'return ' : ' '
         } ${evaluatedBody.toString().trimStart()}};`
       }
-
+      case '~':
+        return '(' + tree.args.map(x => dfs(x, locals)).join('+') + ')'
       case '==':
         return '(' + tree.args.map(x => dfs(x, locals)).join('===') + ')'
       case '+':

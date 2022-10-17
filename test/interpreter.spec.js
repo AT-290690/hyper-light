@@ -26,7 +26,7 @@ describe('run should work as expected', () => {
     ).toBe('Can work!')
     expect(
       runFromText(` 
-        := [validate age; -> [age; ? [>= [age; 18]; + ["Can work"; ? [>=[age; 21]; " and can drink"; ""]]; "Can't work and can't drink"]]];
+        := [validate age; -> [age; ? [>= [age; 18]; ~ ["Can work"; ? [>=[age; 21]; " and can drink"; ""]]; "Can't work and can't drink"]]];
         .: [validate age [18]; validate age [21]; validate age [12]];
     `)
     ).toEqual([

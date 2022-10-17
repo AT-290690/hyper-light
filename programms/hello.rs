@@ -17,4 +17,4 @@ make user interface [];
                    "];
       | on mouse click [-> [insert into container [container;
           |> [make paragraph ["Hello!"]; 
-             | set style [+ ["color:"; random color []]]]]]]]]]
+             | set style [~ ["color:"; random color []]]]]]]]]]

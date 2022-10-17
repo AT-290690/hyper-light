@@ -11,22 +11,34 @@ export const pipe =
 const tokens = {
   ['+']: (args, env) => {
     if (args.length < 2) throw new TypeError('Invalid number of arguments to +')
-    const [first, ...rest] = args.map(a => evaluate(a, env))
+    const operands = args.map(a => evaluate(a, env))
+    if (operands.some(n => typeof n !== 'number'))
+      throw new TypeError('Invalid use of + (Not all args are numbers)')
+    const [first, ...rest] = operands
     return rest.reduce((acc, x) => (acc += x), first)
   },
   ['-']: (args, env) => {
     if (args.length < 2) throw new TypeError('Invalid number of arguments to -')
-    const [first, ...rest] = args.map(a => evaluate(a, env))
+    const operands = args.map(a => evaluate(a, env))
+    if (operands.some(n => typeof n !== 'number'))
+      throw new TypeError('Invalid use of - (Not all args are numbers)')
+    const [first, ...rest] = operands
     return rest.reduce((acc, x) => (acc -= x), first)
   },
   ['*']: (args, env) => {
     if (args.length < 2) throw new TypeError('Invalid number of arguments to *')
-    const [first, ...rest] = args.map(a => evaluate(a, env))
+    const operands = args.map(a => evaluate(a, env))
+    if (operands.some(n => typeof n !== 'number'))
+      throw new TypeError('Invalid use of * (Not all args are numbers)')
+    const [first, ...rest] = operands
     return rest.reduce((acc, x) => (acc *= x), first)
   },
   [':']: (args, env) => {
     if (args.length < 2) throw new TypeError('Invalid number of arguments to :')
-    const [first, ...rest] = args.map(a => evaluate(a, env))
+    const operands = args.map(a => evaluate(a, env))
+    if (operands.some(n => typeof n !== 'number'))
+      throw new TypeError('Invalid use of : (Not all args are numbers)')
+    const [first, ...rest] = operands
     if (rest.includes(0))
       throw new RangeError('Invalid operation to : (devision by zero)')
     return rest.reduce((acc, x) => (acc /= x), first)
@@ -34,8 +46,19 @@ const tokens = {
   ['%']: (args, env) => {
     if (args.length !== 2)
       throw new TypeError('Invalid number of arguments to %')
-    const [left, right] = args.map(a => evaluate(a, env))
+    const operands = args.map(a => evaluate(a, env))
+    if (operands.some(n => typeof n !== 'number'))
+      throw new TypeError('Invalid use of % (Not all args are numbers)')
+    const [left, right] = operands
     return left % right
+  },
+  ['~']: (args, env) => {
+    if (args.length < 2) throw new TypeError('Invalid number of arguments to `')
+    const operands = args.map(a => evaluate(a, env))
+    if (operands.some(n => typeof n !== 'string'))
+      throw new TypeError('Invalid use of ` (Not all args are strings)')
+    const [first, ...rest] = operands
+    return rest.reduce((acc, x) => (acc += x), first)
   },
   ['?']: (args, env) => {
     if (args.length > 3 || args.length <= 1)
@@ -117,6 +140,10 @@ const tokens = {
   [':=']: (args, env) => {
     if (!args.length || args?.[0].type !== 'word' || args.length > 2)
       throw new SyntaxError('Invalid use of operation :=')
+    if (args[0].name.includes('.') || args[0].name.includes('-'))
+      throw new SyntaxError(
+        'Invalid use of operation := (variable name must not contain . or -)'
+      )
     const value =
       args.length === 1 ? VOID : evaluate(args[args.length - 1], env)
     env[args[0].name] = value
@@ -306,6 +333,10 @@ const tokens = {
   ['<-']:
     (args, env) =>
     (exp, prefix = '') => {
+      if (prefix.length > 4)
+        throw new TypeError(
+          'Invalid prefix for <- (prefix can be no longer than 4 characters)'
+        )
       if (args[0].value === '*')
         for (const method in exp) env[`${prefix}${method}`] = exp[method]
       else
