@@ -108,8 +108,8 @@ export const parse = program => {
 }
 export const cell =
   (env, run = true) =>
-  args => {
-    const AST = parse(args)
+  source => {
+    const AST = parse(source)
     return run
       ? { result: evaluate(AST, env), env, AST }
       : { result: null, env, AST }

@@ -4,28 +4,28 @@ import { generateCompressedModules } from '../../language/misc/utils.js'
 export const shortModules = generateCompressedModules()
 export const encodeUrl = source => {
   const value = removeNoCode(source)
-  let { result, count } = value
+  let { result, occurance } = value
     .split('];]')
     .join(']]')
     .split('')
     .reduce(
       (acc, item) => {
-        if (item === ']') acc.count++
+        if (item === ']') acc.occurance++
         else {
-          if (acc.count === 1) {
+          if (acc.occurance === 1) {
             acc.result += ']'
-            acc.count = 0
-          } else if (acc.count > 1) {
-            acc.result += "'" + acc.count
-            acc.count = 0
+            acc.occurance = 0
+          } else if (acc.occurance > 1) {
+            acc.result += "'" + acc.occurance
+            acc.occurance = 0
           }
           acc.result += item
         }
         return acc
       },
-      { result: '', count: 0 }
+      { result: '', occurance: 0 }
     )
-  if (count > 0) result += "'" + count
+  if (occurance > 0) result += "'" + occurance
 
   for (const { full, short } of shortModules)
     result = result
@@ -54,6 +54,5 @@ export const decodeUrl = url => {
       .replaceAll(short + '[', full + '[')
       .replaceAll('[' + short + ']', '[' + full + ']')
       .replaceAll(`"${short}"`, `"${full}"`)
-
   return result
 }

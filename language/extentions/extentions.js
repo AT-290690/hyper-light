@@ -467,6 +467,7 @@ export const UNIVERSE = {
     substring: (string, start, end) =>
       string.substring(start, end ?? end.length),
     replace: (string, match, replace) => string.replace(match, replace),
+    replaceall: (string, match, replace) => string.replaceAll(match, replace),
     sp: ' ',
   },
   CONVERT: {

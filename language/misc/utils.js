@@ -157,38 +157,62 @@ import { exe } from '${utils}';
 </script>
 </body>`
 }
+export const ABC = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
+]
 
-export const generateCompressedModules = (
-  abc = [
-    'a',
-    'b',
-    'c',
-    'd',
-    'e',
-    'f',
-    'g',
-    'h',
-    'i',
-    'j',
-    'k',
-    'l',
-    'm',
-    'n',
-    'o',
-    'p',
-    'q',
-    'r',
-    's',
-    't',
-    'u',
-    'v',
-    'w',
-    'x',
-    'y',
-    'z',
-  ]
-) => {
-  abc = [...abc, ...abc.map(x => x.toUpperCase())]
+export const generateCompressedModules = () => {
   const { NAME, ...lib } = STD.UNIVERSE
   const modules = [NAME]
   const dfs = (lib, modules) => {
@@ -206,9 +230,9 @@ export const generateCompressedModules = (
   return modules
     .sort((a, b) => (a.length > b.length ? 1 : -1))
     .map(full => {
-      const short = count + abc[index]
+      const short = count + ABC[index]
       ++index
-      if (index === abc.length) {
+      if (index === ABC.length) {
         index = 0
         ++count
       }
