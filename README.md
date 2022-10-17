@@ -1,8 +1,10 @@
 # Hyper Light
 
 <p align="center">
-<img  width="100" alt="Star Light Logo" src="https://user-images.githubusercontent.com/88512646/196051171-dd4aea30-a241-45c1-890e-be1a3fd3ead2.svg" />
+<img  width="100" alt="Star Light Logo" src="https://user-images.githubusercontent.com/88512646/196250251-23ac72d1-e355-4d00-a714-7af7ac769586.svg" />
 </p>
+
+
 Write programms that can be stored in a hyper-link and then shared without a server host
 
 ```lisp
