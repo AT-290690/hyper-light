@@ -53,7 +53,7 @@ const tokens = {
     return left % right
   },
   ['~']: (args, env) => {
-    if (args.length < 2) throw new TypeError('Invalid number of arguments to `')
+    if (args.length < 2) throw new TypeError('Invalid number of arguments to ~')
     const operands = args.map(a => evaluate(a, env))
     if (operands.some(n => typeof n !== 'string'))
       throw new TypeError('Invalid use of ` (Not all args are strings)')
