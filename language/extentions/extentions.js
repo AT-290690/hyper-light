@@ -45,6 +45,7 @@ ${
           .replaceAll('}', ']')
           .replaceAll(',', '; ')
           .replaceAll('":', '"; ')
+          .replaceAll('null', 'void')
     : VOID
 }`
     )
