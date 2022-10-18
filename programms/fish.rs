@@ -6,8 +6,8 @@
    "setposition"; "setfill"; "setopacity"; "setorigin"; "setrotation";
    "gettranslation"] [SKETCH];
 
-<- ["repeat"] [LOOP; "cycle"];
-<- ["push"] [ARRAY; "array"];
+<- ["repeat"] [LOOP];
+<- ["push"] [ARRAY];
 <- ["PI"; "sin"; "cos"] [MATH];
 
 make scene [400; 200; -> [.. [
@@ -18,10 +18,10 @@ background ["#0f2645"];
 := [mid; - [width [0.5]; * [size; 0.5]]];
 := [colors; .: ["#9dc5eb"; "#6888a6"]];
 := [rects; .: []];
-cycle repeat [w; -> [x; 
-  cycle repeat [h; -> [y; 
+ repeat [w; -> [x; 
+   repeat [h; -> [y; 
     |> [rects; 
-      | array push [
+      |  push [
         |> [make circle [
           * [x; size]; * [y; size]; * [size; 0.65]; * [size; 0.25]]; 
           | set fill [. [colors; % [+ [x; y]; 2]]]; 

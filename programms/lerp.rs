@@ -1,8 +1,8 @@
 <- ["MATH"; "SKETCH"; "ARRAY"] [UNIVERSE];
-<- ["for of"; "range"; "map1"] [ARRAY];
+<- ["forof"; "range"; "map1"] [ARRAY];
 <- ["lerp"; "floor"] [MATH];
-<- ["make scene"; "make group"; "insert into group"; 
-    "set position x"; "make circle"; "update"] [SKETCH];
+<- ["makescene"; "makegroup"; "insertintogroup"; 
+    "setpositionx"; "makecircle"; "update"] [SKETCH];
 
 := [a; 3];
 := [b; 23];

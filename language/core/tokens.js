@@ -330,22 +330,16 @@ const tokens = {
     )
   },
   ['.:']: (args, env) => args.map(item => extract(item, env)),
-  ['<-']:
-    (args, env) =>
-    (exp, prefix = '') => {
-      if (prefix.length > 4)
-        throw new TypeError(
-          'Invalid prefix for <- (prefix can be no longer than 4 characters)'
-        )
-      if (args[0].value === '*')
-        for (const method in exp) env[`${prefix}${method}`] = exp[method]
-      else
-        args.forEach(arg => {
-          const method = arg.value
-          env[`${prefix}${method}`] = exp[method]
-        })
-      return VOID
-    },
+  ['<-']: (args, env) => exp => {
+    if (args[0].value === '*')
+      for (const method in exp) env[method] = exp[method]
+    else
+      args.forEach(arg => {
+        const method = arg.value
+        env[method] = exp[method]
+      })
+    return VOID
+  },
   ['|>']: (args, env) => {
     const [param, ...rest] = args
     return pipe(...rest.map(arg => p => evaluate(arg, env)(p)))(

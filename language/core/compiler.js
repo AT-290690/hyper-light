@@ -188,29 +188,28 @@ const dfs = (tree, locals) => {
             const methods = tree.operator.args.map(x =>
               x.type === 'value' ? x.value : dfs(x, locals)
             )
-            const prefix = pref && pref.type === 'value' ? pref.value : ''
 
             if (methods.includes('*')) {
               methods.length = 0
               const MOD = imp === 'UNIVERSE' ? UNIVERSE : UNIVERSE[imp]
               return Object.keys(MOD).map(method => {
                 if (method !== 'NAME') {
-                  locals.add(`${prefix}${method}`)
+                  locals.add(method)
                   if (imp in modules) modules[imp].push(method)
                   else modules[imp] = [method]
                 }
-                return `${prefix}${method} = ${MOD.NAME}["${method}"];`
+                return `${method} = ${MOD.NAME}["${method}"];`
               })
             }
 
             return methods
               .map(method => {
                 if (method) {
-                  locals.add(`${prefix}${method}`)
+                  locals.add(method)
                   if (imp in modules) modules[imp].push(method)
                   else modules[imp] = [method]
                 }
-                return `${prefix}${method} = ${imp}["${method}"];`
+                return `${method} = ${imp}["${method}"];`
               })
               .join('')
           } else if (

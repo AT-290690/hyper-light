@@ -1,5 +1,5 @@
 <- ["BINAR"; "ARRAY"; "LOGIC"] [UNIVERSE]; 
-<- ["from"; "to"; "balance"; "append"; "prepend"; "tail"; "first"; "isempty"] [BINAR]; 
+<- ["*"] [BINAR]; 
 
 := [isvalidparens; -> [input; 
 |> [input; 

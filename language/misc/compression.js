@@ -33,9 +33,11 @@ export const encodeUrl = source => {
   const value = removeNoCode(source)
   const AST = parse(wrapInBody(value))
   const { definitions, excludes } = dfs(AST.args)
+
   excludes.forEach(value => {
     if (definitions.has(value)) definitions.delete(value)
   })
+
   excludes.clear()
   const defs = [...definitions]
   let { result, occurance } = value
