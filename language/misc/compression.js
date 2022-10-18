@@ -4,33 +4,40 @@ import { parse } from '../core/parser.js'
 import { LZUTF8 } from '../libs/lz-utf8.js'
 
 export const shortModules = generateCompressedModules()
-const dfs = (tree, definitions = new Set()) => {
+const dfs = (tree, definitions = new Set(), excludes = new Set()) => {
   for (const node of tree) {
-    const { type, operator, args } = node
+    const { type, operator, args, value } = node
+    if (type === 'value' && node.class === 'string') {
+      excludes.add(value)
+    }
     if (
       type === 'apply' &&
       operator.type === 'word' &&
-      operator.name === ':=' &&
-      args[0].name.length > 3
+      args[0]?.name?.length > 3 &&
+      args[0].name[0] !== '_'
     ) {
       definitions.add(args[0].name)
     }
     if (Array.isArray(args)) {
-      dfs(args, definitions)
+      dfs(args, definitions, excludes)
     }
     if (Array.isArray(operator?.args)) {
-      dfs(operator.args, definitions)
+      dfs(operator.args, definitions, excludes)
     }
   }
 
-  return definitions
+  return { definitions, excludes }
 }
 
 export const encodeUrl = source => {
   const value = removeNoCode(source)
   const AST = parse(wrapInBody(value))
-
-  const definitions = [...dfs(AST.args)]
+  const { definitions, excludes } = dfs(AST.args)
+  excludes.forEach(value => {
+    if (definitions.has(value)) definitions.delete(value)
+  })
+  excludes.clear()
+  const defs = [...definitions]
   let { result, occurance } = value
     .split('];]')
     .join(']]')
@@ -55,14 +62,11 @@ export const encodeUrl = source => {
   if (occurance > 0) result += "'" + occurance
 
   for (const { full, short } of shortModules)
-    result = result
-      .replaceAll(full + '[', short + '[')
-      .replaceAll('[' + full + ']', '[' + short + ']')
-      .replaceAll(`"${full}"`, `"${short}"`)
+    result = result.replaceAll(new RegExp(`\\b${full}\\b`, 'g'), short)
 
   let index = 0
   let count = 0
-  const shortDefinitions = definitions
+  const shortDefinitions = defs
     .sort((a, b) => (a.length > b.length ? 1 : -1))
     .map(full => {
       const short = ABC[index] + '_' + count
@@ -73,12 +77,11 @@ export const encodeUrl = source => {
       }
       return { full, short }
     })
+
   for (const { full, short } of shortDefinitions)
     result = result.replaceAll(new RegExp(`\\b${full}\\b`, 'g'), short)
 
-  const encoded = LZUTF8.compress(result.trim(), { outputEncoding: 'Base64' })
-
-  return encoded
+  return LZUTF8.compress(result.trim(), { outputEncoding: 'Base64' })
 }
 
 export const decodeUrl = url => {
@@ -92,10 +95,7 @@ export const decodeUrl = url => {
     value
   )
   for (const { full, short } of shortModules)
-    result = result
-      .replaceAll(short + '[', full + '[')
-      .replaceAll('[' + short + ']', '[' + full + ']')
-      .replaceAll(`"${short}"`, `"${full}"`)
+    result = result.replaceAll(new RegExp(`\\b${short}\\b`, 'g'), full)
 
   return result
 }
