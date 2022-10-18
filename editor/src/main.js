@@ -51,13 +51,16 @@ ${
   msg !== VOID
     ? typeof msg === 'string'
       ? `"${msg}"`
+      : typeof msg === 'function'
+      ? '-> []'
       : JSON.stringify(msg, null, space)
           .replaceAll('{', '[')
           .replaceAll('}', ']')
           .replaceAll(',', '; ')
           .replaceAll('":', '"; ')
           .replaceAll('null', 'void')
-    : VOID
+          .replaceAll('undefined', 'void')
+    : 'void'
 }`
     )
     popup.setCursor(
