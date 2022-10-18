@@ -7,14 +7,13 @@
   },
   "scripts": {
     "build": "node index.js",
-    "test": "jest test test"
+    "test": "jest test test",
+    "link": "node ./language/misc/link.js --path"
   },
   "license": "MIT",
   "dependencies": {
     "babel-jest": "^27.0.6",
-    "jest": "^27.0.6",
-    "lzutf8": "^0.6.3",
-    "nanobench": "^2.1.1"
+    "jest": "^27.0.6"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.14.9"

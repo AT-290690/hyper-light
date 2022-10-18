@@ -1,7 +1,7 @@
 import { CodeMirror } from '../cell.editor.bundle.js'
 import { elements } from './common.js'
 import { compile, interpred } from './utils.js'
-import { encodeUrl } from './compression.js'
+import { encodeUrl } from '../../language/misc/compression.js'
 import { STD, TWO_JS_HTML } from '../../language/extentions/extentions.js'
 import { VOID } from '../../language/core/tokens.js'
 

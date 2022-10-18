@@ -1,10 +1,9 @@
 import { removeNoCode, wrapInBody } from './helpers.js'
-import LZUTF8 from 'lzutf8'
 import { ABC, generateCompressedModules } from './utils.js'
 import { parse } from '../core/parser.js'
+import { LZUTF8 } from '../libs/lz-utf8.js'
 
 export const shortModules = generateCompressedModules()
-
 const dfs = (tree, definitions = new Set()) => {
   for (const node of tree) {
     const { type, operator, args } = node
@@ -77,18 +76,16 @@ export const encodeUrl = source => {
   for (const { full, short } of shortDefinitions)
     result = result.replaceAll(new RegExp(`\\b${full}\\b`, 'g'), short)
 
-  const encoded = LZUTF8.compress(result.trim(), {
-    outputEncoding: 'Base64',
-  })
+  const encoded = LZUTF8.compress(result.trim(), { outputEncoding: 'Base64' })
 
   return encoded
 }
 
 export const decodeUrl = url => {
-  const value = LZUTF8.decompress(url, {
+  const value = LZUTF8.decompress(url.trim(), {
     inputEncoding: 'Base64',
     outputEncoding: 'String',
-  }).trim()
+  })
   const suffix = [...new Set(value.match(/\'+?\d+/g))]
   let result = suffix.reduce(
     (acc, m) => acc.split(m).join(']'.repeat(parseInt(m.substring(1)))),
