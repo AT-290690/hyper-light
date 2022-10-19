@@ -57,9 +57,8 @@ for each [cells; -> [cell; i; cells; .. [
 := [sum; 0]; 
 
 for of [directions; -> [dir; .. [
-  <- ["x"; "y"] [dir; "dir"]; 
-  := [cell; get cell [+ [x; dirx]; 
-  + [y; diry]]]; 
+  := [cell; get cell [+ [x; . [dir; "x"]]; 
+  + [y; . [dir; "y"]]]]; 
   = [sum; + [sum; ? [cell; . [cell; "state"; "alive"]; 0]]]]]]; sum]]];
 
 := [update state; -> [iterate cells [cells; -> [cell; x; y; .. [

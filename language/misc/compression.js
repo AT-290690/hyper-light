@@ -28,8 +28,7 @@ const dfs = (tree, definitions = new Set(), excludes = new Set()) => {
 
   return { definitions, excludes }
 }
-
-export const encodeUrl = source => {
+export const compress = source => {
   const value = removeNoCode(source)
   const AST = parse(wrapInBody(value))
   const { definitions, excludes } = dfs(AST.args)
@@ -71,7 +70,7 @@ export const encodeUrl = source => {
   const shortDefinitions = defs
     .sort((a, b) => (a.length > b.length ? 1 : -1))
     .map(full => {
-      const short = ABC[index] + '_' + count
+      const short = ABC[index] + count
       ++index
       if (index === ABC.length) {
         index = 0
@@ -82,22 +81,25 @@ export const encodeUrl = source => {
 
   for (const { full, short } of shortDefinitions)
     result = result.replaceAll(new RegExp(`\\b${full}\\b`, 'g'), short)
-
-  return LZUTF8.compress(result.trim(), { outputEncoding: 'Base64' })
+  return result
 }
-
-export const decodeUrl = url => {
-  const value = LZUTF8.decompress(url.trim(), {
-    inputEncoding: 'Base64',
-    outputEncoding: 'String',
-  })
-  const suffix = [...new Set(value.match(/\'+?\d+/g))]
+export const decompress = source => {
+  const suffix = [...new Set(source.match(/\'+?\d+/g))]
   let result = suffix.reduce(
     (acc, m) => acc.split(m).join(']'.repeat(parseInt(m.substring(1)))),
-    value
+    source
   )
   for (const { full, short } of shortModules)
     result = result.replaceAll(new RegExp(`\\b${short}\\b`, 'g'), full)
-
   return result
 }
+export const encodeUrl = source =>
+  LZUTF8.compress(compress(source).trim(), { outputEncoding: 'Base64' })
+
+export const decodeUrl = source =>
+  decompress(
+    LZUTF8.decompress(source.trim(), {
+      inputEncoding: 'Base64',
+      outputEncoding: 'String',
+    })
+  )

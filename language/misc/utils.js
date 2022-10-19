@@ -157,7 +157,7 @@ import { exe } from '${utils}';
 </script>
 </body>`
 }
-export const ABC = [
+export const abc = [
   'a',
   'b',
   'c',
@@ -210,8 +210,57 @@ export const ABC = [
   'X',
   'Y',
   'Z',
+  // 'а',
+  // 'б',
+  // 'в',
+  // 'г',
+  // 'д',
+  // 'е',
+  // 'ж',
+  // 'з',
+  // 'и',
+  // 'й',
+  // 'к',
+  // 'л',
+  // 'м',
+  // 'н',
+  // 'о',
+  // 'п',
+  // 'р',
+  // 'с',
+  // 'т',
+  // 'щ',
+  // 'ц',
+  // 'ч',
+  // 'ь',
+  // 'ю',
+  // 'я',
+  // 'А',
+  // 'Б',
+  // 'В',
+  // 'Г',
+  // 'Д',
+  // 'Е',
+  // 'Ж',
+  // 'З',
+  // 'И',
+  // 'Й',
+  // 'К',
+  // 'Л',
+  // 'М',
+  // 'Н',
+  // 'О',
+  // 'П',
+  // 'Р',
+  // 'С',
+  // 'Т',
+  // 'Щ',
+  // 'Ц',
+  // 'Ч',
+  // 'Ю',
+  // 'Я',
 ]
-
+export const ABC = [...abc]
 export const generateCompressedModules = () => {
   const { NAME, ...lib } = STD.UNIVERSE
   const modules = [NAME]
@@ -230,9 +279,9 @@ export const generateCompressedModules = () => {
   return modules
     .sort((a, b) => (a.length > b.length ? 1 : -1))
     .map(full => {
-      const short = count + ABC[index]
+      const short = count + abc[index]
       ++index
-      if (index === ABC.length) {
+      if (index === abc.length) {
         index = 0
         ++count
       }

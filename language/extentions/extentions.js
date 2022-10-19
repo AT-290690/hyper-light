@@ -1324,9 +1324,7 @@ export const UNIVERSE = {
     },
     styleoption: attr => {
       let out = ''
-      for (const a in attr) {
-        out += `${a}: ${attr[a]};`
-      }
+      for (const a in attr) out += `${a}: ${attr[a]};`
       return out
     },
   },
