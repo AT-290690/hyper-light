@@ -13,7 +13,7 @@ const dfs = (tree, definitions = new Set(), excludes = new Set()) => {
     if (
       type === 'apply' &&
       operator.type === 'word' &&
-      args[0]?.name?.length > 3 &&
+      args[0]?.name?.length > 2 &&
       args[0].name[0] !== '_'
     ) {
       definitions.add(args[0].name)
