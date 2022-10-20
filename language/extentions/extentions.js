@@ -10,54 +10,6 @@ export const protolessModule = methods => {
   return env
 }
 
-const createPopUp = () => {
-  elements.popupContainer.innerHTML = ''
-  const popup = CodeMirror(elements.popupContainer)
-  elements.popupContainer.style.display = 'block'
-  return popup
-}
-
-const popUp = (
-  popup,
-  msg,
-  w = window.innerWidth / 2 - 5,
-  h = window.innerHeight / 3
-) => {
-  popup.setSize(w, h)
-  popup.setValue(msg)
-}
-
-LOGGER: (disable = 0, createPopUp, popUp) => {
-  if (disable || !createPopUp || popUp) return (msg, count) => {}
-  const popup = createPopUp()
-  popup.setSize(window.innerWidth * 1 - 20, window.innerHeight / 3)
-  let count = 0
-  return (msg, comment = '', space) => {
-    const current = popup.getValue()
-    popup.setValue(
-      `${current ? current + '\n' : ''};; ${count++} ${comment}
-${
-  msg !== VOID
-    ? typeof msg === 'string'
-      ? `"${msg}"`
-      : JSON.stringify(msg, null, space)
-          .replaceAll('{', '[')
-          .replaceAll('}', ']')
-          .replaceAll(',', '; ')
-          .replaceAll('":', '"; ')
-          .replaceAll('null', 'void')
-          .replaceAll('undefined', 'void')
-    : VOID
-}`
-    )
-    popup.setCursor(
-      popup.posToOffset({ ch: 0, line: popup.lineCount() - 1 }),
-      true
-    )
-    return msg
-  }
-}
-
 export const UNIVERSE = {
   NAME: 'UNIVERSE',
   DATE: {

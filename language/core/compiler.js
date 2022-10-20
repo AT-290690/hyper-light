@@ -182,7 +182,7 @@ const dfs = (tree, locals) => {
           )
         else {
           if (tree.operator.operator.name === '<-') {
-            const [lib, pref] = tree.args
+            const lib = tree.args[0]
             const imp =
               lib.type === 'word' ? lib.name : dfs(lib, locals).slice(0, -1)
             const methods = tree.operator.args.map(x =>
