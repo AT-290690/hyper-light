@@ -5,6 +5,7 @@ import { compress, encodeUrl } from '../../language/misc/compression.js'
 import { STD, TWO_JS_HTML } from '../../language/extentions/extentions.js'
 import { VOID } from '../../language/core/tokens.js'
 import { LZUTF8 } from '../../language/libs/lz-utf8.js'
+import { removeNoCode } from '../../language/misc/helpers.js'
 
 const editor = CodeMirror(elements.commentsSection)
 editor.setSize(window.innerWidth - 5, window.innerHeight - 5)
@@ -38,8 +39,21 @@ STD.IMP = module => {
   )
   pop.focus()
 }
+STD.COMPACT = str => removeNoCode(str)
 STD.COMPRESS = str => compress(str)
-STD.BASE64 = str => LZUTF8.compress(str, { outputEncoding: 'Base64' })
+STD.TOBASE64 = str => LZUTF8.compress(str, { outputEncoding: 'Base64' })
+STD.FROMBINARYSTRING = str =>
+  LZUTF8.decompress(str, {
+    inputEncoding: 'StorageBinaryString',
+    outputEncoding: 'String',
+  })
+STD.FROMBASE64 = str =>
+  LZUTF8.decompress(str, {
+    inputEncoding: 'Base64',
+    outputEncoding: 'String',
+  })
+STD.TOBINARYSTRING = str =>
+  LZUTF8.compress(str, { outputEncoding: 'StorageBinaryString' })
 STD.LOGGER = (disable = 0) => {
   if (disable) return (msg, count) => {}
   const popup = createPopUp()
