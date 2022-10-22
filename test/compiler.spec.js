@@ -3,10 +3,12 @@ import { compileModule } from '../language/misc/utils'
 const UTIL = `const VOID = null;
 const _tco = func => (...args) => { let result = func(...args); while (typeof result === 'function') { result = result(); }; return result };
 const _pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
+const _node = (...args) => { const [val, ...rest] = args; return { '*': val, '=>': rest ? rest.map(args => _node(args)) : VOID }}
 const _spread = (items) => Array.isArray(items[0]) ? items.reduce((acc, item) => [...acc, ...item], []) : items.reduce((acc, item) => ({ ...acc, ...item }), {});
 const _scanLeft = (array, callback) => { for (let i = 0; i < array.length; ++i) callback(array[i], i) ;return array } 
 const _scanRight = (array, callback) => {  for (let i = array.length - 1; i >= 0; --i) callback(array[i], i) ;return array }
 const call = (x, fn) => fn(x); 
+const printout = (...args) => console.log(...args);
 const protolessModule = methods => { const env = Object.create(null); for (const method in methods) env[method] = methods[method]; return env;};
 const UNIVERSE = {}`
 

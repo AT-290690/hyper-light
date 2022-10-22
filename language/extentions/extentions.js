@@ -1303,6 +1303,7 @@ export const STD = {
   _: VOID,
   null: VOID,
   NULL: VOID,
+  printout: (...args) => console.log(...args),
   IMP: module => {
     console.log(
       `<- [${Object.keys(module)
@@ -1312,18 +1313,6 @@ export const STD = {
     )
   },
   call: (x, callback) => callback(x),
-
-  curry: func => {
-    return function curried(...args) {
-      if (args.length >= func.length) {
-        return func.apply(this, args)
-      } else {
-        return function (...args2) {
-          return curried.apply(this, args.concat(args2))
-        }
-      }
-    }
-  },
   tco:
     func =>
     (...args) => {

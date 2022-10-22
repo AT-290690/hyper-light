@@ -117,6 +117,10 @@ const dfs = (tree, locals) => {
         const [param, ...rest] = tree.args.map(x => dfs(x, locals))
         return `_pipe(${rest.join(',')})(${param});`
       }
+      case '=>': {
+        const args = tree.args.map(x => dfs(x, locals))
+        return `_node(${args.join(',')});`
+      }
       case '>>': {
         const [array, callback] = tree.args.map(x => dfs(x, locals))
         return `_scanLeft(${array}, ${callback});`

@@ -333,6 +333,13 @@ const tokens = {
           ),
         }
   },
+  ['=>']: (args, env) => {
+    const [val, ...rest] = args
+    return {
+      '*': extract(val, env),
+      '=>': rest ? rest.map(x => tokens['=>'](x.args, env)) : VOID,
+    }
+  },
   ['::']: (args, env) => {
     let count = 0
     return Object.fromEntries(
