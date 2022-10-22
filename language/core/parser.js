@@ -28,12 +28,12 @@ const tailCallOpt = (children, name, parent) => {
 }
 const pipeArgs = expr => {
   const [first, ...rest] = expr.args
-  if (!rest.every(x => x.class === 'function' && x.operator.name)) {
+  if (!rest.every(x => x.class === 'function' && x.operator.name))
     throw new SyntaxError(`Non function arguments passed to a Pipe`)
-  }
-  if (!rest.every(x => x.operator.name[0] === '|')) {
+
+  if (!rest.every(x => x.operator.name[0] === '|'))
     throw new SyntaxError(`Pipe functions have to start with |`)
-  }
+
   expr.args = [
     first,
     ...rest.map(arg => ({

@@ -178,6 +178,14 @@ describe('run should work as expected', () => {
 
   it('nested pipes should work', () => {
     expect(
+      runFromText(`
+      |> [
+        10;
+        | call [-> [x; * [x; 3]]];
+        | call [-> [x; * [x; 10]]]
+      ]`)
+    ).toEqual(300)
+    expect(
       runFromText(`<- ["BINAR"; "MATH"] [UNIVERSE];
       <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
       <- ["cos"; "floor"] [MATH];

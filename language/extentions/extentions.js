@@ -1311,7 +1311,19 @@ export const STD = {
         .join(';')}] [${module.NAME}];\n`
     )
   },
+  call: (x, callback) => callback(x),
 
+  curry: func => {
+    return function curried(...args) {
+      if (args.length >= func.length) {
+        return func.apply(this, args)
+      } else {
+        return function (...args2) {
+          return curried.apply(this, args.concat(args2))
+        }
+      }
+    }
+  },
   tco:
     func =>
     (...args) => {
