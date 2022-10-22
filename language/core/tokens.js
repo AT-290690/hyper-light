@@ -181,6 +181,30 @@ const tokens = {
       `Tried setting an undefined variable: ${entityName}`
     )
   },
+  ['>>']: (args, env) => {
+    if (args.length !== 2)
+      throw new TypeError('Invalid number of arguments to >>')
+    const array = evaluate(args[0], env)
+    if (!Array.isArray(array))
+      throw new TypeError('First argument of >> must be an .: []')
+    const callback = evaluate(args[1], env)
+    if (typeof callback !== 'function')
+      throw new TypeError('Second argument of >> must be an -> []')
+    for (let i = 0; i < array.length; ++i) callback(array[i], i)
+    return array
+  },
+  ['<<']: (args, env) => {
+    if (args.length !== 2)
+      throw new TypeError('Invalid number of arguments to <<')
+    const array = evaluate(args[0], env)
+    if (!Array.isArray(array))
+      throw new TypeError('First argument of << must be an .: []')
+    const callback = evaluate(args[1], env)
+    if (typeof callback !== 'function')
+      throw new TypeError('Second argument of << must be an -> []')
+    for (let i = array.length - 1; i >= 0; --i) callback(array[i], i)
+    return array
+  },
   ['.=']: (args, env) => {
     const main = args[0]
     const last = args[args.length - 1]

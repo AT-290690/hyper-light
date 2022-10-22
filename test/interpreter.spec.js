@@ -198,4 +198,15 @@ describe('run should work as expected', () => {
          | to array []]`)
     ).toEqual([84, 100, -66, 96, 75, -15, -15, -92, -92, -92])
   })
+  it('>> and << should work', () => {
+    expect(
+      runFromText(`
+      := [out; .: []];
+      >> [.: [1; 2; 3; 4]; -> [x; i; .= [out; i; * [x; 10]]]];
+      << [.: [10; 20; 30]; -> [x; i; .= [out; i; - [. [out; i]; * [x; 0.1]]]]];
+      >> [out; -> [x; i; .= [out; i; + [x; i]]]];
+      out;
+    `)
+    ).toEqual([9, 19, 29, 43])
+  })
 })

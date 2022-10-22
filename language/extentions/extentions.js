@@ -444,9 +444,8 @@ export const UNIVERSE = {
       const typeA = typeof a,
         typeB = typeof b
       if (typeA !== typeB) return 0
-      if (typeA === 'number' || typeA === 'string' || typeA === 'boolean') {
+      if (typeA === 'number' || typeA === 'string' || typeA === 'boolean')
         return +(a === b)
-      }
       if (typeA === 'object') {
         const isArrayA = Array.isArray(a),
           isArrayB = Array.isArray(b)
@@ -460,11 +459,8 @@ export const UNIVERSE = {
           if (a === undefined || a === null || b === undefined || b === null)
             return +(a === b)
           if (Object.keys(a).length !== Object.keys(b).length) return 0
-          for (const key in a) {
-            if (!UNIVERSE.LOGIC.isequal(a[key], b[key])) {
-              return 0
-            }
-          }
+          for (const key in a)
+            if (!UNIVERSE.LOGIC.isequal(a[key], b[key])) return 0
           return 1
         }
       }
