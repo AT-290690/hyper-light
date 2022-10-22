@@ -1,9 +1,10 @@
 import { CodeMirror } from '../cell.editor.bundle.js'
 import { elements } from './common.js'
 import { compile, interpred } from './utils.js'
-import { encodeUrl } from '../../language/misc/compression.js'
+import { compress, encodeUrl } from '../../language/misc/compression.js'
 import { STD, TWO_JS_HTML } from '../../language/extentions/extentions.js'
 import { VOID } from '../../language/core/tokens.js'
+import { LZUTF8 } from '../../language/libs/lz-utf8.js'
 
 const editor = CodeMirror(elements.commentsSection)
 editor.setSize(window.innerWidth - 5, window.innerHeight - 5)
@@ -37,7 +38,8 @@ STD.IMP = module => {
   )
   pop.focus()
 }
-
+STD.COMPRESS = str => compress(str)
+STD.BASE64 = str => LZUTF8.compress(str, { outputEncoding: 'Base64' })
 STD.LOGGER = (disable = 0) => {
   if (disable) return (msg, count) => {}
   const popup = createPopUp()
