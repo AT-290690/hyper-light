@@ -70,7 +70,8 @@ ${
       : typeof msg === 'function'
       ? '-> []'
       : JSON.stringify(msg, null, space)
-          .replaceAll('{', '[')
+          .replaceAll('[', '.: [')
+          .replaceAll('{', ':: [')
           .replaceAll('}', ']')
           .replaceAll(',', '; ')
           .replaceAll('":', '"; ')
