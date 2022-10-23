@@ -82,6 +82,10 @@ make scene [:= [WIDTH; 500]; := [HEIGHT; 500]; -> [..[
 here is the link:
 https://at-290690.github.io/hyper-light/preview.html?s=PC1bIjF5IjsiM04iXVs0Rl07xBI1UyI7IjVixBdDIjsiMk7ECkciXVszTsYhMHAiOyIwbyI7IlBJIl1bMXldOzVTWzo9W2owOzUwMF07Oj1bcMcLLT5bLi7EHGkwOzAuOMUcZMQLN8ULaDA7KltQSTswLjVdxREyWTszR1swLjLHEGcwO8ZRcTA7McYKYjA7Mk5byTJhMMQyMcYNbjA7LjpbcTDGDm3NDnIw5ACOYzA75gCRbMR7Mlk7MG9baDAnM8Qia8gTcMkTZjA7K8RybMdFZTA7LcRza8QQNWLEG2EwO2YwO2UwXTsu5QCBZzA7YsYNbcUNYTBdO+UAtmbFCWHGLOUA2yvEBeQAu+UBCivEBSrkASpjxH7lAQ3lAJBkxG0/WzzELnHEWy5bcjBbMV07cjBbLTHFK2jkAJjSPzrJP8VwLcpwYjA7LuYArsUPYcQP5QCwJzXEVzBdOzNDWyc0
 
+
+## Link to Excercises:
+https://at-290690.github.io/hyper-light/learn.html
+
 ## More examples
 
 animations are also supported:
