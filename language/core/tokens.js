@@ -190,7 +190,7 @@ const tokens = {
     const callback = evaluate(args[1], env)
     if (typeof callback !== 'function')
       throw new TypeError('Second argument of >> must be an -> []')
-    for (let i = 0; i < array.length; ++i) callback(array[i], i)
+    for (let i = 0; i < array.length; ++i) callback(array[i], i, array)
     return array
   },
   ['<<']: (args, env) => {
@@ -202,7 +202,7 @@ const tokens = {
     const callback = evaluate(args[1], env)
     if (typeof callback !== 'function')
       throw new TypeError('Second argument of << must be an -> []')
-    for (let i = array.length - 1; i >= 0; --i) callback(array[i], i)
+    for (let i = array.length - 1; i >= 0; --i) callback(array[i], i, array)
     return array
   },
   ['.=']: (args, env) => {
