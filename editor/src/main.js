@@ -1,7 +1,7 @@
 import { CodeMirror } from '../cell.editor.bundle.js'
 import { elements } from './common.js'
 import { compile, interpred } from './utils.js'
-import { compress, encodeUrl } from '../../language/misc/compression.js'
+import { compress, encodeBase64 } from '../../language/misc/compression.js'
 import { STD, TWO_JS_HTML } from '../../language/extentions/extentions.js'
 import { VOID } from '../../language/core/tokens.js'
 import { LZUTF8 } from '../../language/libs/lz-utf8.js'
@@ -111,7 +111,7 @@ const openEditor = e => {
 elements.openEditorButton.addEventListener('click', openEditor)
 elements.openAppButton.addEventListener('click', openAppWindow)
 elements.key.addEventListener('click', () => {
-  const encoded = encodeUrl(editor.getValue())
+  const encoded = encodeBase64(editor.getValue())
   if (encoded)
     window.open(location.href + 'preview.html?s=' + encoded, '_blank').focus()
 })

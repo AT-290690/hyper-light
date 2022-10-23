@@ -46,10 +46,10 @@ export const compress = source => {
       (acc, item) => {
         if (item === ']') acc.occurance++
         else {
-          if (acc.occurance === 1) {
-            acc.result += ']'
+          if (acc.occurance < 3) {
+            acc.result += ']'.repeat(acc.occurance)
             acc.occurance = 0
-          } else if (acc.occurance > 1) {
+          } else {
             acc.result += "'" + acc.occurance
             acc.occurance = 0
           }
@@ -92,10 +92,10 @@ export const decompress = source => {
     result = result.replaceAll(new RegExp(`\\b${short}\\b`, 'g'), full)
   return result
 }
-export const encodeUrl = source =>
+export const encodeBase64 = source =>
   LZUTF8.compress(compress(source).trim(), { outputEncoding: 'Base64' })
 
-export const decodeUrl = source =>
+export const decodeBase64 = source =>
   decompress(
     LZUTF8.decompress(source.trim(), {
       inputEncoding: 'Base64',

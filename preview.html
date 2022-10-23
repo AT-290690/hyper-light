@@ -16,7 +16,7 @@
     referrerpolicy="no-referrer"
   ></script>
   <script type="module">
-    import { decodeUrl } from './language/misc/compression.js'
+    import { decodeBase64 } from './language/misc/compression.js'
     import { compileToJs } from './language/core/compiler.js'
     import {
       treeShake,
@@ -28,7 +28,7 @@
     const shortModules = generateCompressedModules()
     const inlined = wrapInBody(
       removeNoCode(
-        decodeUrl(
+        decodeBase64(
           location.href.split('preview.html')[1].trim().replace('?s=', '')
         )
       )
