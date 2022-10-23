@@ -86,7 +86,7 @@ https://at-290690.github.io/hyper-light/preview.html?s=PC1bIjF5IjsiM04iXVs0Rl07x
 ## Web Code Editor:
 https://at-290690.github.io/hyper-light/index.html
 
-## Link to Excercises:
+## Excercises:
 https://at-290690.github.io/hyper-light/learn.html
 
 ## More examples
