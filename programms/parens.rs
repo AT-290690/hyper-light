@@ -1,4 +1,4 @@
-<- ["BINAR"; "ARRAY"; "LOGIC"] [UNIVERSE]; 
+<- ["BINAR"; "ARRAY"; "LOGIC"] [LIBRARY]; 
 <- ["*"] [BINAR]; 
 
 := [isvalidparens; -> [input; 

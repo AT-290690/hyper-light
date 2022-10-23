@@ -1,4 +1,4 @@
-<- ["MATH"; "SKETCH"; "ARRAY"] [UNIVERSE];
+<- ["MATH"; "SKETCH"; "ARRAY"] [LIBRARY];
 <- ["forof"; "range"; "map1"] [ARRAY];
 <- ["lerp"; "floor"] [MATH];
 <- ["makescene"; "makegroup"; "insertintogroup"; 

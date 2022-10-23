@@ -10,8 +10,8 @@ export const protolessModule = methods => {
   return env
 }
 
-export const UNIVERSE = {
-  NAME: 'UNIVERSE',
+export const LIBRARY = {
+  NAME: 'LIBRARY',
   DATE: {
     NAME: 'DATE',
     formattolocal: (date, format) => date.toLocaleDateString(format),
@@ -63,12 +63,12 @@ export const UNIVERSE = {
     PATH: {
       NAME: 'PATH',
       pathfrom: points => {
-        const path = UNIVERSE.SKETCH.engine.makePath(...points)
+        const path = LIBRARY.SKETCH.engine.makePath(...points)
         path.closed = false
         return path
       },
       makepath: (...points) => {
-        const path = UNIVERSE.SKETCH.engine.makePath(...points)
+        const path = LIBRARY.SKETCH.engine.makePath(...points)
         path.closed = false
         return path
       },
@@ -110,22 +110,22 @@ export const UNIVERSE = {
       rotate: (vec, angle) => vec.rotate(angle),
     },
     background: (color = 'var(--background-primary)') =>
-      (UNIVERSE.SKETCH.CANVAS_CONTAINER.firstChild.style.background = color),
+      (LIBRARY.SKETCH.CANVAS_CONTAINER.firstChild.style.background = color),
     requestanimationframe: fn => (animation = requestAnimationFrame(fn)),
     destroycomposition: () => {
-      UNIVERSE.SKETCH.CANVAS_CONTAINER.style.background =
+      LIBRARY.SKETCH.CANVAS_CONTAINER.style.background =
         'var(--background-primary)'
-      UNIVERSE.SKETCH.CANVAS_CONTAINER.innerHTML = ''
-      UNIVERSE.SKETCH.engine?.removeEventListener('update')
+      LIBRARY.SKETCH.CANVAS_CONTAINER.innerHTML = ''
+      LIBRARY.SKETCH.engine?.removeEventListener('update')
     },
     makescene: (width = 100, height = 100, callback) => {
-      UNIVERSE.SKETCH.engine?.removeEventListener('update')
-      UNIVERSE.SKETCH.CANVAS_CONTAINER =
+      LIBRARY.SKETCH.engine?.removeEventListener('update')
+      LIBRARY.SKETCH.CANVAS_CONTAINER =
         document.getElementById('canvas-container')
-      UNIVERSE.SKETCH.engine = new Two({
+      LIBRARY.SKETCH.engine = new Two({
         width,
         height,
-      }).appendTo(UNIVERSE.SKETCH.CANVAS_CONTAINER)
+      }).appendTo(LIBRARY.SKETCH.CANVAS_CONTAINER)
       callback()
       return 'Scene created!'
     },
@@ -139,7 +139,7 @@ export const UNIVERSE = {
     },
     removefromgroup: item => {
       item.parent.remove(item)
-      UNIVERSE.SKETCH.engine.add(item)
+      LIBRARY.SKETCH.engine.add(item)
       return item
     },
     removefromscene: item => {
@@ -148,59 +148,59 @@ export const UNIVERSE = {
     },
     groupadditions: group => group.additions,
     groupchildren: group => group.children,
-    width: (ratio = 1) => UNIVERSE.SKETCH.engine.width * ratio,
-    height: (ratio = 1) => UNIVERSE.SKETCH.engine.height * ratio,
-    add: (...elements) => UNIVERSE.SKETCH.engine.add(...elements),
-    clear: () => UNIVERSE.SKETCH.engine.clear(),
-    ignore: (...args) => UNIVERSE.SKETCH.engine.ignore(...args),
+    width: (ratio = 1) => LIBRARY.SKETCH.engine.width * ratio,
+    height: (ratio = 1) => LIBRARY.SKETCH.engine.height * ratio,
+    add: (...elements) => LIBRARY.SKETCH.engine.add(...elements),
+    clear: () => LIBRARY.SKETCH.engine.clear(),
+    ignore: (...args) => LIBRARY.SKETCH.engine.ignore(...args),
     interpret: index =>
-      UNIVERSE.SKETCH.engine.interpret(document.getElementById(index)),
-    listen: (...args) => UNIVERSE.SKETCH.engine.listen(...args),
-    load: (...args) => UNIVERSE.SKETCH.engine.load(...args),
-    makearcsegment: (...args) => UNIVERSE.SKETCH.engine.makeArcSegment(...args),
-    makearrow: (...args) => UNIVERSE.SKETCH.engine.makeArrow(...args),
-    makecircle: (x, y, r) => UNIVERSE.SKETCH.engine.makeCircle(x, y, r),
-    makecurve: (...points) => UNIVERSE.SKETCH.engine.makeCurve(...points),
-    makeellipse: (...args) => UNIVERSE.SKETCH.engine.makeEllipse(...args),
-    makegroup: (...args) => UNIVERSE.SKETCH.engine.makeGroup(...args),
+      LIBRARY.SKETCH.engine.interpret(document.getElementById(index)),
+    listen: (...args) => LIBRARY.SKETCH.engine.listen(...args),
+    load: (...args) => LIBRARY.SKETCH.engine.load(...args),
+    makearcsegment: (...args) => LIBRARY.SKETCH.engine.makeArcSegment(...args),
+    makearrow: (...args) => LIBRARY.SKETCH.engine.makeArrow(...args),
+    makecircle: (x, y, r) => LIBRARY.SKETCH.engine.makeCircle(x, y, r),
+    makecurve: (...points) => LIBRARY.SKETCH.engine.makeCurve(...points),
+    makeellipse: (...args) => LIBRARY.SKETCH.engine.makeEllipse(...args),
+    makegroup: (...args) => LIBRARY.SKETCH.engine.makeGroup(...args),
     makeimagesequence: (...args) =>
-      UNIVERSE.SKETCH.engine.makeImageSequence(...args),
+      LIBRARY.SKETCH.engine.makeImageSequence(...args),
     makeline: (x1, y1, x2, y2, color = 'white') => {
-      const line = UNIVERSE.SKETCH.engine.makeLine(x1, y1, x2, y2)
+      const line = LIBRARY.SKETCH.engine.makeLine(x1, y1, x2, y2)
       line.stroke = color
       return line
     },
     makelineargradient: (...args) =>
-      UNIVERSE.SKETCH.engine.makeLinearGradient(...args),
-    makepath: (...args) => UNIVERSE.SKETCH.engine.makePath(...args),
-    makepoints: (...args) => UNIVERSE.SKETCH.engine.makePoints(...args),
-    makepolygon: (...args) => UNIVERSE.SKETCH.engine.makePolygon(...args),
+      LIBRARY.SKETCH.engine.makeLinearGradient(...args),
+    makepath: (...args) => LIBRARY.SKETCH.engine.makePath(...args),
+    makepoints: (...args) => LIBRARY.SKETCH.engine.makePoints(...args),
+    makepolygon: (...args) => LIBRARY.SKETCH.engine.makePolygon(...args),
     makeradialgradient: (...args) =>
-      UNIVERSE.SKETCH.engine.makeRadialGradient(...args),
+      LIBRARY.SKETCH.engine.makeRadialGradient(...args),
     makerectangle: (x, y, w, h) =>
-      UNIVERSE.SKETCH.engine.makeRectangle(x, y, w, h),
+      LIBRARY.SKETCH.engine.makeRectangle(x, y, w, h),
     makeroundedrectangle: (...args) =>
-      UNIVERSE.SKETCH.engine.makeRoundedRectangle(...args),
-    makesprite: (...args) => UNIVERSE.SKETCH.engine.makeSprite(...args),
-    makestar: (...args) => UNIVERSE.SKETCH.engine.makeStar(...args),
-    maketext: (...args) => UNIVERSE.SKETCH.engine.makeText(...args),
-    maketexture: (...args) => UNIVERSE.SKETCH.engine.makeTexture(...args),
-    on: (...args) => UNIVERSE.SKETCH.engine.on(...args),
-    off: (...args) => UNIVERSE.SKETCH.engine.off(...args),
+      LIBRARY.SKETCH.engine.makeRoundedRectangle(...args),
+    makesprite: (...args) => LIBRARY.SKETCH.engine.makeSprite(...args),
+    makestar: (...args) => LIBRARY.SKETCH.engine.makeStar(...args),
+    maketext: (...args) => LIBRARY.SKETCH.engine.makeText(...args),
+    maketexture: (...args) => LIBRARY.SKETCH.engine.makeTexture(...args),
+    on: (...args) => LIBRARY.SKETCH.engine.on(...args),
+    off: (...args) => LIBRARY.SKETCH.engine.off(...args),
     pause: (...args) => {
-      UNIVERSE.SKETCH.engine.pause(...args)
+      LIBRARY.SKETCH.engine.pause(...args)
       return 'Paused!'
     },
     play: (...args) => {
-      UNIVERSE.SKETCH.engine.play(...args)
+      LIBRARY.SKETCH.engine.play(...args)
       return 'Playing!'
     },
-    release: (...args) => UNIVERSE.SKETCH.engine.release(...args),
-    remove: (...args) => UNIVERSE.SKETCH.engine.remove(...args),
-    setplaying: (...args) => UNIVERSE.SKETCH.engine.setPlaying(...args),
-    trigger: (...args) => UNIVERSE.SKETCH.engine.trigger(...args),
+    release: (...args) => LIBRARY.SKETCH.engine.release(...args),
+    remove: (...args) => LIBRARY.SKETCH.engine.remove(...args),
+    setplaying: (...args) => LIBRARY.SKETCH.engine.setPlaying(...args),
+    trigger: (...args) => LIBRARY.SKETCH.engine.trigger(...args),
     update: (...args) => {
-      UNIVERSE.SKETCH.engine.update(...args)
+      LIBRARY.SKETCH.engine.update(...args)
       return 'Updated!'
     },
     nofill: entity => {
@@ -213,16 +213,16 @@ export const UNIVERSE = {
     },
     draw: (lifespan, callback) => {
       if (callback && typeof callback === 'function') {
-        UNIVERSE.SKETCH.engine.bind('update', callback)
+        LIBRARY.SKETCH.engine.bind('update', callback)
         setTimeout(() => {
-          UNIVERSE.SKETCH.engine.unbind('update', callback)
-          UNIVERSE.SKETCH.engine.removeEventListener('update')
+          LIBRARY.SKETCH.engine.unbind('update', callback)
+          LIBRARY.SKETCH.engine.removeEventListener('update')
         }, 1000 * lifespan)
       }
     },
 
     setscreensize: (w, h, showBorder = true) => {
-      const svg = UNIVERSE.SKETCH.CANVAS_CONTAINER.firstChild
+      const svg = LIBRARY.SKETCH.CANVAS_CONTAINER.firstChild
       svg.setAttribute('width', w)
       svg.setAttribute('height', h)
       if (showBorder) svg.style.border = '1px solid lime'
@@ -453,14 +453,14 @@ export const UNIVERSE = {
         if (isArrayA && isArrayB) {
           if (a.length !== b.length) return 0
           return +a.every((item, index) =>
-            UNIVERSE.LOGIC.isequal(item, b[index])
+            LIBRARY.LOGIC.isequal(item, b[index])
           )
         } else {
           if (a === undefined || a === null || b === undefined || b === null)
             return +(a === b)
           if (Object.keys(a).length !== Object.keys(b).length) return 0
           for (const key in a)
-            if (!UNIVERSE.LOGIC.isequal(a[key], b[key])) return 0
+            if (!LIBRARY.LOGIC.isequal(a[key], b[key])) return 0
           return 1
         }
       }
@@ -478,18 +478,14 @@ export const UNIVERSE = {
         if (isArrayA !== isArrayB) return 0
         if (isArrayA && isArrayB) {
           return a.length < b.length
-            ? +a.every((item, index) =>
-                UNIVERSE.LOGIC.issimilar(item, b[index])
-              )
-            : +b.every((item, index) =>
-                UNIVERSE.LOGIC.issimilar(item, a[index])
-              )
+            ? +a.every((item, index) => LIBRARY.LOGIC.issimilar(item, b[index]))
+            : +b.every((item, index) => LIBRARY.LOGIC.issimilar(item, a[index]))
         } else {
           if (a === undefined || a === null || b === undefined || b === null)
             return +(a === b)
           const less = Object.keys(a) > Object.keys(b) ? b : a
           for (const key in less) {
-            if (!UNIVERSE.LOGIC.issimilar(a[key], b[key])) {
+            if (!LIBRARY.LOGIC.issimilar(a[key], b[key])) {
               return 0
             }
           }
@@ -510,7 +506,7 @@ export const UNIVERSE = {
     invert: val => +!val,
     ishaving: (obj, ...props) => +props.every(x => x in obj),
     areequal: (item, ...args) =>
-      +args.every(current => UNIVERSE.LOGIC.isequal(item, current)),
+      +args.every(current => LIBRARY.LOGIC.isequal(item, current)),
   },
   LOOP: {
     NAME: 'LOOP',
@@ -644,8 +640,7 @@ export const UNIVERSE = {
         const dim = dimensions[0]
         const rest = dimensions.slice(1)
         const arr = []
-        for (let i = 0; i < dim; ++i)
-          arr[i] = UNIVERSE.ARRAY.makematrix(...rest)
+        for (let i = 0; i < dim; ++i) arr[i] = LIBRARY.ARRAY.makematrix(...rest)
         return arr
       } else return VOID
     },
@@ -745,197 +740,195 @@ export const UNIVERSE = {
     offsetleft: entity => (entity.left.length - 1) * -1,
     offsetright: entity => entity.right.length,
     negativeZero: Symbol('-0'),
-    makebinar: () => ({ left: [UNIVERSE.BINAR.negativeZero], right: [] }),
+    makebinar: () => ({ left: [LIBRARY.BINAR.negativeZero], right: [] }),
     length: entity => entity.left.length + entity.right.length - 1,
     clear: entity => {
-      entity.left = [UNIVERSE.BINAR.negativeZero]
+      entity.left = [LIBRARY.BINAR.negativeZero]
       entity.right = []
       return entity
     },
-    zeroes: size => UNIVERSE.BINAR.from(new Array(size).fill(0)),
-    ones: size => UNIVERSE.BINAR.from(new Array(size).fill(1)),
+    zeroes: size => LIBRARY.BINAR.from(new Array(size).fill(0)),
+    ones: size => LIBRARY.BINAR.from(new Array(size).fill(1)),
     flatten: (collection, levels, flat) =>
-      UNIVERSE.BINAR.to(
+      LIBRARY.BINAR.to(
         collection,
         (acc, current) => {
-          if (UNIVERSE.BINAR.isbinar(current))
-            acc.push(...UNIVERSE.BINAR.toarray(flat(current, levels)))
+          if (LIBRARY.BINAR.isbinar(current))
+            acc.push(...LIBRARY.BINAR.toarray(flat(current, levels)))
           else acc.push(current)
           return acc
         },
         []
       ),
     get: (entity, offset) => {
-      const offsetIndex = offset + UNIVERSE.BINAR.offsetleft(entity)
+      const offsetIndex = offset + LIBRARY.BINAR.offsetleft(entity)
       const index = offsetIndex < 0 ? offsetIndex * -1 : offsetIndex
       return offsetIndex >= 0 ? entity.right[index] : entity.left[index]
     },
     at: (entity, index) => {
       if (index < 0)
-        return UNIVERSE.BINAR.get(entity, UNIVERSE.BINAR.length(entity) + index)
-      else return UNIVERSE.BINAR.get(entity, index)
+        return LIBRARY.BINAR.get(entity, LIBRARY.BINAR.length(entity) + index)
+      else return LIBRARY.BINAR.get(entity, index)
     },
     set: (entity, index, value) => {
-      const offset = index + UNIVERSE.BINAR.offsetleft(entity)
+      const offset = index + LIBRARY.BINAR.offsetleft(entity)
       if (offset >= 0) entity.right[offset] = value
       else entity.left[offset * -1] = value
     },
-    first: entity => UNIVERSE.BINAR.get(entity, 0),
-    last: entity =>
-      UNIVERSE.BINAR.get(entity, UNIVERSE.BINAR.length(entity) - 1),
+    first: entity => LIBRARY.BINAR.get(entity, 0),
+    last: entity => LIBRARY.BINAR.get(entity, LIBRARY.BINAR.length(entity) - 1),
     toarray: entity => {
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       const out = []
-      for (let i = 0; i < len; ++i) out.push(UNIVERSE.BINAR.get(entity, i))
+      for (let i = 0; i < len; ++i) out.push(LIBRARY.BINAR.get(entity, i))
       return out
     },
     toarraydeep: entity => {
-      return UNIVERSE.BINAR.isbinar(entity)
-        ? UNIVERSE.BINAR.toarray(
-            UNIVERSE.BINAR.map(entity, item =>
-              UNIVERSE.BINAR.isbinar(item)
-                ? UNIVERSE.BINAR.some(item, UNIVERSE.BINAR.isbinar)
-                  ? UNIVERSE.BINAR.toarraydeep(item)
-                  : UNIVERSE.BINAR.toarray(item)
+      return LIBRARY.BINAR.isbinar(entity)
+        ? LIBRARY.BINAR.toarray(
+            LIBRARY.BINAR.map(entity, item =>
+              LIBRARY.BINAR.isbinar(item)
+                ? LIBRARY.BINAR.some(item, LIBRARY.BINAR.isbinar)
+                  ? LIBRARY.BINAR.toarraydeep(item)
+                  : LIBRARY.BINAR.toarray(item)
                 : item
             )
           )
         : entity
     },
     copy: entity => {
-      const lem = UNIVERSE.BINAR.length(entity)
-      const out = UNIVERSE.BINAR.makebinar()
+      const lem = LIBRARY.BINAR.length(entity)
+      const out = LIBRARY.BINAR.makebinar()
       const half = (lem / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
-        UNIVERSE.BINAR.addtoleft(out, UNIVERSE.BINAR.get(entity, i))
+        LIBRARY.BINAR.addtoleft(out, LIBRARY.BINAR.get(entity, i))
       for (let i = half; i < lem; ++i)
-        UNIVERSE.BINAR.addtoright(out, UNIVERSE.BINAR.get(entity, i))
+        LIBRARY.BINAR.addtoright(out, LIBRARY.BINAR.get(entity, i))
       return out
     },
     isbinar: entity =>
       typeof entity === 'object' &&
       'left' in entity &&
-      entity.left[0] === UNIVERSE.BINAR.negativeZero,
+      entity.left[0] === LIBRARY.BINAR.negativeZero,
     isbalanced: entity =>
-      UNIVERSE.BINAR.offsetright(entity) + UNIVERSE.BINAR.offsetleft(entity) ===
+      LIBRARY.BINAR.offsetright(entity) + LIBRARY.BINAR.offsetleft(entity) ===
       0,
     balance: entity => {
-      if (UNIVERSE.BINAR.isbalanced(entity)) return entity
-      const initial = UNIVERSE.BINAR.toarray(entity)
-      UNIVERSE.BINAR.clear(entity)
+      if (LIBRARY.BINAR.isbalanced(entity)) return entity
+      const initial = LIBRARY.BINAR.toarray(entity)
+      LIBRARY.BINAR.clear(entity)
       const half = (initial.length / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
-        UNIVERSE.BINAR.addtoleft(entity, initial[i])
+        LIBRARY.BINAR.addtoleft(entity, initial[i])
       for (let i = half; i < initial.length; ++i)
-        UNIVERSE.BINAR.addtoright(entity, initial[i])
+        LIBRARY.BINAR.addtoright(entity, initial[i])
       return entity
     },
     addtoleft: (entity, item) => entity.left.push(item),
     addtoright: (entity, item) => entity.right.push(item),
     removefromleft: entity => {
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       if (len) {
-        if (len === 1) UNIVERSE.BINAR.clear(entity)
+        if (len === 1) LIBRARY.BINAR.clear(entity)
         else if (entity.left.length > 0) entity.left.length--
       }
     },
     removefromright: entity => {
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       if (len) {
-        if (len === 1) UNIVERSE.BINAR.clear(entity)
+        if (len === 1) LIBRARY.BINAR.clear(entity)
         else if (entity.right.length > 0) entity.right.length--
       }
     },
     fill: (entity, ...initial) => {
       const half = (initial.length / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
-        UNIVERSE.BINAR.addtoleft(entity, initial[i])
+        LIBRARY.BINAR.addtoleft(entity, initial[i])
       for (let i = half; i < initial.length; ++i)
-        UNIVERSE.BINAR.addtoright(entity, initial[i])
+        LIBRARY.BINAR.addtoright(entity, initial[i])
       return entity
     },
-    from: initial =>
-      UNIVERSE.BINAR.fill(UNIVERSE.BINAR.makebinar(), ...initial),
+    from: initial => LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...initial),
     makebinarwith: (...intilal) =>
-      UNIVERSE.BINAR.fill(UNIVERSE.BINAR.makebinar(), ...intilal),
+      LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...intilal),
     map: (entity, callback) => {
-      const result = UNIVERSE.BINAR.makebinar()
-      const len = UNIVERSE.BINAR.length(entity)
+      const result = LIBRARY.BINAR.makebinar()
+      const len = LIBRARY.BINAR.length(entity)
       const half = (len / 2) | 0.5
       for (let i = half - 1; i >= 0; i--)
-        UNIVERSE.BINAR.addtoleft(
+        LIBRARY.BINAR.addtoleft(
           result,
-          callback(UNIVERSE.BINAR.get(entity, i), i, entity)
+          callback(LIBRARY.BINAR.get(entity, i), i, entity)
         )
       for (let i = half; i < len; ++i)
-        UNIVERSE.BINAR.addtoright(
+        LIBRARY.BINAR.addtoright(
           result,
-          callback(UNIVERSE.BINAR.get(entity, i), i, entity)
+          callback(LIBRARY.BINAR.get(entity, i), i, entity)
         )
       return result
     },
     filter: (entity, callback) => {
       const out = []
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       for (let i = 0; i < len; ++i) {
-        const current = UNIVERSE.BINAR.get(entity, i)
+        const current = LIBRARY.BINAR.get(entity, i)
         const predicat = callback(current, i, entity)
         if (predicat) out.push(current)
       }
-      return UNIVERSE.BINAR.fill(UNIVERSE.BINAR.makebinar(), ...out)
+      return LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...out)
     },
     some: (entity, callback) => {
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       for (let i = 0; i < len; i += 1)
-        if (callback(UNIVERSE.BINAR.get(entity, i), i, entity)) return true
+        if (callback(LIBRARY.BINAR.get(entity, i), i, entity)) return true
       return false
     },
     every: (entity, callback) => {
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       for (let i = 0; i < len; i += 1)
         if (
-          i >= UNIVERSE.BINAR.length(entity) ||
-          !callback(UNIVERSE.BINAR.get(entity, i), i, entity)
+          i >= LIBRARY.BINAR.length(entity) ||
+          !callback(LIBRARY.BINAR.get(entity, i), i, entity)
         )
           return false
       return true
     },
     findfirst: (entity, callback) => {
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       for (let i = 0; i < len; i += 1) {
-        const current = UNIVERSE.BINAR.get(entity, i)
+        const current = LIBRARY.BINAR.get(entity, i)
         if (callback(current, i, entity)) return current
       }
     },
     findlast: (entity, callback) => {
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       for (let i = len - 1; i >= 0; i -= 1) {
-        const current = UNIVERSE.BINAR.get(entity, i)
+        const current = LIBRARY.BINAR.get(entity, i)
         if (callback(current, i, entity)) return current
       }
     },
     scan: (entity, callback, dir = 1) => {
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       if (dir === -1)
         for (let i = len; i >= 0; i -= 1)
-          callback(UNIVERSE.BINAR.get(entity, i), i, entity)
+          callback(LIBRARY.BINAR.get(entity, i), i, entity)
       else
         for (let i = 0; i < len; i += 1)
-          callback(UNIVERSE.BINAR.get(entity, i), i, entity)
+          callback(LIBRARY.BINAR.get(entity, i), i, entity)
       return entity
     },
     each: (entity, callback) => {
-      const len = UNIVERSE.BINAR.length(entity)
-      for (let i = 0; i < len; i += 1) callback(UNIVERSE.BINAR.get(entity, i))
+      const len = LIBRARY.BINAR.length(entity)
+      for (let i = 0; i < len; i += 1) callback(LIBRARY.BINAR.get(entity, i))
       return entity
     },
     reverse: entity => {
-      const len = UNIVERSE.BINAR.length(entity)
+      const len = LIBRARY.BINAR.length(entity)
       if (len <= 2) {
         if (len === 1) return entity
-        const temp = UNIVERSE.BINAR.get(entity, 0)
-        UNIVERSE.BINAR.set(entity, 0, UNIVERSE.BINAR.get(entity, 1))
-        UNIVERSE.BINAR.set(entity, 1, temp)
+        const temp = LIBRARY.BINAR.get(entity, 0)
+        LIBRARY.BINAR.set(entity, 0, LIBRARY.BINAR.get(entity, 1))
+        LIBRARY.BINAR.set(entity, 1, temp)
         return entity
       }
       const left = entity.left
@@ -948,160 +941,156 @@ export const UNIVERSE = {
     isempty: entity => (entity.left.length + entity.right.length === 1 ? 1 : 0),
     isinbounds: (entity, index) => index >= 0 && index < entity.length,
     getinbounds: (entity, index) =>
-      UNIVERSE.BINAR.get(
+      LIBRARY.BINAR.get(
         entity,
-        UNIVERSE.MATH.clamp(index, 0, UNIVERSE.BINAR.length(entity) - 1)
+        LIBRARY.MATH.clamp(index, 0, LIBRARY.BINAR.length(entity) - 1)
       ),
     append: (entity, item) => {
-      UNIVERSE.BINAR.addtoright(entity, item)
+      LIBRARY.BINAR.addtoright(entity, item)
       return entity
     },
     prepend: (entity, item) => {
-      UNIVERSE.BINAR.addtoleft(entity, item)
+      LIBRARY.BINAR.addtoleft(entity, item)
       return entity
     },
     cut: entity => {
-      if (UNIVERSE.BINAR.offsetright(entity) === 0)
-        UNIVERSE.BINAR.balance(entity)
-      const out = UNIVERSE.BINAR.last(entity)
-      UNIVERSE.BINAR.removefromright(entity)
+      if (LIBRARY.BINAR.offsetright(entity) === 0) LIBRARY.BINAR.balance(entity)
+      const out = LIBRARY.BINAR.last(entity)
+      LIBRARY.BINAR.removefromright(entity)
       return out
     },
     chop: entity => {
-      if (UNIVERSE.BINAR.offsetleft(entity) === 0)
-        UNIVERSE.BINAR.balance(entity)
-      const out = UNIVERSE.BINAR.first(entity)
-      UNIVERSE.BINAR.removefromleft(entity)
+      if (LIBRARY.BINAR.offsetleft(entity) === 0) LIBRARY.BINAR.balance(entity)
+      const out = LIBRARY.BINAR.first(entity)
+      LIBRARY.BINAR.removefromleft(entity)
       return out
     },
     head: entity => {
-      if (UNIVERSE.BINAR.offsetright(entity) === 0)
-        UNIVERSE.BINAR.balance(entity)
-      UNIVERSE.BINAR.removefromright(entity)
+      if (LIBRARY.BINAR.offsetright(entity) === 0) LIBRARY.BINAR.balance(entity)
+      LIBRARY.BINAR.removefromright(entity)
       return entity
     },
     tail: entity => {
-      if (UNIVERSE.BINAR.offsetleft(entity) === 0)
-        UNIVERSE.BINAR.balance(entity)
-      UNIVERSE.BINAR.removefromleft(entity)
+      if (LIBRARY.BINAR.offsetleft(entity) === 0) LIBRARY.BINAR.balance(entity)
+      LIBRARY.BINAR.removefromleft(entity)
       return entity
     },
     to: (entity, callback, initial) => {
-      initial = initial ?? UNIVERSE.BINAR.makebinar()
-      const len = UNIVERSE.BINAR.length(entity)
+      initial = initial ?? LIBRARY.BINAR.makebinar()
+      const len = LIBRARY.BINAR.length(entity)
       for (let i = 0; i < len; i += 1)
-        initial = callback(initial, UNIVERSE.BINAR.get(entity, i), i, entity)
+        initial = callback(initial, LIBRARY.BINAR.get(entity, i), i, entity)
       return initial
     },
     rotateleft: (entity, n = 1) => {
-      n = n % UNIVERSE.BINAR.length(entity)
+      n = n % LIBRARY.BINAR.length(entity)
       for (let i = 0; i < n; i += 1) {
-        if (UNIVERSE.BINAR.offsetleft(entity) === 0)
-          UNIVERSE.BINAR.balance(entity)
-        UNIVERSE.BINAR.addtoright(entity, UNIVERSE.BINAR.first(entity))
-        UNIVERSE.BINAR.removefromleft(entity)
+        if (LIBRARY.BINAR.offsetleft(entity) === 0)
+          LIBRARY.BINAR.balance(entity)
+        LIBRARY.BINAR.addtoright(entity, LIBRARY.BINAR.first(entity))
+        LIBRARY.BINAR.removefromleft(entity)
       }
       return entity
     },
     rotateright: (entity, n = 1) => {
-      n = n % UNIVERSE.BINAR.length(entity)
+      n = n % LIBRARY.BINAR.length(entity)
       for (let i = 0; i < n; i += 1) {
-        if (UNIVERSE.BINAR.offsetright(entity) === 0)
-          UNIVERSE.BINAR.balance(entity)
-        UNIVERSE.BINAR.addtoleft(entity, UNIVERSE.BINAR.last(entity))
-        UNIVERSE.BINAR.removefromright(entity)
+        if (LIBRARY.BINAR.offsetright(entity) === 0)
+          LIBRARY.BINAR.balance(entity)
+        LIBRARY.BINAR.addtoleft(entity, LIBRARY.BINAR.last(entity))
+        LIBRARY.BINAR.removefromright(entity)
       }
       return entity
     },
     rotate: (entity, n = 1, direction = 1) => {
       return direction === 1
-        ? UNIVERSE.BINAR.rotateright(entity, n)
-        : UNIVERSE.BINAR.rotateleft(entity, n)
+        ? LIBRARY.BINAR.rotateright(entity, n)
+        : LIBRARY.BINAR.rotateleft(entity, n)
     },
     flat: (entity, levels = 1) => {
       const flat =
         levels === Infinity
-          ? collection => UNIVERSE.BINAR.flatten(collection, levels, flat)
+          ? collection => LIBRARY.BINAR.flatten(collection, levels, flat)
           : (collection, levels) => {
               levels -= 1
               return levels === -1
                 ? collection
-                : UNIVERSE.BINAR.flatten(collection, levels, flat)
+                : LIBRARY.BINAR.flatten(collection, levels, flat)
             }
-      return UNIVERSE.BINAR.fill(
-        UNIVERSE.BINAR.makebinar(),
+      return LIBRARY.BINAR.fill(
+        LIBRARY.BINAR.makebinar(),
         ...flat(entity, levels)
       )
     },
     swap: (entity, i1, i2) => {
-      const temp = UNIVERSE.BINAR.get(entity, i1)
-      UNIVERSE.BINAR.set(entity, i1, UNIVERSE.BINAR.get(entity, i2))
-      UNIVERSE.BINAR.set(entity, i2, temp)
+      const temp = LIBRARY.BINAR.get(entity, i1)
+      LIBRARY.BINAR.set(entity, i1, LIBRARY.BINAR.get(entity, i2))
+      LIBRARY.BINAR.set(entity, i2, temp)
       return entity
     },
     swapremoveRight: (entity, index) => {
-      UNIVERSE.BINAR.set(entity, index, UNIVERSE.BINAR.cut(entity))
+      LIBRARY.BINAR.set(entity, index, LIBRARY.BINAR.cut(entity))
       return entity
     },
     swapremoveLeft: (entity, index) => {
-      UNIVERSE.BINAR.set(entity, index, UNIVERSE.BINAR.chop(entity))
+      LIBRARY.BINAR.set(entity, index, LIBRARY.BINAR.chop(entity))
       return entity
     },
-    compact: entity => UNIVERSE.BINAR.filter(entity, Boolean),
+    compact: entity => LIBRARY.BINAR.filter(entity, Boolean),
     union: (entity, b) => {
       const a = entity
-      const out = UNIVERSE.BINAR.makebinar()
-      const A = new Set(UNIVERSE.BINAR.toarray(a))
-      const B = new Set(UNIVERSE.BINAR.toarray(b))
-      A.forEach(item => UNIVERSE.BINAR.append(out, item))
-      B.forEach(item => UNIVERSE.BINAR.append(out, item))
-      return UNIVERSE.BINAR.balance(out)
+      const out = LIBRARY.BINAR.makebinar()
+      const A = new Set(LIBRARY.BINAR.toarray(a))
+      const B = new Set(LIBRARY.BINAR.toarray(b))
+      A.forEach(item => LIBRARY.BINAR.append(out, item))
+      B.forEach(item => LIBRARY.BINAR.append(out, item))
+      return LIBRARY.BINAR.balance(out)
     },
     symetricdifference: (entity, b) => {
       const a = entity
-      const out = UNIVERSE.BINAR.makebinar()
-      const A = new Set(UNIVERSE.BINAR.toarray(a))
-      const B = new Set(UNIVERSE.BINAR.toarray(b))
-      B.forEach(item => !A.has(item) && UNIVERSE.BINAR.append(out, item))
-      A.forEach(item => !B.has(item) && UNIVERSE.BINAR.append(out, item))
-      return UNIVERSE.BINAR.balance(out)
+      const out = LIBRARY.BINAR.makebinar()
+      const A = new Set(LIBRARY.BINAR.toarray(a))
+      const B = new Set(LIBRARY.BINAR.toarray(b))
+      B.forEach(item => !A.has(item) && LIBRARY.BINAR.append(out, item))
+      A.forEach(item => !B.has(item) && LIBRARY.BINAR.append(out, item))
+      return LIBRARY.BINAR.balance(out)
     },
     intersection: (entity, b) => {
       const a = entity
-      const out = UNIVERSE.BINAR.makebinar()
-      const A = new Set(UNIVERSE.BINAR.toarray(a))
-      const B = new Set(UNIVERSE.BINAR.toarray(b))
-      B.forEach(item => A.has(item) && UNIVERSE.BINAR.append(out, item))
-      return UNIVERSE.BINAR.balance(out)
+      const out = LIBRARY.BINAR.makebinar()
+      const A = new Set(LIBRARY.BINAR.toarray(a))
+      const B = new Set(LIBRARY.BINAR.toarray(b))
+      B.forEach(item => A.has(item) && LIBRARY.BINAR.append(out, item))
+      return LIBRARY.BINAR.balance(out)
     },
     difference: (entity, b) => {
       const a = entity
-      const out = UNIVERSE.BINAR.makebinar()
-      const A = new Set(UNIVERSE.BINAR.toarray(a))
-      const B = new Set(UNIVERSE.BINAR.toarray(b))
-      A.forEach(item => !B.has(item) && UNIVERSE.BINAR.append(out, item))
-      return UNIVERSE.BINAR.balance(out)
+      const out = LIBRARY.BINAR.makebinar()
+      const A = new Set(LIBRARY.BINAR.toarray(a))
+      const B = new Set(LIBRARY.BINAR.toarray(b))
+      A.forEach(item => !B.has(item) && LIBRARY.BINAR.append(out, item))
+      return LIBRARY.BINAR.balance(out)
     },
     partition: (entity, groups = 1) =>
-      UNIVERSE.BINAR.balance(
-        UNIVERSE.BINAR.to(entity, (acc, _, index, arr) => {
+      LIBRARY.BINAR.balance(
+        LIBRARY.BINAR.to(entity, (acc, _, index, arr) => {
           if (index % groups === 0) {
-            const part = UNIVERSE.BINAR.makebinar()
+            const part = LIBRARY.BINAR.makebinar()
             for (let i = 0; i < groups; i += 1) {
-              const current = UNIVERSE.BINAR.get(arr, index + i)
-              if (current !== undefined) UNIVERSE.BINAR.append(part, current)
+              const current = LIBRARY.BINAR.get(arr, index + i)
+              if (current !== undefined) LIBRARY.BINAR.append(part, current)
             }
-            UNIVERSE.BINAR.balance(part)
-            UNIVERSE.BINAR.append(acc, part)
+            LIBRARY.BINAR.balance(part)
+            LIBRARY.BINAR.append(acc, part)
           }
           return acc
         })
       ),
     unique: entity => {
       const set = new Set()
-      return UNIVERSE.BINAR.fill(
-        UNIVERSE.BINAR.makebinar(),
-        ...UNIVERSE.BINAR.to(
+      return LIBRARY.BINAR.fill(
+        LIBRARY.BINAR.makebinar(),
+        ...LIBRARY.BINAR.to(
           entity,
           (acc, item) => {
             if (!set.has(item)) {
@@ -1117,7 +1106,7 @@ export const UNIVERSE = {
     duplicates: entity => {
       const set = new Set()
       const extra = []
-      const out = UNIVERSE.BINAR.to(
+      const out = LIBRARY.BINAR.to(
         entity,
         (acc, item) => {
           set.has(item) ? acc.push(item) : set.add(item)
@@ -1131,10 +1120,7 @@ export const UNIVERSE = {
           extra.push(item)
         }
       })
-      return UNIVERSE.BINAR.fill(
-        UNIVERSE.BINAR.makebinar(),
-        ...out.concat(extra)
-      )
+      return LIBRARY.BINAR.fill(LIBRARY.BINAR.makebinar(), ...out.concat(extra))
     },
   },
   DOM: {
@@ -1151,7 +1137,7 @@ export const UNIVERSE = {
       // styles.textContent = ``
       // document.body.appendChild(styles)
       document.body.appendChild(div)
-      // UNIVERSE.EVENTS.userInterface = div
+      // LIBRARY.EVENTS.userInterface = div
     },
     makeinput: (width = '100px', height = '100px', settings) => {
       const element = document.createElement('input')
@@ -1320,5 +1306,5 @@ export const STD = {
       while (typeof result === 'function') result = result()
       return result
     },
-  UNIVERSE,
+  LIBRARY,
 }

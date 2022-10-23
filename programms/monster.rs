@@ -1,4 +1,4 @@
-<- ["SKETCH"; "MATH"] [UNIVERSE];
+<- ["SKETCH"; "MATH"] [LIBRARY];
 <- ["makescene"; "width"; "height"; "setrotation"; "setposition";
     "setfill"; "nofill"; "setstroke"; "setlinewidth"; "nofill"; "closepath";
     "update"; "makerectangle"; "background"; "setscale"; "PATH";

@@ -91,16 +91,16 @@ export const handleHangingSemi = source => {
 
 export const treeShake = modules => {
   let lib = ''
-  const dfs = (modules, lib, UNIVERSE) => {
+  const dfs = (modules, lib, LIBRARY) => {
     for (const key in modules) {
-      if (key !== 'UNIVERSE' && modules[key] !== undefined) {
+      if (key !== 'LIBRARY' && modules[key] !== undefined) {
         lib += '["' + key + '"]:{'
         for (const method of modules[key]) {
-          if (UNIVERSE[key]) {
-            const current = UNIVERSE[key][method]
+          if (LIBRARY[key]) {
+            const current = LIBRARY[key][method]
             if (current) {
               if (typeof current === 'object') {
-                lib += dfs({ [method]: modules[method] }, '', UNIVERSE[key])
+                lib += dfs({ [method]: modules[method] }, '', LIBRARY[key])
               } else {
                 lib += '["' + method + '"]:'
                 lib += current.toString()
@@ -114,7 +114,7 @@ export const treeShake = modules => {
     }
     return lib
   }
-  lib += 'const UNIVERSE = {' + dfs(modules, lib, STD.UNIVERSE) + '}'
+  lib += 'const LIBRARY = {' + dfs(modules, lib, STD.LIBRARY) + '}'
   return lib
 }
 
@@ -267,7 +267,7 @@ export const abc = [
 ]
 export const ABC = [...abc]
 export const generateCompressedModules = () => {
-  const { NAME, ...lib } = STD.UNIVERSE
+  const { NAME, ...lib } = STD.LIBRARY
   const modules = [NAME]
   const dfs = (lib, modules) => {
     for (const module in lib) {

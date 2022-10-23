@@ -34,7 +34,7 @@
       )
     )
     const { body, modules } = compileToJs(parse(inlined))
-    const UNIVERSE = treeShake(modules)
+    const LIBRARY = treeShake(modules)
     const script = document.createElement('script')
     script.innerHTML = `const canvasContainer =  document.createElement('div')
     canvasContainer.id = 'canvas-container'
@@ -42,7 +42,7 @@
     const VOID = null
     const LOGGER = () => () => {}
     ${languageUtilsString}
-    ${UNIVERSE}
+    ${LIBRARY}
     ${body}
     `
     document.body.appendChild(script)

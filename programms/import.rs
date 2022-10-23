@@ -1,4 +1,4 @@
-<- ["BINAR"; "ARRAY"] [UNIVERSE];
+<- ["BINAR"; "ARRAY"] [LIBRARY];
 <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
 := [bin map; map];
 <- ["map"] [ARRAY];

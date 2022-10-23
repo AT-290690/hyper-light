@@ -27,7 +27,7 @@ Write programms that can be stored in a hyper-link and then shared without a ser
 Here is the source for the tree above
 
 ```go
-<- ["MATH"; "SKETCH"] [UNIVERSE];
+<- ["MATH"; "SKETCH"] [LIBRARY];
 <- ["makescene"; "makeline"; "update"; "width"; "height"] [SKETCH];
 <- ["sin"; "cos"; "PI"] [MATH];
 

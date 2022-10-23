@@ -16,7 +16,7 @@ const dfs = (tree, definitions = new Set(), excludes = new Set()) => {
       args[0]?.name?.length > 2 &&
       args[0].name[0] !== '_'
     ) {
-      definitions.add(args[0].name)
+      args.forEach(({ name }) => definitions.add(name))
     }
     if (Array.isArray(args)) {
       dfs(args, definitions, excludes)
@@ -36,7 +36,6 @@ export const compress = source => {
   excludes.forEach(value => {
     if (definitions.has(value)) definitions.delete(value)
   })
-
   excludes.clear()
   const defs = [...definitions]
   let { result, occurance } = value

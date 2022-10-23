@@ -1,4 +1,4 @@
-<- ["DOM"; "EVENT"; "COLOR"] [UNIVERSE];
+<- ["DOM"; "EVENT"; "COLOR"] [LIBRARY];
 <- ["*"] [DOM];
 <- ["onmouseclick"] [EVENT];
 <- ["randomcolor"] [COLOR];
