@@ -353,6 +353,10 @@ const tokens = {
             throw new SyntaxError(
               'Invalid use of operation :: (Only strings can be used as keys)'
             )
+          } else if (key.length > 32) {
+            throw new RangeError(
+              `Key name "${key}" is too long. Max length is 32 characters!`
+            )
           }
           acc[count] = [key]
         }

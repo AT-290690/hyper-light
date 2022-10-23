@@ -255,20 +255,20 @@ export const abc = [
 export const ABC = [...abc]
 export const generateCompressedModules = () => {
   const { NAME, ...lib } = STD.LIBRARY
-  const modules = [NAME]
+  const modules = new Set([NAME])
   const dfs = (lib, modules) => {
     for (const module in lib) {
-      modules.push(module)
+      if (module.length > 2) modules.add(module)
       for (const m in lib[module]) {
         if (lib[module][m].NAME) dfs(lib[module][m], modules)
-        if (m !== 'NAME' && m.length > 2) modules.push(m)
+        if (m !== 'NAME' && m.length > 2) modules.add(m)
       }
     }
   }
   dfs(lib, modules)
   let index = 0
   let count = 0
-  return modules
+  return [...modules]
     .sort((a, b) => (a.length > b.length ? 1 : -1))
     .map(full => {
       const short = count + abc[index]

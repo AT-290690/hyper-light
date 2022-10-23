@@ -1337,6 +1337,24 @@ export const LIBRARY = {
   },
   void: VOID,
   VOID,
+  CMN: {
+    position: 'position',
+    rotation: 'rotation',
+    opacity: 'opacity',
+    scale: 'scale',
+    white: 'white',
+    black: 'black',
+    purple: 'purple',
+    orange: 'orange',
+    green: 'green',
+    container: 'container',
+    crimson: 'crimson',
+    next: 'next',
+    value: 'value',
+    textContent: 'textContent',
+    translation: 'translation',
+    default: 'default',
+  },
 }
 
 export const STD = {

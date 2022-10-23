@@ -77,7 +77,6 @@ export const compress = source => {
       }
       return { full, short }
     })
-
   for (const { full, short } of shortDefinitions)
     result = result.replaceAll(new RegExp(`\\b${full}\\b`, 'g'), short)
   return result
