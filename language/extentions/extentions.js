@@ -594,28 +594,33 @@ export const LIBRARY = {
   },
   DOUBLELIST: {
     NAME: 'DOUBLELIST',
+    makedoublelist: size => LIBRARY.DOUBLELIST.range(0)(size),
     node: prev => next => ({ '<-': prev, '->': next }),
-    ['<-']: n => n['<-'],
-    ['->']: n => n['->'],
+    prev: n => n['<-'],
+    next: n => n['->'],
     range: low => high =>
-      low > high ? null : list.node(low)(list.range(low + 1)(high)),
+      low > high
+        ? VOID
+        : LIBRARY.DOUBLELIST.node(low)(LIBRARY.DOUBLELIST.range(low + 1)(high)),
     map: f => n =>
-      n === null
-        ? null
-        : list.node(f(list['<-'](n)))(list.map(f)(list['->'](n))),
+      n === VOID
+        ? VOID
+        : LIBRARY.DOUBLELIST.node(f(LIBRARY.DOUBLELIST.prev(n)))(
+            LIBRARY.DOUBLELIST.map(f)(LIBRARY.DOUBLELIST.next(n))
+          ),
     listtoarray: node => {
       const result = []
-      while (node !== null) {
-        result.push(list['<-'](node))
-        node = list['->'](node)
+      while (node !== VOID) {
+        result.push(LIBRARY.DOUBLELIST.prev(node))
+        node = LIBRARY.DOUBLELIST.next(node)
       }
       return result
     },
     arraytolist: arrayLike => {
-      let result = null
+      let result = VOID
       const array = Array.from(arrayLike)
       for (let i = array.length; i >= 0; i--) {
-        result = list.node(array[i])(result)
+        result = LIBRARY.DOUBLELIST.node(array[i])(result)
       }
       return result
     },

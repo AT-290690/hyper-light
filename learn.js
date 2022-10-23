@@ -276,7 +276,7 @@ length of list [list; 0];`,
         ;; reverse 
         := [reversed; reverse [. [head; "=>"; 0]]];
                  .= [head; "=>"; 0; "=>"; 0; head];
-                            .= [head; "=>"; .: [void]];
+                        .= [head; "=>"; .: [void]];
                                       reversed]]]];
 reverse [list]`,
       },
@@ -297,7 +297,7 @@ reverse [list]`,
                       ;; reverse 
                       := [reversed; reverse [. [head; "=>"; 0]]];
                                .= [head; "=>"; 0; "=>"; 0; head];
-                                          .= [head; "=>"; .: [void]];
+                                      .= [head; "=>"; .: [void]];
                                                     reversed]]]];
 
 ;; simple function that tells us if the given nodes have same value
