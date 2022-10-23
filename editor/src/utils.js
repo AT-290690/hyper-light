@@ -5,15 +5,8 @@ import {
   interpredHtml,
   run,
 } from '../../language/misc/utils.js'
-import { elements } from './common.js'
 
-export const logErrorMessage = msg => {
-  elements.popupContainer.style.display = 'none'
-  elements.canvasContainer.style.display = 'none'
-  elements.consoleElement.textContent = msg
-}
-
-export const compile = (file, scripts) => {
+export const compile = (file, scripts, logErrorMessage) => {
   try {
     handleUnbalancedParens(file)
     return compileHtml(file, scripts)
@@ -22,7 +15,7 @@ export const compile = (file, scripts) => {
   }
 }
 
-export const interpred = file => {
+export const interpred = (file, logErrorMessage) => {
   try {
     handleUnbalancedParens(file)
     return run(file)
@@ -31,7 +24,7 @@ export const interpred = file => {
   }
 }
 
-export const interpredBrowser = (file, to) => {
+export const interpredBrowser = (file, to, logErrorMessage) => {
   try {
     handleUnbalancedParens(file)
     return interpredHtml(dashCommentsToSemiComments(file))

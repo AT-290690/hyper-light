@@ -12,9 +12,9 @@
     <link rel="icon" type="image/x-icon" href="./assets/images/favicon.svg" />
   </head>
   <body>
-    <p id="console"></p>
-    <div id="comments-section"></div>
-    <div id="header">
+    <p id="console" class="console"></p>
+    <div id="comments-section" class="comments-section"></div>
+    <div id="header" class="header">
       <button id="run-code" title="run code" class="header-button svgIcon">
         <svg
           width="34"
@@ -351,10 +351,10 @@
         </svg>
       </button>
     </div>
-    <div id="canvas-container" style="display: none"></div>
-    <div id="editor-container"></div>
-    <div id="popup-container"></div>
-    <iframe id="app" style="display: none"></iframe>
+    <div id="canvas-container" class="canvas-container"></div>
+    <div id="editor-container" class="editor-container"></div>
+    <div id="popup-container" class="popup-container"></div>
+    <iframe id="app" class="app"></iframe>
     <script src="https://cdn.jsdelivr.net/npm/lzutf8@0.6.3/build/production/lzutf8.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.8.10/two.min.js"
@@ -362,6 +362,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="./editor/src/main.js" type="module"></script>
+    <script src="./editor/src/index.js" type="module"></script>
   </body>
 </html>

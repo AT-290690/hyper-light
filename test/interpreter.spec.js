@@ -261,4 +261,33 @@ dfs [n; .: []];
     `)
     ).toEqual([2, 2.1, 2.2, 2.3, 2.4])
   })
+
+  it('shoud be albe to implement standart lib', () => {
+    expect(
+      runFromText(`
+;; 5 Reverse a list
+;; Hyper List standard library has <- ["reverse"] [LIST] but we ask that you reimplement it.
+:= [list; => [0; => [1; => [2; => [3; => [4]]]]]];
+;; := [reverse; -> [list; .. []]];
+
+;; solution
+:= [reverse; -> [head; 
+   ;; base case
+   ? [|| [== [head; void]; == [. [head; "=>"; 0]; void]]; head; .. [
+     ;; reverse 
+     := [reversed; reverse [. [head; "=>"; 0]]];
+     .= [head; "=>"; 0; "=>"; 0; head];
+     .= [head; "=>"; .: [void]];
+     reversed]]]];
+
+reverse [list]
+    `)
+    ).toEqual(
+      runFromText(`<- ["LIST"] [LIBRARY];
+    <- ["reverse"] [LIST];
+    := [list; => [0; => [1; => [2; => [3; => [4]]]]]];
+    reverse [list];
+    `)
+    )
+  })
 })

@@ -26,13 +26,8 @@
     import { wrapInBody, removeNoCode } from './language/misc/helpers.js'
     import { parse } from './language/core/parser.js'
     const shortModules = generateCompressedModules()
-    const inlined = wrapInBody(
-      removeNoCode(
-        decodeBase64(
-          location.href.split('preview.html')[1].trim().replace('?s=', '')
-        )
-      )
-    )
+    const encoding = location.href.split('?s=')[1]
+    const inlined = wrapInBody(removeNoCode(decodeBase64(encoding)))
     const { body, modules } = compileToJs(parse(inlined))
     const LIBRARY = treeShake(modules)
     const script = document.createElement('script')

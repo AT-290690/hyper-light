@@ -9,11 +9,22 @@ export const link = path =>
 
 export const evaluate = path => interpred(readFileSync(path, 'utf8'))
 export const zip = path =>
-  LZUTF8.compress(compress(readFileSync(path, 'utf8')), {
+  LZUTF8.compress(compress(readFileSync(path, 'utf8').trim()), {
     outputEncoding: 'StorageBinaryString',
   })
 export const unzip = path =>
   LZUTF8.decompress(readFileSync(path, 'utf8'), {
+    inputEncoding: 'Base64',
+    outputEncoding: 'String',
+  })
+
+export const compressRaw = path =>
+  LZUTF8.compress(readFileSync(path, 'utf8').trim(), {
+    outputEncoding: 'Base64',
+  })
+
+export const decompressRaw = source =>
+  LZUTF8.decompress(source, {
     inputEncoding: 'Base64',
     outputEncoding: 'String',
   })

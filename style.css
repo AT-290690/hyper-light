@@ -57,15 +57,6 @@
   font-display: swap;
 }
 
-#comments-section {
-  position: absolute;
-  background: transparent;
-  top: 0;
-  left: 0;
-  width: fit-content;
-  z-index: 2;
-}
-
 text,
 input,
 button,
@@ -81,11 +72,20 @@ body {
   margin: 0;
   height: 100vh;
 }
+.comments-section {
+  position: absolute;
+  background: transparent;
+  top: 0;
+  left: 0;
+  width: fit-content;
+  z-index: 2;
+}
 
-#editor-container {
+.editor-container {
   z-index: 1;
 }
-#app {
+.app {
+  display: none;
   position: absolute;
   top: 0;
   left: 50vw;
@@ -122,7 +122,7 @@ body {
   fill: var(--icons);
   stroke: var(--icons);
 }
-#header {
+.header {
   right: 0;
   top: 15px;
   height: 50px;
@@ -132,7 +132,7 @@ body {
   display: grid;
   background-color: transparent;
   position: fixed;
-  z-index: 1000;
+  z-index: 1500;
 }
 
 .cm-editor {
@@ -181,7 +181,7 @@ input:focus {
   bottom: 10px;
 }
 
-#console {
+.console {
   outline: none;
   resize: none;
   position: absolute;
@@ -202,14 +202,17 @@ input:focus {
   background-color: transparent;
 }
 
-#popup-container {
+.popup-container {
   position: absolute;
-  bottom: 10px;
-  left: 8px;
+  bottom: 5px;
+  /* left: 8px; */
   width: fit-content;
   z-index: 1000;
   color: white;
   background-color: transparent;
   display: none;
   /* border: solid 1px var(--border); */
+}
+.canvas-container {
+  display: none;
 }

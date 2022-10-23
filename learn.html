@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hyper Light</title>
+    <link href="./style.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.svg" />
+
+    <style>
+      :root {
+        --border: #546a90;
+        --font-primary: 'Fantastic';
+      }
+      @font-face {
+        font-family: 'Fantastic';
+        src: url(./assets/fonts/FantasqueSansMono-Regular.ttf)
+          format('truetype');
+        font-display: swap;
+      }
+
+      /* p {
+              color: var(--warning);
+              font-family: var(--font-primary);
+            } */
+
+      body {
+        user-select: none;
+        background-color: var(--background-thirdly);
+        overflow: hidden;
+        margin: 0;
+
+        height: 100vh;
+      }
+      /* #header {
+              text-align: center;
+              border-bottom: 1px solid var(--border);
+              position: sticky;
+              padding-bottom: 5px;
+              box-shadow: 0px 3px 15px rgba(53, 53, 53, 0.958);
+              z-index: 1;
+            } */
+      #main-container {
+        overflow: scroll;
+        max-height: calc(100vh - 100px);
+      }
+      .comments-section {
+        position: static;
+        z-index: 2;
+      }
+      .interface-header {
+        left: 0;
+        gap: 10px;
+        border: none;
+        display: flex;
+        position: relative;
+        z-index: 1500;
+        height: 50px;
+      }
+      .header-lesson {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 11pt;
+        text-align: center;
+      }
+      .rotate {
+        animation: animationFrames 1s linear normal;
+      }
+      @keyframes animationFrames {
+        0% {
+          transform: rotate(0deg) scale(1);
+        }
+        50% {
+          transform: rotate(180deg) scale(1.6);
+        }
+
+        80% {
+          transform: rotate(320deg) scale(0.7);
+        }
+        100% {
+          transform: rotate(360deg) scale(1);
+        }
+      }
+      .cm-panels,
+      .cm-search {
+        background-color: var(--background-primary) !important;
+        max-width: 99vw;
+        bottom: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <p>Hyper Light</p> -->
+
+    <!-- <div id="header">
+      <button id="key" style="display: none"></button>
+      <br />
+      <img src="./assets/images/favicon.svg" width="100px" height="70px" />
+    </div> -->
+    <button
+      id="key"
+      style="display: none"
+      aria-label="Stashed Code"
+      title="get link"
+      class="header-button svgIcon"
+    ></button>
+
+    <div id="main-container">
+      <div id="problems">
+        <div id="popup-container" class="popup-container"></div>
+      </div>
+
+      <p id="console" class="console"></p>
+      <iframe id="app" class="app" style="display: none"></iframe>
+      <div
+        id="canvas-container"
+        class="canvas-container"
+        style="display: none"
+      ></div>
+    </div>
+    <script type="module" src="./learn.js"></script>
+  </body>
+</html>

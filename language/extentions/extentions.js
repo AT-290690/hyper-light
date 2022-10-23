@@ -571,6 +571,55 @@ export const LIBRARY = {
         return result
       },
   },
+  LIST: {
+    reverse: list => {
+      let head = list // set a reference to head of linked list
+      if (head['=>'][0] === VOID) return
+
+      let currentNode = head
+      let prevNode = VOID
+      let nextNode = VOID
+
+      // traverse list and adjust links
+      while (currentNode) {
+        nextNode = currentNode['=>'][0]
+        currentNode['=>'][0] = prevNode
+        prevNode = currentNode
+        currentNode = nextNode
+        nextNode = VOID
+      }
+      head = prevNode
+      return head
+    },
+  },
+  DOUBLELIST: {
+    NAME: 'DOUBLELIST',
+    node: prev => next => ({ '<-': prev, '->': next }),
+    ['<-']: n => n['<-'],
+    ['->']: n => n['->'],
+    range: low => high =>
+      low > high ? null : list.node(low)(list.range(low + 1)(high)),
+    map: f => n =>
+      n === null
+        ? null
+        : list.node(f(list['<-'](n)))(list.map(f)(list['->'](n))),
+    listtoarray: node => {
+      const result = []
+      while (node !== null) {
+        result.push(list['<-'](node))
+        node = list['->'](node)
+      }
+      return result
+    },
+    arraytolist: arrayLike => {
+      let result = null
+      const array = Array.from(arrayLike)
+      for (let i = array.length; i >= 0; i--) {
+        result = list.node(array[i])(result)
+      }
+      return result
+    },
+  },
   ARRAY: {
     NAME: 'ARRAY',
     ['map1']: (entity, callback) => {
