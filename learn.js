@@ -225,7 +225,7 @@ last [list];`,
         title: 'Last two elements of a list',
         solution: `;; solution
 := [last 2; -> [list; ? [== [. [list; "=>"; 0; "=>"; 0]; void]; 
-                                                 . [list; "*"]; 
+                                                          list;
                                  last 2 [. [list; "=>"; 0]]]]];
 
 last 2 [list];`,

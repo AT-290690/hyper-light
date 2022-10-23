@@ -102,3 +102,16 @@ export const decodeBase64 = source =>
       outputEncoding: 'String',
     })
   )
+export const addSpace = str => str + '\n'
+export const prettier = str =>
+  addSpace(
+    str
+      .replaceAll('];', '];\n')
+      .replaceAll(';', '; ')
+      .replaceAll('; ;', ';;')
+      .replaceAll('[', ' [')
+      .replaceAll('|', '| ')
+      .replaceAll('| >', '\n|>')
+      .replaceAll('.. [', '.. [\n')
+      .replaceAll('; :=', ';\n:=')
+  )

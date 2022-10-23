@@ -43,7 +43,6 @@ export const exe = source => {
   const { result } = cell(ENV)(wrapInBody(source))
   return result
 }
-export const addSpace = str => str + '\n'
 export const isBalancedParenthesis = sourceCode => {
   let count = 0
   const stack = []
@@ -63,18 +62,6 @@ export const handleUnbalancedParens = sourceCode => {
       } "]"`
     )
 }
-export const prettier = str =>
-  addSpace(
-    str
-      .replaceAll('];', '];\n')
-      .replaceAll(';', '; ')
-      .replaceAll('; ;', ';;')
-      .replaceAll('[', ' [')
-      .replaceAll('|', '| ')
-      .replaceAll('| >', '\n|>')
-      .replaceAll('.. [', '.. [\n')
-      .replaceAll('; :=', ';\n:=')
-  )
 
 export const run = source => {
   const sourceCode = removeNoCode(source.toString().trim())

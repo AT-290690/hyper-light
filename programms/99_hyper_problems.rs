@@ -14,7 +14,7 @@ last [list];
 ;; := [last; -> [list; .. []]];
 
 ;; solution
-:= [last 2; -> [list; ? [== [. [list; "=>"; 0; "=>"; 0]; void]; . [list; "*"]; last 2 [. [list; "=>"; 0]]]]];
+:= [last 2; -> [list; ? [== [. [list; "=>"; 0; "=>"; 0]; void];  list; last 2 [. [list; "=>"; 0]]]]];
 last 2 [list];
 
 ;; --------------------------------------------
