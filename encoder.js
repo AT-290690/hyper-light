@@ -1,4 +1,4 @@
-import { CodeMirror } from '../editor/cell.editor.bundle.js'
+import { CodeMirror } from './editor/cell.editor.bundle.js'
 import { compress, decompress, prettier } from './language/misc/compression.js'
 import { removeNoCode } from './language/misc/helpers.js'
 const editor = CodeMirror(document.getElementById('comments-section'))
