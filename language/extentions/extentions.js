@@ -761,7 +761,7 @@ export const LIBRARY = {
       return entity
     },
     includes: (entity, arg) => +entity.includes(arg),
-    isarray: entity => +entity.isArray(),
+    isarray: entity => +Array.isArray(entity),
     unshift: (entity, ...args) => entity.unshift(...args),
     shift: entity => entity.shift(),
     fill: (entity, filling) => entity.fill(filling),

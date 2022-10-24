@@ -8,7 +8,26 @@ describe('run should work as expected', () => {
     ).toEqual({ x: 3, y: 10 })
     expect(() => runFromText(`: [29; 0]`)).toThrow(RangeError)
   })
+  it('types', () => {
+    expect(
+      runFromText(`
+    <- ["CONVERT"] [LIBRARY];
+<- ["boolean"] [CONVERT];
 
+:= [type of; -> [entity; ? [== [entity; void]; void; . [entity; "constructor"; "name"]]]];
+
+>> [.: [0; "0"; boolean [0]; :: ["0"; 0]; .: [0]; -> [0]; void]; -> [x; i; a; .= [a; i; type of [x]]]];
+    `)
+    ).toEqual([
+      'Number',
+      'String',
+      'Boolean',
+      'Object',
+      'Array',
+      'Function',
+      void 0,
+    ])
+  })
   it('simple math', () => {
     expect(
       runFromText(

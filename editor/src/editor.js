@@ -171,9 +171,7 @@ export const HyperLightEditor = (
     const source = editor.getValue()
     editor.setValue(source.trim())
     const result = runCodeEvent()
-    if (result !== undefined) {
-      STD.LOGGER(0, 0)(interpred(source, logErrorMessage))
-    }
+    STD.LOGGER(0, 0)(interpred(source, logErrorMessage))
   })
   return editor
 }
