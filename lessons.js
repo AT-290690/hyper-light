@@ -120,18 +120,14 @@ is palindrome [list]`,
 
   {
     value: `;; 7 Flatten an array
-:= [array; .: ["c"; 
-            .: ["a"; "b"]; 
-            .: ["d"; "e"; 
-                .: ["f"; "g"];
-                .: ["h"; "i"; "j"; 
-                    .: ["k"; "l"; "m"]
-                  ]
-                ]; 
-            "n"; 
-            .: ["o"]; 
-            "p"];
-];
+:= [array; .: ["a";
+                .: ["b"; "c"]; 
+                .: ["d"; "e"; 
+                    .: ["f"; "g"];
+                    .: ["h"; "i"; "j"; 
+                        .: ["k"; "l"; "m"]]]; 
+                .: ["n"]; 
+               "o"]];
 
 ;; Hint - you can get the constructor name with 
 ;; . ["a"; "constructor"; "name"] -> "String"`,
@@ -140,8 +136,23 @@ is palindrome [list]`,
 := [is array; -> [entity; == ["Array"; . [entity; "constructor"; "name"]]]];
 := [flat; .: []];
 := [flatten; -> [array; >> [array; -> [x; i; a; ? [is array [x]; 
-                                                flatten [x]; 
-                      .= [flat; . [flat; "length"]; x]]]]]];
+                                                    flatten [x]; 
+                          .= [flat; . [flat; "length"]; x]]]]]];
 flatten [array]; flat;`,
+  },
+  {
+    value: `;; 8 Remove duplicates from array
+:= [array; .: ["a"; "b"; "b"; "c"; "d"; "e"; "e"; "f"; "g"; "h"; "i"; "a"; "b";
+               "j"; "k"; "l"; "m"; "n"; "o"; "a"; "b"; "b"; "c"; "d"; "e"; "e";
+               "f"; "g"; "h"; "i"; "a"; "b"; "j"; "k"; "l"; "m"; "n"; "o"; "c"]];`,
+    title: 'Remove duplicates from array',
+    solution: `;; solution
+:= [map; :: []];
+:= [set; .: []];
+>> [array; -> [x; i; a; 
+                  ? [== [. [map; x]; void]; 
+                    .= [map; x; 
+                    .= [set; . [set; "length"]; x]]]]]; 
+set;`,
   },
 ]
