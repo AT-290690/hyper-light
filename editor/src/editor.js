@@ -8,7 +8,7 @@ import { removeNoCode } from '../../language/misc/helpers.js'
 
 export const HyperLightEditor = (
   parent,
-  { elements, onResize, onPopupResize, initialValue }
+  { elements, onResize, onPopupResize, initialValue, showPopUpOnLoad }
 ) => {
   const editor = CodeMirror(parent)
   onResize(editor)
@@ -23,13 +23,6 @@ export const HyperLightEditor = (
   // const [, ...encoding] = location.href.split('?r=')
   // const intilal = encoding.join('').trim()
 
-  const createPopUp = () => {
-    elements.popupContainer.innerHTML = ''
-    const popup = CodeMirror(elements.popupContainer)
-    elements.popupContainer.style.display = 'block'
-    return popup
-  }
-
   const popUp = (
     popup,
     msg,
@@ -39,18 +32,21 @@ export const HyperLightEditor = (
     popup.setSize(w, h)
     popup.setValue(msg)
   }
-
+  const popup = CodeMirror(elements.popupContainer)
+  if (showPopUpOnLoad) {
+    elements.popupContainer.style.display = 'block'
+    onPopupResize(popup)
+  }
   STD.IMP = module => {
-    const pop = createPopUp()
     popUp(
-      pop,
+      popup,
       `<- [${Object.keys(module)
         .filter(x => x !== 'NAME')
         .map(x => `"${x}"`)
         .join(';')}] [${module.NAME}];\n`,
       window.innerWidth * 1 - 20
     )
-    pop.focus()
+    popup.focus()
   }
   STD.COMPACT = str => removeNoCode(str)
   STD.COMPRESS = str => compress(str)
@@ -69,6 +65,9 @@ export const HyperLightEditor = (
     LZUTF8.compress(str, { outputEncoding: 'StorageBinaryString' })
   STD.LOGGER = (disable = 0, showCount = 1) => {
     if (disable) return (msg, count) => {}
+    popup.setValue('')
+    elements.popupContainer.style.display = 'block'
+    onPopupResize(popup)
     // if (!!editor.getLine(editor.lineCount() - 1).trim()) {
     //   editor.addValue('\n'.repeat(window.innerHeight / 50))
     //   editor.setCursor(
@@ -76,8 +75,7 @@ export const HyperLightEditor = (
     //     true
     //   )
     // }
-    const popup = createPopUp()
-    onPopupResize(popup)
+
     let count = 0
     return (msg, comment = '', space) => {
       let top = ''
@@ -142,7 +140,10 @@ export const HyperLightEditor = (
     const link = 'https://at-290690.github.io/hyper-light/preview.html?s='
     if (encoded) window.open(link + encoded, '_blank').focus()
   })
-  window.addEventListener('resize', () => onResize(editor))
+  window.addEventListener('resize', () => {
+    onResize(editor)
+    if (elements.popupContainer.style.display === 'block') onPopupResize(popup)
+  })
   const runCodeEvent = () => {
     if (elements.app.style.display === 'block') {
       elements.app.src = ''
@@ -153,12 +154,17 @@ export const HyperLightEditor = (
     }
   }
   document.addEventListener('keydown', e => {
-    if (e.key.toLowerCase() === 's' && (e.ctrlKey || e.metaKey)) {
+    const key = e.key.toLowerCase()
+    if (key === 's' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault()
       e.stopPropagation()
       elements.consoleElement.textContent = ''
-      elements.popupContainer.innerHTML = ''
       runCodeEvent()
+    } else if (key === 'escape') {
+      e.preventDefault()
+      e.stopPropagation()
+      elements.popupContainer.style.display = 'none'
+      openEditor()
     }
   })
   elements.run.addEventListener('click', () => {

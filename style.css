@@ -128,7 +128,7 @@ body {
   height: 50px;
   gap: 10px;
   border: none;
-  width: 70px;
+  margin-right: 10px;
   display: grid;
   background-color: transparent;
   position: fixed;
@@ -145,7 +145,6 @@ body {
   cursor: pointer;
   background: transparent;
   border: none;
-  width: 50px;
 }
 
 input {
@@ -177,8 +176,8 @@ input:focus {
 .cm-panels,
 .cm-search {
   background-color: var(--background-primary) !important;
-  max-width: 48.5vw;
-  bottom: 10px;
+  max-width: 99vw;
+  bottom: 0px;
 }
 
 .console {

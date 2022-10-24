@@ -160,12 +160,16 @@ const buildProblemEditor = (container, problems) => {
     app: document.getElementById('app'),
     run: logo,
   }
-  const editor = HyperLightEditor(editorContainer, {
+
+  const settings = {
     elements,
     onResize: editor => editor.setSize(window.innerWidth - 5, HEIGHT),
     onPopupResize: popup => popup.setSize(window.innerWidth - 5, HEIGHT / 3.2),
     initialValue: problems.value,
-  })
+    showPopUpOnLoad: true,
+  }
+  const editor = HyperLightEditor(editorContainer, settings)
+
   const animate = () => {
     logo.classList.toggle('rotate')
     setTimeout(() => logo.classList.toggle('rotate'), 1000)
