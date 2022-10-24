@@ -1,7 +1,138 @@
 import { removeNoCode, wrapInBody } from './helpers.js'
-import { ABC, generateCompressedModules } from './utils.js'
 import { parse } from '../core/parser.js'
 import { LZUTF8 } from '../libs/lz-utf8.js'
+import { STD } from '../extentions/extentions.js'
+
+export const ABC = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
+  // 'а',
+  // 'б',
+  // 'в',
+  // 'г',
+  // 'д',
+  // 'е',
+  // 'ж',
+  // 'з',
+  // 'и',
+  // 'й',
+  // 'к',
+  // 'л',
+  // 'м',
+  // 'н',
+  // 'о',
+  // 'п',
+  // 'р',
+  // 'с',
+  // 'т',
+  // 'щ',
+  // 'ц',
+  // 'ч',
+  // 'ь',
+  // 'ю',
+  // 'я',
+  // 'А',
+  // 'Б',
+  // 'В',
+  // 'Г',
+  // 'Д',
+  // 'Е',
+  // 'Ж',
+  // 'З',
+  // 'И',
+  // 'Й',
+  // 'К',
+  // 'Л',
+  // 'М',
+  // 'Н',
+  // 'О',
+  // 'П',
+  // 'Р',
+  // 'С',
+  // 'Т',
+  // 'Щ',
+  // 'Ц',
+  // 'Ч',
+  // 'Ю',
+  // 'Я',
+]
+export const generateCompressedModules = () => {
+  const { NAME, ...lib } = STD.LIBRARY
+  const modules = new Set([NAME])
+  const dfs = (lib, modules) => {
+    for (const module in lib) {
+      if (module.length > 2) modules.add(module)
+      for (const m in lib[module]) {
+        if (lib[module][m].NAME) dfs(lib[module][m], modules)
+        if (m !== 'NAME' && m.length > 2) modules.add(m)
+      }
+    }
+  }
+  dfs(lib, modules)
+  let index = 0
+  let count = 0
+  return [...modules]
+    .sort((a, b) => (a.length > b.length ? 1 : -1))
+    .map(full => {
+      const short = count + ABC[index]
+      ++index
+      if (index === ABC.length) {
+        index = 0
+        ++count
+      }
+      return { full, short }
+    })
+}
 
 export const shortModules = generateCompressedModules()
 const dfs = (tree, definitions = new Set(), excludes = new Set()) => {
