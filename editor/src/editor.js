@@ -26,8 +26,8 @@ export const HyperLightEditor = (
   const popUp = (
     popup,
     msg,
-    w = window.innerWidth / 2 - 5,
-    h = window.innerHeight / 3
+    w = document.body.getBoundingClientRect().width / 2 - 5,
+    h = document.body.getBoundingClientRect().height / 3
   ) => {
     popup.setSize(w, h)
     popup.setValue(msg)
@@ -167,11 +167,8 @@ export const HyperLightEditor = (
       openEditor()
     }
   })
-  elements.run.addEventListener('click', () => {
-    const source = editor.getValue()
-    editor.setValue(source.trim())
-    const result = runCodeEvent()
-    STD.LOGGER(0, 0)(interpred(source, logErrorMessage))
-  })
+  elements.run.addEventListener('click', () =>
+    STD.LOGGER(0, 0)(interpred(editor.getValue().trim(), logErrorMessage))
+  )
   return editor
 }

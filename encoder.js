@@ -2,8 +2,10 @@ import { CodeMirror } from './editor/cell.editor.bundle.js'
 import { compress, decompress, prettier } from './language/misc/compression.js'
 import { removeNoCode } from './language/misc/helpers.js'
 const editor = CodeMirror(document.getElementById('comments-section'))
-const onResize = () =>
-  editor.setSize(window.innerWidth - 5, window.innerHeight - 5)
+const onResize = () => {
+  const bouds = document.body.getBoundingClientRect()
+  editor.setSize(bouds.width - 5, bouds.height - 5)
+}
 
 const compressionStages = {
   count: 0,

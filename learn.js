@@ -163,8 +163,13 @@ const buildProblemEditor = (container, problems) => {
 
   const settings = {
     elements,
-    onResize: editor => editor.setSize(window.innerWidth - 5, HEIGHT),
-    onPopupResize: popup => popup.setSize(window.innerWidth - 5, HEIGHT / 3.2),
+    onResize: editor =>
+      editor.setSize(document.body.getBoundingClientRect().width - 5, HEIGHT),
+    onPopupResize: popup =>
+      popup.setSize(
+        document.body.getBoundingClientRect().width - 5,
+        HEIGHT / 3.2
+      ),
     initialValue: problems.value,
     showPopUpOnLoad: true,
   }
