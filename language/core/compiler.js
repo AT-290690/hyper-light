@@ -143,7 +143,7 @@ const dfs = (tree, locals) => {
           .map(x => '[' + x + ']')
           .join('')};`
       }
-      case '.-': {
+      case '.!=': {
         const prop = []
         for (let i = 1; i < tree.args.length; ++i) {
           const arg = tree.args[i]

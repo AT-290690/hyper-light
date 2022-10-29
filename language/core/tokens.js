@@ -240,7 +240,7 @@ const tokens = {
         }
     }
   },
-  ['.-']: (args, env) => {
+  ['.!=']: (args, env) => {
     const prop = []
     for (let i = 1; i < args.length; ++i) {
       const arg = args[i]
