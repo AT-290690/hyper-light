@@ -1193,6 +1193,18 @@ export const LIBRARY = {
       document.body.appendChild(div)
       // LIBRARY.EVENTS.userInterface = div
     },
+    makeiframe: src => {
+      const element = document.createElement('iframe')
+      element.setAttribute('src', src)
+      return element
+    },
+    makeelement: (type, settings) => {
+      const element = document.createElement(type)
+      for (const setting in settings) {
+        element.setAttribute(setting, settings[setting])
+      }
+      return element
+    },
     makeinput: (width = '100px', height = '100px', settings) => {
       const element = document.createElement('input')
       element.classList.add('_user-interface-input')
@@ -1242,14 +1254,22 @@ export const LIBRARY = {
     },
     makebutton: () => {
       const element = document.createElement('button')
-      element.classList.add('_user-interface-button')
       return element
     },
     makelabel: (element, label) => {
       element.textContent = label
       return element
     },
-
+    makeheadertag: (content, n = 1) => {
+      const element = document.createElement('h' + n)
+      element.textContent = content
+      return element
+    },
+    makepre: content => {
+      const element = document.createElement('pre')
+      element.textContent = content
+      return element
+    },
     makeparagraph: content => {
       const element = document.createElement('p')
       element.textContent = content
@@ -1258,7 +1278,6 @@ export const LIBRARY = {
     makespan: content => {
       const element = document.createElement('span')
       element.textContent = content
-      element.classList.add('_user-interface-span')
       return element
     },
     getattribute: (element, key) => element.getattribute(key),
@@ -1277,7 +1296,12 @@ export const LIBRARY = {
       return div
     },
     addclass: (element, ...classlist) => {
-      classlist.forEach(cls => element.classList.add('_user-interface-' + cls))
+      classlist.forEach(cls => element.classList.add(cls))
+      return element
+    },
+    makeitalictext: content => {
+      const element = document.createElement('i')
+      element.textContent = content
       return element
     },
     insertintocontainer: (container, ...elements) => {
@@ -1289,6 +1313,8 @@ export const LIBRARY = {
   },
   STYLE: {
     NAME: 'STYLE',
+    fontfamily: font => `font-family: ${font};`,
+    fontsize: (size, unit = 'px') => `font-size: ${size}${unit};`,
     displayshow: element => {
       element.style.display = 'block'
       return element
@@ -1297,12 +1323,15 @@ export const LIBRARY = {
       element.style.display = 'none'
       return element
     },
+    textcolor: color => `color:${color};`,
+    textalign: (align = 'c') =>
+      `text-align:${{ c: 'center', l: 'left', r: 'right' }[align]};`,
     makeclass: (name, attr) => {
       let out = ''
       for (const a in attr) {
         out += `${a}: ${attr[a]};`
       }
-      return `._user-interface-${name} {\n${out}\n}`
+      return `.${name} {\n${out}\n}`
     },
     makesvgstyle: (entity, props) => {
       for (const prop in props) {
