@@ -20,12 +20,12 @@ const dfs = (tree, locals) => {
         const res = dfs(tree.args[1], locals)
         locals.add(tree.args[0].name)
         if (res !== undefined)
-          return `(void(${tree.args[0].name}=${res})||${tree.args[0].name});`
+          return `((${tree.args[0].name}=${res}),${tree.args[0].name});`
         break
       }
       case '=': {
         const res = dfs(tree.args[1], locals)
-        return `(void(${tree.args[0].name}=${res})||${tree.args[0].name});`
+        return `((${tree.args[0].name}=${res}),${tree.args[0].name});`
       }
       case '->': {
         const args = tree.args
@@ -157,10 +157,10 @@ const dfs = (tree, locals) => {
         if (tree.args[0].type === 'apply') {
           locals.add('_tmp_')
           const obj = dfs(tree.args[0], locals)
-          return `(void(delete (_tmp_=${obj})${path})||_tmp_);`
+          return `((delete (_tmp_=${obj})${path}), _tmp_);`
         } else {
           const obj = dfs(tree.args[0], locals)
-          return `(void(delete ${obj}${path})||${obj});`
+          return `((delete ${obj}${path}), ${obj});`
         }
       }
       case '.=': {
@@ -178,10 +178,10 @@ const dfs = (tree, locals) => {
         if (tree.args[0].type === 'apply') {
           locals.add('_tmp_')
           const obj = dfs(tree.args[0], locals)
-          return `(void((_tmp_=${obj})${path}=${res})||_tmp_);`
+          return `(((_tmp_=${obj})${path}=${res}), _tmp_);`
         } else {
           const obj = dfs(tree.args[0], locals)
-          return `(void(${obj}${path}=${res})||${obj});`
+          return `((${obj}${path}=${res}), ${obj});`
         }
       }
       default: {
