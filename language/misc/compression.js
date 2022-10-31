@@ -106,6 +106,7 @@ export const ABC = [
   // 'Ю',
   // 'Я',
 ]
+const SPACE = '□'
 export const generateCompressedModules = () => {
   const { NAME, ...lib } = STD.LIBRARY
   const modules = new Set([NAME])
@@ -210,7 +211,7 @@ export const compress = source => {
     })
   for (const { full, short } of shortDefinitions)
     result = result.replaceAll(new RegExp(`\\b${full}\\b`, 'g'), short)
-  return result
+  return result.replaceAll(' ', SPACE)
 }
 export const decompress = source => {
   const suffix = [...new Set(source.match(/\'+?\d+/g))]
@@ -220,7 +221,7 @@ export const decompress = source => {
   )
   for (const { full, short } of shortModules)
     result = result.replaceAll(new RegExp(`\\b${short}\\b`, 'g'), full)
-  return result
+  return result.replaceAll(SPACE, ' ')
 }
 export const encodeBase64 = source =>
   LZUTF8.compress(compress(source).trim(), { outputEncoding: 'Base64' })
