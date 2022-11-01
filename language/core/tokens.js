@@ -7,7 +7,6 @@ export const pipe =
   (...fns) =>
   x =>
     fns.reduce((v, f) => f(v), x)
-
 const tokens = {
   ['+']: (args, env) => {
     if (args.length < 2) throw new TypeError('Invalid number of arguments to +')
@@ -140,13 +139,14 @@ const tokens = {
   [':=']: (args, env) => {
     if (!args.length || args?.[0].type !== 'word' || args.length > 2)
       throw new SyntaxError('Invalid use of operation :=')
-    if (args[0].name.includes('.') || args[0].name.includes('-'))
+    const name = args[0].name
+    if (name.includes('.') || name.includes('-'))
       throw new SyntaxError(
         'Invalid use of operation := (variable name must not contain . or -)'
       )
     const value =
       args.length === 1 ? VOID : evaluate(args[args.length - 1], env)
-    env[args[0].name] = value
+    env[name] = value
     return value
   },
   ['->']: (args, env) => {
@@ -382,6 +382,18 @@ const tokens = {
         ? evaluate(param, env)
         : param.value
     )
+  },
+  ['#']: (args, env) => {
+    if (!args.length || args?.[0].type !== 'word')
+      throw new SyntaxError("Invalid use of operation '")
+    const name = args[0].name
+    if (name.includes('.') || name.includes('-'))
+      throw new SyntaxError(
+        'Invalid use of operation =: (variable name must not contain . or -)'
+      )
+
+    env[name] = name
+    return name
   },
 }
 tokens['~='] = tokens[':=']

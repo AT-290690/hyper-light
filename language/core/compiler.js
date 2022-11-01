@@ -18,15 +18,21 @@ const dfs = (tree, locals) => {
       case ':=':
       case '~=': {
         const res = dfs(tree.args[1], locals)
-        locals.add(tree.args[0].name)
-        if (res !== undefined)
-          return `((${tree.args[0].name}=${res}),${tree.args[0].name});`
+        const name = tree.args[0].name
+        locals.add(name)
+        if (res !== undefined) return `((${name}=${res}),${name});`
         break
+      }
+      case '#': {
+        const name = tree.args[0].name
+        locals.add(name)
+        return `((${name} = "${name}"),${name});`
       }
       case '=': {
         const res = dfs(tree.args[1], locals)
         return `((${tree.args[0].name}=${res}),${tree.args[0].name});`
       }
+
       case '->': {
         const args = tree.args
         const body = args.pop()
