@@ -24,9 +24,12 @@ const dfs = (tree, locals) => {
         break
       }
       case '#': {
-        const name = tree.args[0].name
-        locals.add(name)
-        return `((${name} = "${name}"),${name});`
+        const names = tree.args.map(({ name }) => {
+          locals.add(name)
+          return `${name} = "${name}"`
+        })
+
+        return `((${names.join(',')}),${tree.args[tree.args.length - 1].name});`
       }
       case '=': {
         const res = dfs(tree.args[1], locals)
