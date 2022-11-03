@@ -384,16 +384,20 @@ const tokens = {
     )
   },
   ['#']: (args, env) => {
-    if (!args.length || args?.[0].type !== 'word')
-      throw new SyntaxError("Invalid use of operation '")
-    const name = args[0].name
-    if (name.includes('.') || name.includes('-'))
-      throw new SyntaxError(
-        'Invalid use of operation =: (variable name must not contain . or -)'
-      )
+    if (!args.length) throw new SyntaxError('Invalid use of operation #')
+    args.forEach(({ name, type }) => {
+      if (type !== 'word')
+        throw new SyntaxError(
+          'Invalid use of operation # (Arguments must be words)'
+        )
+      if (name.includes('.') || name.includes('-'))
+        throw new SyntaxError(
+          'Invalid use of operation # (variable name must not contain . or -)'
+        )
+      env[name] = name
+    })
 
-    env[name] = name
-    return name
+    return args[args.length - 1].name
   },
 }
 tokens['~='] = tokens[':=']
