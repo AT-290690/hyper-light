@@ -1265,6 +1265,27 @@ export const LIBRARY = {
       element.textContent = content
       return element
     },
+    makelist: content => {
+      const element = document.createElement('li')
+      element.appendChild(content)
+      return element
+    },
+    makeorderedlist: (...lists) => {
+      const element = document.createElement('ol')
+      lists.forEach(l => element.appendChild(l))
+      return element
+    },
+    makeunorderedlist: (...lists) => {
+      const element = document.createElement('ul')
+      lists.forEach(l => element.appendChild(l))
+      return element
+    },
+    makeanchor: (content, href) => {
+      const element = document.createElement('a')
+      element.href = href
+      element.textContent = content
+      return element
+    },
     makepre: content => {
       const element = document.createElement('pre')
       element.textContent = content
@@ -1280,6 +1301,11 @@ export const LIBRARY = {
       element.textContent = content
       return element
     },
+    setid: (element, id) => {
+      element.setAttribute('id', id)
+      return element
+    },
+    getid: element => element.getattribute('id'),
     getattribute: (element, key) => element.getattribute(key),
     setattribute: (element, key, value) => {
       element.setAttribute(key, value)
@@ -1313,6 +1339,68 @@ export const LIBRARY = {
   },
   STYLE: {
     NAME: 'STYLE',
+    makestyle: (...styles) => {
+      const element = document.createElement('style')
+      element.innerHTML = styles.reduce((acc, [selector, ...style]) => {
+        acc += `${selector}{${style.join(';')}}`
+        return acc
+      }, '')
+      document.body.appendChild(element)
+      return element
+    },
+    resetcss: () => {
+      const element = document.createElement('style')
+      element.innerHTML = `html, body, div, span, applet, object, iframe,
+   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+   a, abbr, acronym, address, big, cite, code,
+   del, dfn, em, img, ins, kbd, q, s, samp,
+   small, strike, strong, sub, sup, tt, var,
+   b, u, i, center,
+   dl, dt, dd, ol, ul, li,
+   fieldset, form, label, legend,
+   table, caption, tbody, tfoot, thead, tr, th, td,
+   article, aside, canvas, details, embed, 
+   figure, figcaption, footer, header, hgroup, 
+   menu, nav, output, ruby, section, summary,
+   time, mark, audio, video {
+     margin: 0;
+     padding: 0;
+     border: 0;
+     font-size: 100%;
+     font: inherit;
+     vertical-align: baseline;
+   }
+   /* HTML5 display-role reset for older browsers */
+   article, aside, details, figcaption, figure, 
+   footer, header, hgroup, menu, nav, section {
+     display: block;
+   }
+   body {
+     line-height: 1;
+   }
+   ol, ul {
+     list-style: none;
+   }
+   blockquote, q {
+     quotes: none;
+   }
+   blockquote:before, blockquote:after,
+   q:before, q:after {
+     content: '';
+     content: none;
+   }
+   table {
+     border-collapse: collapse;
+     border-spacing: 0;
+   }
+   a {
+    color: blue;
+    text-decoration: none; /* no underline */
+  }
+   `
+      document.body.appendChild(element)
+      return element
+    },
     fontfamily: font => `font-family: ${font};`,
     fontsize: (size, unit = 'px') => `font-size: ${size}${unit};`,
     displayshow: element => {
