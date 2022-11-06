@@ -17,7 +17,7 @@ animations are also supported:
 ${link('./programms/rose.rs')}
 
 user interface:
-${link('./programms/hello.rs')}
+${link('./programms/counters.rs')}
 
 game of life: 
 ${link('./programms/gol.rs')}
