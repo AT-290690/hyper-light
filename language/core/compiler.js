@@ -207,7 +207,7 @@ const dfs = (tree, locals) => {
             const imp =
               lib.type === 'word' ? lib.name : dfs(lib, locals).slice(0, -1)
             const methods = tree.operator.args.map(x =>
-              x.type === 'value' ? x.value : dfs(x, locals)
+              x.type === 'import' ? x.value : dfs(x, locals)
             )
 
             if (methods.includes('*')) {

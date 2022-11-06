@@ -135,12 +135,16 @@ export const generateCompressedModules = () => {
 }
 
 export const shortModules = generateCompressedModules()
-const dfs = (tree, definitions = new Set(), excludes = new Set()) => {
+const dfs = (
+  tree,
+  definitions = new Set(),
+  imports = new Set()
+  // excludes = new Set()
+) => {
   for (const node of tree) {
     const { type, operator, args, value } = node
-    if (type === 'value' && node.class === 'string') {
-      excludes.add(value)
-    }
+    if (type === 'import' && node.class === 'string') imports.add(value)
+    // if (type === 'value' && node.class === 'string') excludes.add(value)
     if (
       type === 'apply' &&
       operator.type === 'word' &&
@@ -150,24 +154,32 @@ const dfs = (tree, definitions = new Set(), excludes = new Set()) => {
       args.forEach(({ name }) => definitions.add(name))
     }
     if (Array.isArray(args)) {
-      dfs(args, definitions, excludes)
+      dfs(args, definitions, imports)
     }
     if (Array.isArray(operator?.args)) {
-      dfs(operator.args, definitions, excludes)
+      dfs(operator.args, definitions, imports)
     }
   }
-
-  return { definitions, excludes }
+  return { definitions, imports }
 }
 export const compress = source => {
   const value = removeNoCode(source)
   const AST = parse(wrapInBody(value))
-  const { definitions, excludes } = dfs(AST.args)
+  const { definitions, imports } = dfs(
+    AST.args,
+    new Set(),
+    new Set(['LIBRARY'])
+  )
 
-  excludes.forEach(value => {
-    if (definitions.has(value)) definitions.delete(value)
-  })
-  excludes.clear()
+  // imports.forEach(value => {
+  //   if (definitions.has(value)) definitions.delete(value)
+  // })
+
+  const importedModules = shortModules.reduce((acc, item) => {
+    if (imports.has(item.full)) acc.push(item)
+    return acc
+  }, [])
+
   const defs = [...definitions]
   let { result, occurance } = value
     .split('];]')
@@ -192,7 +204,7 @@ export const compress = source => {
     )
   if (occurance > 0) result += "'" + occurance
 
-  for (const { full, short } of shortModules)
+  for (const { full, short } of importedModules)
     result = result.replaceAll(new RegExp(`\\b${full}\\b`, 'g'), short)
 
   let index = 0

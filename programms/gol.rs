@@ -6,6 +6,7 @@
 <- ["forof"] [OBJECT]; 
 <- ["randomint"] [MATH];
 
+#[render; next; alive; state];
 ;; STATE
 := [N; 50]; 
 := [factor; 0.25]; 
@@ -28,7 +29,7 @@
   := [rect; |> [make rectangle [% [* [count; r]; * [r; cols]]; h; r; r]; 
       | set fill [. [COLORS; is alive]];
       | no stroke []]];
-  := [cell; :: ["state"; :: ["alive"; is alive; "next"; next is alive]; "render"; rect]]; 
+  := [cell; :: [state; :: [alive; is alive; next; next is alive]; render; rect]]; 
   insert into group [cells container; rect]; 
   push [cells; cell]; 
   ? [> [bounds; count]; loop [= [count; + [count; 1]]; bounds]]]]];
@@ -59,25 +60,25 @@ for each [cells; -> [cell; i; cells; .. [
 for of [directions; -> [dir; .. [
   := [cell; get cell [+ [x; . [dir; "x"]]; 
   + [y; . [dir; "y"]]]]; 
-  = [sum; + [sum; ? [cell; . [cell; "state"; "alive"]; 0]]]]]]; sum]]];
+  = [sum; + [sum; ? [cell; . [cell; state; alive]; 0]]]]]]; sum]]];
 
 := [update state; -> [iterate cells [cells; -> [cell; x; y; .. [
-  := [is alive; . [cell; "state"; "alive"]]; 
+  := [is alive; . [cell; state; alive]]; 
   := [neighbors; adjacent [x; y]]; 
   ? [&& [isalive; < [neighbors; 2]]; 
-    .= [cell; "state"; "next"; 0]; 
+    .= [cell; state; next; 0]; 
       ? [&& [is alive; > [neighbors; 3]]; 
-        .= [cell; "state"; "next"; 0]; 
+        .= [cell; state; next; 0]; 
            ? [&& [! [is alive]; 
              == [neighbors; 3]]; 
-  .= [cell; "state"; "next"; 1]]]]]]]]]; 
+  .= [cell; state; next; 1]]]]]]]]]; 
 
 := [trottle; -> [delta; value; callback; ? [! [% [delta; value]]; callback []]]];
 
 := [render; -> [iterate cells [cells; -> [cell; x; y; .. [
-  := [is alive; . [cell; "state"; "alive"]]; 
-  set fill [. [cell; "render"]; . [COLORS; is alive]]; 
-  .= [cell; "state"; "alive"; . [cell; "state"; "next"]]]]]]]; 
+  := [is alive; . [cell; state; alive]]; 
+  set fill [. [cell; render]; . [COLORS; is alive]]; 
+  .= [cell; state; alive; . [cell; state; next]]]]]]]; 
 
 := [lifespan; 1000]; 
 make scene [1300; 500; -> [.. [

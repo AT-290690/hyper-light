@@ -26,6 +26,12 @@ const tailCallOpt = (children, name, parent) => {
         break
       } else tailCallOpt(children[i].args, name, parent)
 }
+const importArgs = expr =>
+  (expr.args = expr.args.map(arg => {
+    arg.type = 'import'
+    return arg
+  }))
+
 const pipeArgs = expr => {
   const [first, ...rest] = expr.args
   if (!rest.every(x => x.class === 'function' && x.operator.name))
@@ -73,6 +79,7 @@ export const parseApply = (expr, program) => {
     }
   }
   if (expr.operator.name === '|>') pipeArgs(expr)
+  else if (expr.operator.name === '<-') importArgs(expr)
   else if (expr.operator.name === '~=')
     tailCallOpt(expr.args, expr.args[0].name, expr.args)
   return parseApply(expr, program.slice(1))

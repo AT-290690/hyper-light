@@ -1,5 +1,5 @@
 <- ["BINAR"] [LIBRARY];
-<- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
+<- ["*"] [BINAR];
 
 |> [10; 
    | ones []; 
