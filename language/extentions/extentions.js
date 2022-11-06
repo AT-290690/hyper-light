@@ -1340,10 +1340,6 @@ export const LIBRARY = {
       document.body.appendChild(div)
       return div
     },
-    addclass: (element, ...classlist) => {
-      classlist.forEach(cls => element.classList.add(cls))
-      return element
-    },
     makeitalictext: content => {
       const element = document.createElement('i')
       element.textContent = content
@@ -1367,6 +1363,10 @@ export const LIBRARY = {
       document.body.appendChild(element)
       return element
     },
+    addclass: (element, ...classlist) => {
+      classlist.forEach(cls => element.classList.add(cls))
+      return element
+    },
     noborder: () => 'border: none;',
     border: options =>
       `border: ${options.size ?? ''} ${options.type ?? ''} ${
@@ -1388,7 +1388,7 @@ export const LIBRARY = {
       };`,
     unitspercent: value => `${value}%`,
     unitspixel: value => `${value}px`,
-    unitpoint: value => `${value}pt`,
+    unitspoint: value => `${value}pt`,
     backgroundcolor: color => `background-color: ${color};`,
     resetcss: () => {
       const element = document.createElement('style')
@@ -1445,7 +1445,7 @@ export const LIBRARY = {
     },
     cursorpointer: () => 'cursor: pointer;',
     fontfamily: font => `font-family: ${font};`,
-    fontsize: (size, unit = 'px') => `font-size: ${size}${unit};`,
+    fontsize: size => `font-size: ${size};`,
     displayshow: element => {
       element.style.display = 'block'
       return element
