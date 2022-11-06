@@ -1326,8 +1326,12 @@ export const LIBRARY = {
       element.setAttribute(key, value)
       return element
     },
-    setstyle: (element, style) => {
-      element.style = style
+    settextcontent: (element, content) => {
+      element.textContent = content
+      return element
+    },
+    setstyle: (element, ...styles) => {
+      element.style = styles.join('')
       return element
     },
     makecontainer: (...elements) => {
@@ -1363,6 +1367,29 @@ export const LIBRARY = {
       document.body.appendChild(element)
       return element
     },
+    noborder: () => 'border: none;',
+    border: options =>
+      `border: ${options.size ?? ''} ${options.type ?? ''} ${
+        options.color ?? ''
+      };`.trim(),
+    margin: options =>
+      `margin: ${options.top ?? '0'} ${options.right ?? '0'} ${
+        options.bottom ?? '0'
+      } ${options.left ?? '0'};`,
+    padding: options =>
+      `padding: ${options.top ?? '0'} ${options.right ?? '0'} ${
+        options.bottom ?? '0'
+      } ${options.left ?? '0'};`,
+    display: display =>
+      `display: ${
+        { f: 'flex', g: 'grid', i: 'inline', b: 'block', ib: 'inline-block' }[
+          display
+        ]
+      };`,
+    unitspercent: value => `${value}%`,
+    unitspixel: value => `${value}px`,
+    unitpoint: value => `${value}pt`,
+    backgroundcolor: color => `background-color: ${color};`,
     resetcss: () => {
       const element = document.createElement('style')
       element.innerHTML = `html, body, div, span, applet, object, iframe,
@@ -1416,6 +1443,7 @@ export const LIBRARY = {
       document.body.appendChild(element)
       return element
     },
+    cursorpointer: () => 'cursor: pointer;',
     fontfamily: font => `font-family: ${font};`,
     fontsize: (size, unit = 'px') => `font-size: ${size}${unit};`,
     displayshow: element => {
@@ -1476,14 +1504,14 @@ export const STD = {
   VOID,
   _: VOID,
   printout: (...args) => console.log(...args),
-  IMP: module => {
-    console.log(
-      `<- [${Object.keys(module)
-        .filter(x => x !== 'NAME')
-        .map(x => `"${x}"`)
-        .join(';')}] [${module.NAME}];\n`
-    )
-  },
+  // IMP: module => {
+  //   console.log(
+  //     `<- [${Object.keys(module)
+  //       .filter(x => x !== 'NAME')
+  //       .map(x => `"${x}"`)
+  //       .join(';')}] [${module.NAME}];\n`
+  //   )
+  // },
   call: (x, callback) => callback(x),
   tco:
     func =>
