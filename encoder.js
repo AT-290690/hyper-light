@@ -13,16 +13,18 @@ const compressionStages = {
     removeNoCode,
     compress,
     source =>
-      LZUTF8.compress(source.trim(), {
-        outputEncoding: 'Base64',
-      }),
+      encodeURIComponent(
+        LZUTF8.compress(source.trim(), {
+          outputEncoding: 'Base64',
+        })
+      ),
   ],
 }
 const decompressionStages = {
   count: 0,
   stages: [
     source =>
-      LZUTF8.decompress(source.trim(), {
+      LZUTF8.decompress(decodeURIComponent(source.trim()), {
         inputEncoding: 'Base64',
         outputEncoding: 'String',
       }),

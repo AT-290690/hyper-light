@@ -12,6 +12,17 @@ export const protolessModule = methods => {
 
 export const LIBRARY = {
   NAME: 'LIBRARY',
+  HTTP: {
+    name: 'HTTP',
+    getrequestmanyjson: (callback, ...promises) =>
+      Promise.all(promises).then(res =>
+        Promise.all(res.map(r => r.json()).then(callback))
+      ),
+    getrequestsinglejson: (url, callback) =>
+      fetch(url)
+        .then(data => data.json())
+        .then(callback),
+  },
   DATE: {
     NAME: 'DATE',
     formattolocal: (date, format) => date.toLocaleDateString(format),

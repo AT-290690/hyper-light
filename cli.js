@@ -5,7 +5,9 @@ import { LZUTF8 } from './language/libs/lz-utf8.js'
 
 export const encode = path => encodeBase64(readFileSync(path, 'utf8'))
 export const link = path =>
-  `https://at-290690.github.io/hyper-light/preview.html?s=${encode(path)}`
+  `https://at-290690.github.io/hyper-light/preview.html?s=${encodeURIComponent(
+    encode(path)
+  )}`
 
 export const evaluate = path => interpred(readFileSync(path, 'utf8'))
 export const zip = path =>
