@@ -1,6 +1,6 @@
 <- ["SKETCH"; "ARRAY"; "LOOP"] [LIBRARY];
 <- ["makescene"; "setstroke"; "nofill";
-    "makegroup"; "background"; 
+    "makegroup"; "background"; "getrotation";
     "width"; "height"; "nostroke"; 
     "draw"; "makerectangle"; "play"; 
     "setfill"; "setopacity"; "setrotation"] [SKETCH];
@@ -36,12 +36,12 @@ repeat [10; -> [i; push [shadows; |> [
 
 draw [60; -> [frame; delta; .. [
   each [arr; 
-        -> [leaf; i; .= [leaf;  "rotation"; 
-        + [.[leaf; "rotation"]; * [i; 0.001]]]]];
+        -> [leaf; i; set rotation [leaf; 
+        + [get rotation [leaf]; * [i; 0.001]]]]];
   each [strokes; 
-        -> [leaf; i; .= [leaf;  "rotation"; 
-        + [.[leaf; "rotation"]; * [i; 0.001]]]]];
+        -> [leaf; i; set rotation [leaf; 
+        + [get rotation [leaf]; * [i; 0.001]]]]];
   each [shadows; 
-        -> [leaf; i; .= [leaf;  "rotation"; 
-        + [.[leaf; "rotation"]; * [i; 0.001]]]]]]]];
+        -> [leaf; i; set rotation [leaf;
+        + [get rotation [leaf]; * [i; 0.001]]]]]]]];
 play []]]];

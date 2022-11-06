@@ -206,10 +206,10 @@ const dfs = (tree, locals) => {
             const lib = tree.args[0]
             const imp =
               lib.type === 'word' ? lib.name : dfs(lib, locals).slice(0, -1)
-            const methods = tree.operator.args.map(x =>
-              x.type === 'import' ? x.value : dfs(x, locals)
-            )
-
+            // const methods = tree.operator.args.map(x =>
+            //   x.type === 'import' ? x.value : dfs(x, locals)
+            // )
+            const methods = tree.operator.args.map(x => x.value)
             if (methods.includes('*')) {
               methods.length = 0
               const MOD = imp === 'LIBRARY' ? LIBRARY : LIBRARY[imp]

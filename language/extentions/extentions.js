@@ -321,6 +321,8 @@ export const LIBRARY = {
     getopacity: entity => entity.opacity,
     getdashes: entity => entity.dashes,
     getposition: entity => entity.position,
+    getrotation: entity => entity.rotation,
+    getscale: entity => entity.scale,
     gettranslation: entity => entity.translation,
     getbounds: entity => entity.getBoundingClientRect(),
   },
@@ -518,6 +520,8 @@ export const LIBRARY = {
     ishaving: (obj, ...props) => +props.every(x => x in obj),
     areequal: (item, ...args) =>
       +args.every(current => LIBRARY.LOGIC.isequal(item, current)),
+    isoftype: (entity, type) =>
+      entity.constructor.name.toUpperCase() === type.toUpperCase(),
   },
   LOOP: {
     NAME: 'LOOP',
