@@ -74,25 +74,6 @@ describe('run should work as expected', () => {
     ).toEqual([42, 'nothing matched', "who's there"])
   })
 
-  it('valid parens', () => {
-    expect(
-      runFromText(`.. [<- ["BINAR"; "ARRAY"; "LOGIC"] [LIBRARY]; 
-    <- ["from"; "to"; "balance"; "append"; "prepend"; "tail"; "first"; "isempty"] [BINAR]; 
-    ;; find if parens are valid for pairs of "(" and ")"
-    := [isvalidparens; -> [input; 
-    |> [input; 
-      | from [];  
-      | to [-> [acc; x; index; arr;
-        ? [== ["("; x]; prepend [acc; x]; 
-            ? [== [first [acc]; "("]; tail [acc]; 
-              append [acc; x]]]]]; 
-      | isempty []]]];
-      .:[
-      is valid parens ["(()))"];
-      is valid parens ["(())"]]];`)
-    ).toEqual([0, 1])
-  })
-
   it('fib sum', () => {
     expect(
       runFromText(`;; calculating fib sequance
@@ -169,43 +150,12 @@ describe('run should work as expected', () => {
     expect(runFromText(`. ["01010"; "length"];`)).toBe(5)
   })
 
-  it('binar should work', () => {
-    expect(
-      runFromText(`<- ["BINAR"] [LIBRARY];
-    <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
-    |> [10; 
-       | ones []; 
-       | map [-> [x; i; a; * [x; 254]]];
-       | to array []]`)
-    ).toEqual([254, 254, 254, 254, 254, 254, 254, 254, 254, 254])
-
-    expect(
-      runFromText(`
-<- ["BINAR"; "LOGIC"] [LIBRARY];
-<- ["makebinar"; "fill"; "map"; "filter"; "toarray"] [BINAR];
-<- ["iseven"; "isodd"] [LOGIC];
-|> [
-  make binar [];
-  | fill [1; 2; 3; 4; 5; 6; 7; 8];
-  | map [-> [x; i; a; * [x; x]]];
-  | filter [is even];
-  | to array []
-];
-    `)
-    ).toEqual([4, 16, 36, 64])
-  })
-
   it('* import should work', () => {
     expect(
-      runFromText(`<- ["BINAR"; "MATH"] [LIBRARY];
-    <- ["*"] [BINAR];
-    <- ["floor"] [MATH];
-    
-    |> [make binar [];
-        | fill [1.3; 3.4; 4.8];
-        | map [floor];
-        | to array []
-       ]
+      runFromText(`<- ["MATH"; "ARRAY"] [LIBRARY];
+    <- ["*"] [ARRAY];
+    <- ["*"] [MATH];
+    map [.: [1.123; 3.14; 4.9]; floor];
     `)
     ).toEqual([1, 3, 4])
   })
@@ -219,26 +169,6 @@ describe('run should work as expected', () => {
         | call [-> [x; * [x; 10]]]
       ]`)
     ).toEqual(300)
-    expect(
-      runFromText(`<- ["BINAR"; "MATH"] [LIBRARY];
-      <- ["ones"; "zeroes"; "map"; "toarray"] [BINAR];
-      <- ["cos"; "floor"] [MATH];
-      |> [10; 
-         | ones []; 
-         | map [-> [x; i; a; 
-                    |> [x; | * [
-                            |> [24; 
-                              | : [|> [i; 
-                                       | + [1];
-                                       | * [-1]]]; 
-                              | floor[]]];
-                          | + [12];
-                          | cos [];
-                          | * [100];
-                          | floor []
-                       ]]];
-         | to array []]`)
-    ).toEqual([84, 100, -66, 96, 75, -15, -15, -92, -92, -92])
   })
   it('>> and << should work', () => {
     expect(

@@ -15,7 +15,6 @@ Write programms that can be stored in a hyper-link and then shared without a ser
 ;; Tree Shakeable [The compiled code uses only the functions that are imported]
 ;; Composable [The pipe operator |> [5; | add [3]; | mult [4]]; makes it easy to compose functions]
 ;; Void [Only one empty primitive [void] - this is undefined; no null or NaN]
-;; Binar [Shipped with a fast and memory cheap array data-structure binary array O[1] operations]
 ;; Tail Call Recursion [Recursive functions can be optimised - just as fast as loops]
 ;; Devision by zero is a run-time error, as well as number operations are validated
 ;; Web Editor [Create web apps directly on the web with autocomplete; logger; live preview on the side]
