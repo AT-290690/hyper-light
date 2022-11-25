@@ -813,12 +813,8 @@ export const LIBRARY = {
     getelementsbytagname: tag => document.getElementsByTagName(tag),
     makeuserinterface: () => {
       const div = document.createElement('div')
-      div.id = '_user-interface'
-      // const styles = document.createElement('style')
-      // styles.textContent = ``
-      // document.body.appendChild(styles)
       document.body.appendChild(div)
-      // LIBRARY.EVENTS.userInterface = div
+      return div
     },
     makeiframe: src => {
       const element = document.createElement('iframe')
@@ -834,7 +830,6 @@ export const LIBRARY = {
     },
     makeinput: (width = '100px', height = '100px', settings) => {
       const element = document.createElement('input')
-      element.classList.add('_user-interface-input')
       element.width = width
       element.height = height
       for (const setting in settings) {
@@ -844,7 +839,6 @@ export const LIBRARY = {
     },
     maketextarea: settings => {
       const element = document.createElement('textarea')
-      element.classList.add('_user-interface-textarea')
       for (const setting in settings) {
         element.setAttribute(setting, settings[setting])
       }
@@ -858,7 +852,6 @@ export const LIBRARY = {
     makeslider: settings => {
       const element = document.createElement('input')
       element.type = 'range'
-      element.classList.add('_user-interface-slider')
 
       for (const setting in settings) {
         element.setAttribute(setting, settings[setting])
@@ -875,9 +868,58 @@ export const LIBRARY = {
     },
     maketooltip: defaultLabel => {
       const tooltip = document.createElement('span')
-      tooltip.classList.add('_user-interface-tooltiptext')
       tooltip.textContent = defaultLabel
       return tooltip
+    },
+    maketable: content => {
+      const table = document.createElement('table')
+      table.innerHTML = content
+      return table
+    },
+    maketablerow: content => {
+      const table = document.createElement('tr')
+      table.innerHTML = content
+      return table
+    },
+    maketabledata: content => {
+      const table = document.createElement('td')
+      table.innerHTML = content
+      return table
+    },
+    maketableheader: content => {
+      const table = document.createElement('th')
+      table.innerHTML = content
+      return table
+    },
+    maketablecaption: content => {
+      const table = document.createElement('caption')
+      table.innerHTML = content
+      return table
+    },
+    maketablecolumn: content => {
+      const table = document.createElement('col')
+      table.innerHTML = content
+      return table
+    },
+    maketablecolumngroup: content => {
+      const table = document.createElement('colgroup')
+      table.innerHTML = content
+      return table
+    },
+    maketablehead: content => {
+      const table = document.createElement('thead')
+      table.innerHTML = content
+      return table
+    },
+    maketablebody: content => {
+      const table = document.createElement('tbody')
+      table.innerHTML = content
+      return table
+    },
+    maketablefooter: content => {
+      const table = document.createElement('tfoot')
+      table.innerHTML = content
+      return table
     },
     makebutton: () => {
       const element = document.createElement('button')
@@ -931,6 +973,21 @@ export const LIBRARY = {
     setid: (element, id) => {
       element.setAttribute('id', id)
       return element
+    },
+    maketablefrom: tableData => {
+      const table = document.createElement('table')
+      const tableBody = document.createElement('tbody')
+      tableData.forEach(rowData => {
+        const row = document.createElement('tr')
+        rowData.forEach(cellData => {
+          const cell = document.createElement('td')
+          cell.appendChild(document.createTextNode(cellData))
+          row.appendChild(cell)
+        })
+        tableBody.appendChild(row)
+      })
+      table.appendChild(tableBody)
+      return table
     },
     getid: element => element.getattribute('id'),
     getattribute: (element, key) => element.getattribute(key),
