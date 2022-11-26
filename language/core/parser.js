@@ -37,9 +37,6 @@ const pipeArgs = expr => {
   if (!rest.every(x => x.class === 'function' && x.operator.name))
     throw new SyntaxError(`Non function arguments passed to a Pipe`)
 
-  if (!rest.every(x => x.operator.name[0] === '|'))
-    throw new SyntaxError(`Pipe functions have to start with |`)
-
   expr.args = [
     first,
     ...rest.map(arg => ({
@@ -49,7 +46,7 @@ const pipeArgs = expr => {
           args: [{ type: 'word', name: '__' }, ...(arg.args ?? [])],
           class: 'function',
           type: 'apply',
-          operator: { name: arg.operator.name.substring(1), type: 'word' },
+          operator: { name: arg.operator.name, type: 'word' },
         },
       ],
       class: 'function',

@@ -38,13 +38,13 @@ make style [.: [".counter"; cursor pointer [];
 := [make counter; -> [container; count;
 insert into container [container;
   |> [:= [butt; make button []]; 
-      | make label [count];
-      | add class ["counter"];
-      | on mouse click [-> [e; 
+      make label [count];
+      add class ["counter"];
+      on mouse click [-> [e; 
            set text content [butt; = [count; + [count; 1]]]]]]];
 ]];
 := [main container; |> [make container []; 
-                        | set style [display ["g"];
+                        set style [display ["g"];
                                      padding [
                                        :: ["left"; unitspixel[50]; 
                                            "right"; unitspixel[50]]]]]];

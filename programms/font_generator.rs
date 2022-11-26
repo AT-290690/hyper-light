@@ -10,15 +10,15 @@
 := [make abc; -> [font; cols; rows; .. [
   = [font; for in [font; -> [key; obj; 
               .= [obj; key; |> [. [obj; key]; 
-               | trim [];
-               | split [" "];
-               | compact [];
-               | map 1 [-> [item;  == [item; "*"]]
+               trim [];
+               split [" "];
+               compact [];
+               map 1 [-> [item;  == [item; "*"]]
                ]]]]]];
   -> [glyph; .. [
   := [letter; . [font; glyph]];
   := [group; |> [make group []; 
-                | set position [20; 50]]];
+                set position [20; 50]]];
   := [y; 0];
   ~= [loop; -> [i; bounds; .. [
     := [x; % [i; cols]];
@@ -26,7 +26,7 @@
     ? [. [letter; i];
          insert into group [group; 
          |> [make rectangle [* [x; 10]; * [y; 10]; 10; 10];
-            | no stroke []]]];
+            no stroke []]]];
   ? [> [bounds; i]; loop [= [i; + [i; 1]]; bounds]]]]];
   loop[0; * [rows; cols]]; group]]]]];
 
@@ -130,9 +130,9 @@
 ]; 4; 5]];
 
 make scene [500; 500; -> [.. [
-  |> [make glyph ["a"]; | set position x [10]];
-  |> [make glyph ["b"]; | set position x [60]];
-  |> [make glyph ["c"]; | set position x [110]];
-  |> [make glyph ["2"]; | set position x [160]];
+  |> [make glyph ["a"]; set position x [10]];
+  |> [make glyph ["b"]; set position x [60]];
+  |> [make glyph ["c"]; set position x [110]];
+  |> [make glyph ["2"]; set position x [160]];
   update [];
 ]]];

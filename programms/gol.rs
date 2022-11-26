@@ -27,8 +27,8 @@
   := [is alive; random int [0; 1]]; 
   := [next is alive; random int [0; 1]]; 
   := [rect; |> [make rectangle [% [* [count; r]; * [r; cols]]; h; r; r]; 
-      | set fill [. [COLORS; is alive]];
-      | no stroke []]];
+      set fill [. [COLORS; is alive]];
+      no stroke []]];
   := [cell; :: [state; :: [alive; is alive; next; next is alive]; render; rect]]; 
   insert into group [cells container; rect]; 
   push [cells; cell]; 
@@ -84,8 +84,8 @@ for of [directions; -> [dir; .. [
 make scene [1300; 500; -> [.. [
   := [cells container; 
   |> [cells; 
-    | makegrid []; 
-    | set position [15; 15]]]; 
+    makegrid []; 
+    set position [15; 15]]]; 
   draw [lifespan; -> [delta; fps; trottle [delta; 8; -> [.. [
     update state []; 
     render []]]]]]; 

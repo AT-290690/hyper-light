@@ -12,4 +12,4 @@ make user interface [];
       .: ["a3"; "b3"; "c3"; "d3"];
       .: ["a4"; "b4"; "c4"; "d4"];
     ]];
-  | set style [text color ["white"]]]]];
+  set style [text color ["white"]]]]];

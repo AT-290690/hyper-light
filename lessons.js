@@ -103,9 +103,9 @@ reverse [list]`,
 := [is palindrome; -> [list; .. [
   := [reversed;  
       |> [list; 
-          | . ["=>"; 0]; ;; honestly no idea why 
-          | ... []; ;; copy the list before reversing it
-          | reverse []; ;; reverse the list
+          . ["=>"; 0]; ;; honestly no idea why 
+          ... []; ;; copy the list before reversing it
+          reverse []; ;; reverse the list
           ]];
   ~= [iterate; -> [a; b; .. [
   ? [! [is same [a; b]]; 0; 

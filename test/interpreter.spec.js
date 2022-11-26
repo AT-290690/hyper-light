@@ -165,8 +165,8 @@ describe('run should work as expected', () => {
       runFromText(`
       |> [
         10;
-        | call [-> [x; * [x; 3]]];
-        | call [-> [x; * [x; 10]]]
+        call [-> [x; * [x; 3]]];
+        call [-> [x; * [x; 10]]]
       ]`)
     ).toEqual(300)
   })
@@ -185,10 +185,10 @@ describe('run should work as expected', () => {
       runFromText(`
     |> [
       .: [1; 2; 3; 4];
-      | >> [-> [x; i; a; .= [a; i; * [x; 10]]]];
-      | << [-> [x; i; a; .= [a; i; - [. [a; i]; * [x; 0.1]]]]];
-      | >> [-> [x; i; a; .= [a; i; + [x; i]]]];
-      | << [-> [x; i; a; .= [a; i; + [. [a; i]; i; 1]]]];
+      >> [-> [x; i; a; .= [a; i; * [x; 10]]]];
+      << [-> [x; i; a; .= [a; i; - [. [a; i]; * [x; 0.1]]]]];
+      >> [-> [x; i; a; .= [a; i; + [x; i]]]];
+      << [-> [x; i; a; .= [a; i; + [. [a; i]; i; 1]]]];
     ]
     `)
     ).toEqual([10, 21, 32, 43])
@@ -222,7 +222,7 @@ dfs [n; .: []];
 ;; solution
 := [reverse; -> [head; 
    ;; base case
-   ? [|| [== [head; void]; == [. [head; "=>"; 0]; void]]; head; .. [
+   ? [||[== [head; void]; == [. [head; "=>"; 0]; void]]; head; .. [
      ;; reverse 
      := [reversed; reverse [. [head; "=>"; 0]]];
      .= [head; "=>"; 0; "=>"; 0; head];
